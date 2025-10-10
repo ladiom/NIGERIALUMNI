@@ -24,3 +24,7 @@
 # Note: Set these in Netlify dashboard instead of here for security
 # OFFICE365_EMAIL = "your-email@yourdomain.com"
 # OFFICE365_PASSWORD = "your-app-password"
+
+# Disable secrets scanning for expected environment variable names
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "OFFICE365_EMAIL,OFFICE365_PASSWORD"
