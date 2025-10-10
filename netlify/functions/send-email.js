@@ -59,17 +59,20 @@ export const handler = async (event, context) => {
       };
     }
 
-    // Office 365 SMTP configuration
+    // Office 365 SMTP configuration (recommended defaults)
     const transporter = nodemailer.createTransport({
       host: 'smtp.office365.com',
       port: 587,
-      secure: false, // true for 465, false for other ports
+      secure: false, // STARTTLS over 587
+      requireTLS: true,
       auth: {
-        user: process.env.SMTP_EMAIL, // Your SMTP email
-        pass: process.env.SMTP_PASSWORD // Your SMTP password or app password
+        user: process.env.SMTP_EMAIL,
+        pass: process.env.SMTP_PASSWORD
       },
       tls: {
-        ciphers: 'SSLv3'
+        ciphers: 'SSLv3',
+        // Keep strict certs in prod; adjust only if logs show cert errors
+        // rejectUnauthorized: false
       }
     });
 
