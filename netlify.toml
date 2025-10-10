@@ -20,10 +20,10 @@
 # VITE_SUPABASE_URL = "your-supabase-url"
 # VITE_SUPABASE_ANON_KEY = "your-supabase-anon-key"
 
-# Environment variables for Office 365 SMTP
+# Environment variables for SMTP
 # Note: Set these in Netlify dashboard instead of here for security
-# OFFICE365_EMAIL = "your-email@yourdomain.com"
-# OFFICE365_PASSWORD = "your-app-password"
+# SMTP_EMAIL = "your-email@yourdomain.com"
+# SMTP_PASSWORD = "your-app-password"
 
 # Disable secrets scanning completely since we've cleaned all secrets
 [build.environment]

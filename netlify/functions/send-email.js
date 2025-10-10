@@ -40,7 +40,7 @@ export const handler = async (event, context) => {
     }
 
     // Check if Office 365 credentials are configured
-    if (!process.env.OFFICE365_EMAIL || !process.env.OFFICE365_PASSWORD) {
+    if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
       console.log('Office 365 credentials not configured, using fallback mode');
       
       // Return success with fallback message
@@ -65,8 +65,8 @@ export const handler = async (event, context) => {
       port: 587,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: process.env.OFFICE365_EMAIL, // Your Office 365 email
-        pass: process.env.OFFICE365_PASSWORD // Your Office 365 password or app password
+        user: process.env.SMTP_EMAIL, // Your SMTP email
+        pass: process.env.SMTP_PASSWORD // Your SMTP password or app password
       },
       tls: {
         ciphers: 'SSLv3'
@@ -77,7 +77,7 @@ export const handler = async (event, context) => {
     const mailOptions = {
       from: {
         name: 'Nigeria Alumni Network',
-        address: process.env.OFFICE365_EMAIL
+        address: process.env.SMTP_EMAIL
       },
       to: toEmail,
       subject: subject,
