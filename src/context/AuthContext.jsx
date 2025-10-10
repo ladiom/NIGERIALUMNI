@@ -218,8 +218,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const isAdmin = !!(userProfile?.roles && userProfile.roles.includes('admin')) || 
-                  (user?.email === 'admin@ladiom.com') ||
-                  (user?.email === 'admin@Ladiom.com'); // Fallback admin check with case variations
+                  (user?.email === 'admin@example.com') ||
+                  (user?.email === 'admin@Example.com'); // Fallback admin check with case variations
   
   console.log('AuthContext state:', { 
     hasUser: !!user, 
