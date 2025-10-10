@@ -2,10 +2,6 @@
   publish = "dist"
   command = "npm ci && npm run build"
 
-[build.environment]
-  NODE_VERSION = "18"
-  NPM_VERSION = "9"
-
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -25,6 +21,8 @@
 # SMTP_EMAIL = "your-email@yourdomain.com"
 # SMTP_PASSWORD = "your-app-password"
 
-# Disable secrets scanning completely since we've cleaned all secrets
+# Build environment settings
 [build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
   SECRETS_SCAN_ENABLED = "false"
