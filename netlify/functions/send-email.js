@@ -76,6 +76,25 @@ export const handler = async (event, context) => {
       }
     });
 
+    // Verify SMTP connectivity/auth first for clearer errors
+    try {
+      await transporter.verify();
+    } catch (verifyErr) {
+      console.error('SMTP verify failed:', verifyErr);
+      return {
+        statusCode: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+          success: false,
+          error: 'SMTP verification failed',
+          details: verifyErr?.message || String(verifyErr)
+        })
+      };
+    }
+
     // Email options
     const mailOptions = {
       from: {
