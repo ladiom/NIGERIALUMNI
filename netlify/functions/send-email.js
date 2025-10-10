@@ -59,7 +59,7 @@ export const handler = async (event, context) => {
       };
     }
 
-    // Gmail SMTP configuration
+    // Gmail SMTP configuration - updated
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
