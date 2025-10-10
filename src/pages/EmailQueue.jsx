@@ -63,7 +63,7 @@ function EmailQueue() {
         },
         {
           id: 3,
-          to_email: 'admin@stpatricksibadan.org',
+          to_email: 'admin@example.com',
           to_name: 'Olusola Omole',
           subject: 'Nigeria Alumni Network — Registration Under Review',
           body: 'Thank you for registering with the Nigeria Alumni Network...',

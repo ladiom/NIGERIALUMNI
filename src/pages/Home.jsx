@@ -396,7 +396,7 @@ function Home() {
             {
               id: 'SPGOYO19731054HI',
               full_name: 'Olusola Omole',
-              email: 'admin@stpatricksibadan.org',
+              email: 'admin@example.com',
               graduation_year: 1973,
               school: { name: "ST. PATRICKK'S GRAMMAR SCHOOL IBADAN", level: 'HI' },
               isRegistered: true
@@ -465,7 +465,7 @@ function Home() {
             {
               id: 'SPGOYO19731054HI',
               full_name: 'Olusola Omole',
-              email: 'admin@stpatricksibadan.org',
+              email: 'admin@example.com',
               graduation_year: 1973,
               school: { name: "ST. PATRICKK'S GRAMMAR SCHOOL IBADAN", level: 'HI' },
               isRegistered: true

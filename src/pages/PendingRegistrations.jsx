@@ -142,7 +142,7 @@ function PendingRegistrations() {
         {
           id: 2,
           alumni_id: 'SPGOYO19731054HI',
-          email: 'admin@stpatricksibadan.org',
+          email: 'admin@example.com',
           status: 'pending',
           created_at: '2025-10-08T01:13:24.499268',
           alumni: {
