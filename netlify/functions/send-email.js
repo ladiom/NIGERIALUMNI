@@ -59,9 +59,9 @@ export const handler = async (event, context) => {
       };
     }
 
-    // Office 365 SMTP configuration (recommended defaults)
+    // Gmail SMTP configuration
     const transporter = nodemailer.createTransport({
-      host: 'smtp.office365.com',
+      host: 'smtp.gmail.com',
       port: 587,
       secure: false, // STARTTLS over 587
       requireTLS: true,
@@ -70,9 +70,7 @@ export const handler = async (event, context) => {
         pass: process.env.SMTP_PASSWORD
       },
       tls: {
-        ciphers: 'SSLv3',
-        // Keep strict certs in prod; adjust only if logs show cert errors
-        // rejectUnauthorized: false
+        ciphers: 'SSLv3'
       }
     });
 
