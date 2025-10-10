@@ -1,0 +1,26 @@
+[build]
+  publish = "dist"
+  command = "npm ci && npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Enable Netlify functions
+[functions]
+  directory = "netlify/functions"
+
+# Environment variables for Supabase
+# Note: Set these in Netlify dashboard instead of here for security
+# VITE_SUPABASE_URL = "your-supabase-url"
+# VITE_SUPABASE_ANON_KEY = "your-supabase-anon-key"
+
+# Environment variables for Office 365 SMTP
+# Note: Set these in Netlify dashboard instead of here for security
+# OFFICE365_EMAIL = "your-email@yourdomain.com"
+# OFFICE365_PASSWORD = "your-app-password"

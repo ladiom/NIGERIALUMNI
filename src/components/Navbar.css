@@ -1,0 +1,145 @@
+.navbar {
+  background-color: #ffffff;
+  color: var(--spaco-dark);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--border-color);
+  
+  /* Dark mode styles */
+  @media (prefers-color-scheme: dark) {
+    background-color: #0f172a;
+    color: #f1f5f9;
+  }
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.navbar-logo {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--spaco-dark);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+
+.logo-image {
+  height: 40px;
+  width: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.logo-image:hover {
+  transform: scale(1.05);
+}
+
+
+.navbar-logo:hover {
+  color: var(--primary-color);
+}
+
+.logo-ni {
+  font-weight: 600;
+  color: var(--spaco-dark);
+}
+
+.logo-ac {
+  color: var(--spaco-dark);
+  font-weight: 600;
+}
+
+.logo-connect {
+  color: var(--spaco-dark);
+  font-weight: 600;
+  
+  /* Dark mode styles */
+  @media (prefers-color-scheme: dark) {
+    color: #f1f5f9;
+  }
+}
+
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar-link {
+  color: var(--spaco-dark);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  
+  /* Dark mode styles */
+  @media (prefers-color-scheme: dark) {
+    color: #f1f5f9;
+  }
+}
+
+.navbar-link:hover {
+  color: var(--primary-color);
+  background-color: var(--spaco-light);
+  transform: translateY(-1px);
+}
+
+.logout-button {
+  background-color: var(--error-color);
+  color: white !important;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.logout-button:hover {
+  background-color: #dc2626;
+  color: white !important;
+  transform: translateY(-1px);
+}
+
+.login-button {
+  background-color: var(--primary-color);
+  color: white !important;
+  font-weight: 600;
+}
+
+.login-button:hover {
+  background-color: var(--primary-hover);
+  color: white !important;
+  transform: translateY(-1px);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+  
+  .navbar-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .navbar-links {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,829 @@
+.alumni-profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--bg-color);
+}
+
+/* Profile Header Styles */
+.profile-header {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  background: var(--hover-bg);
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+}
+
+.profile-image-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--primary-color);
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.alumni-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.profile-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.profile-name-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.profile-name-section h1 {
+  color: var(--heading-color);
+  font-size: 2.5rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.alumni-id {
+  background: var(--primary-light);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.detail-item {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.detail-label {
+  color: var(--text-muted);
+  font-weight: 600;
+  min-width: 120px;
+}
+
+.detail-value {
+  color: var(--text-color);
+}
+
+.profile-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Message Form Styles */
+.message-form-container {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--hover-bg);
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.message-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message-form textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  background: var(--input-bg);
+  color: var(--text-color);
+  resize: vertical;
+  min-height: 100px;
+}
+
+.message-form textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
+}
+
+.message-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Tabs Navigation */
+.profile-tabs {
+  background: var(--bg-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.tabs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 1.25rem 2rem;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  background: var(--hover-bg);
+  color: var(--primary-color);
+}
+
+.tab.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+/* Main Content */
+.profile-content {
+  min-height: 400px;
+}
+
+/* About Section */
+.about-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.about-section h2 {
+  color: var(--heading-color);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.bio {
+  color: var(--text-color);
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.about-card {
+  background: var(--hover-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.about-card h3 {
+  color: var(--heading-color);
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-tag {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.interests-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.interest-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-color);
+}
+
+.interest-icon {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* Education Section */
+.education-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.education-section h2 {
+  color: var(--heading-color);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.education-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.education-item {
+  background: var(--hover-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  position: relative;
+  padding-left: 3rem;
+}
+
+.education-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 100%;
+  width: 2px;
+  height: calc(100% + 1.5rem);
+  background: var(--border-color);
+  z-index: -1;
+}
+
+.education-item::after {
+  content: '';
+  position: absolute;
+  left: 0.68rem;
+  top: 2rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  border: 3px solid var(--hover-bg);
+}
+
+.education-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.education-info h3 {
+  color: var(--heading-color);
+  font-size: 1.25rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.education-institution {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.education-year {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  background: var(--input-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+}
+
+.education-description {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Experience Section */
+.experience-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.experience-section h2 {
+  color: var(--heading-color);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.experience-item {
+  background: var(--hover-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  position: relative;
+  padding-left: 3rem;
+}
+
+.experience-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 100%;
+  width: 2px;
+  height: calc(100% + 1.5rem);
+  background: var(--border-color);
+  z-index: -1;
+}
+
+.experience-item::after {
+  content: '';
+  position: absolute;
+  left: 0.68rem;
+  top: 2rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  border: 3px solid var(--hover-bg);
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.experience-info h3 {
+  color: var(--heading-color);
+  font-size: 1.25rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.experience-company {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.experience-year {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  background: var(--input-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+}
+
+.experience-description {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Achievements Section */
+.achievements-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.achievements-section h2 {
+  color: var(--heading-color);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--hover-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.achievement-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.achievement-content p {
+  color: var(--text-color);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Involvement Section */
+.involvement-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.volunteering-section,
+.alumni-groups-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.volunteering-section h2,
+.alumni-groups-section h2 {
+  color: var(--heading-color);
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.volunteering-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.volunteering-item {
+  background: var(--hover-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  position: relative;
+  padding-left: 3rem;
+}
+
+.volunteering-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 100%;
+  width: 2px;
+  height: calc(100% + 1.5rem);
+  background: var(--border-color);
+  z-index: -1;
+}
+
+.volunteering-item::after {
+  content: '';
+  position: absolute;
+  left: 0.68rem;
+  top: 2rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  border: 3px solid var(--hover-bg);
+}
+
+.volunteering-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.volunteering-info h3 {
+  color: var(--heading-color);
+  font-size: 1.25rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.volunteering-organization {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.volunteering-year {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  background: var(--input-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+}
+
+.volunteering-description {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.alumni-groups-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.group-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--hover-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  justify-content: space-between;
+}
+
+.group-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.group-name {
+  color: var(--text-color);
+  font-weight: 600;
+  flex: 1;
+}
+
+/* Contact Section */
+.contact-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact-section h2 {
+  color: var(--heading-color);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--hover-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.contact-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.contact-details {
+  flex: 1;
+}
+
+.contact-label {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.contact-value {
+  display: block;
+  color: var(--primary-color);
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-value:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.social-media h3 {
+  color: var(--heading-color);
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--hover-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: var(--primary-light);
+  color: var(--primary-color);
+}
+
+.social-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-primary.connected {
+  background-color: var(--success-color);
+}
+
+.btn-primary.connected:hover {
+  background-color: var(--success-dark);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-bg);
+  color: var(--heading-color);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--hover-bg);
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .profile-name-section {
+    justify-content: center;
+  }
+  
+  .profile-actions {
+    justify-content: center;
+  }
+  
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .alumni-profile-container {
+    padding: 1rem;
+  }
+  
+  .profile-header {
+    padding: 1.5rem;
+  }
+  
+  .profile-image {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .profile-name-section h1 {
+    font-size: 2rem;
+  }
+  
+  .detail-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: flex-start;
+  }
+  
+  .education-item,
+  .experience-item,
+  .volunteering-item {
+    padding-left: 2.5rem;
+  }
+  
+  .education-item::after,
+  .experience-item::after,
+  .volunteering-item::after {
+    left: 0.5rem;
+  }
+  
+  .tabs-container {
+    gap: 0.5rem;
+  }
+  
+  .tab {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-header {
+    padding: 1rem;
+  }
+  
+  .profile-image {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .alumni-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+  }
+  
+  .profile-name-section h1 {
+    font-size: 1.75rem;
+  }
+  
+  .alumni-id {
+    font-size: 0.75rem;
+  }
+  
+  .contact-item,
+  .social-link,
+  .group-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}

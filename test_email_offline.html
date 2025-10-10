@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Testing (Offline) - Nigeria Alumni Network</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #34495e;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .email-preview {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-online { background-color: #28a745; }
+        .status-offline { background-color: #dc3545; }
+        .status-unknown { background-color: #ffc107; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Email Testing (Offline Mode)</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            Test email templates and functionality without requiring deployment
+        </p>
+
+        <!-- Status Check -->
+        <div class="test-section">
+            <h3>📡 Deployment Status</h3>
+            <div id="statusCheck">
+                <span class="status-indicator status-unknown"></span>
+                <span id="statusText">Checking deployment status...</span>
+            </div>
+            <button onclick="checkDeploymentStatus()">Check Status</button>
+            <div id="statusResult" class="result" style="display: none;"></div>
+        </div>
+
+        <!-- Email Template Test -->
+        <div class="test-section">
+            <h3>📧 Email Template Test</h3>
+            <div class="form-group">
+                <label for="emailType">Email Type:</label>
+                <select id="emailType">
+                    <option value="pending">Pending Registration</option>
+                    <option value="approved">Registration Approved</option>
+                    <option value="rejected">Registration Rejected</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="testEmail">Test Email Address:</label>
+                <input type="email" id="testEmail" value="test@example.com" placeholder="test@example.com">
+            </div>
+            <div class="form-group">
+                <label for="testName">Test Name:</label>
+                <input type="text" id="testName" value="Test User" placeholder="Test User">
+            </div>
+            <button onclick="testEmailTemplate()">Generate Email Template</button>
+            <div id="templateResult" class="result" style="display: none;"></div>
+            <div id="emailPreview" class="email-preview" style="display: none;"></div>
+        </div>
+
+        <!-- Mock Email Send -->
+        <div class="test-section">
+            <h3>📬 Mock Email Send</h3>
+            <p>This simulates sending an email without actually sending it:</p>
+            <button onclick="mockSendEmail()">Send Mock Email</button>
+            <div id="mockResult" class="result" style="display: none;"></div>
+        </div>
+
+        <!-- Test All Templates -->
+        <div class="test-section">
+            <h3>📋 Test All Email Templates</h3>
+            <button onclick="testAllTemplates()">Generate All Templates</button>
+            <div id="allTemplatesResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Email templates
+        const EMAIL_TEMPLATES = {
+            pending: {
+                subject: 'Nigeria Alumni Network — Registration Under Review',
+                getBody: (data) => `Hello ${data.toName || 'Alumni'},
+
+Thank you for registering with the Nigeria Alumni Network (NAN)!
+
+Your registration has been received and is currently under review by our team. We will carefully verify your information and school details.
+
+Registration Details:
+• Name: ${data.toName || 'N/A'}
+• School: ${data.schoolName || 'N/A'}
+• Alumni ID: ${data.alumniId || 'N/A'}
+• Email: ${data.toEmail}
+
+What happens next:
+1. Our team will review your registration within 2-3 business days
+2. You will receive an approval confirmation email once verified
+3. The approval email will include your login credentials and next steps
+
+If you have any questions or need to update your information, please contact us at support@nigeriaalumninetwork.com.
+
+Thank you for joining the Nigeria Alumni Network!
+
+Best regards,
+The NAN Team
+
+---
+Nigeria Alumni Network (NAN)
+Connecting Alumni Across Nigeria`
+            },
+            approved: {
+                subject: 'Nigeria Alumni Network — Registration Approved!',
+                getBody: (data) => `Congratulations ${data.toName || 'Alumni'}!
+
+Your registration with the Nigeria Alumni Network (NAN) has been approved!
+
+Registration Details:
+• Name: ${data.toName || 'N/A'}
+• School: ${data.schoolName || 'N/A'}
+• Alumni ID: ${data.alumniId || 'N/A'}
+• Email: ${data.toEmail}
+
+How to Access Your Account:
+1. Visit: ${data.loginUrl || 'https://nigeriaalumninetwork.netlify.app/login'}
+2. Use your email: ${data.toEmail}
+3. Click "Forgot Password" to set up your password
+4. Complete your profile setup
+
+What You Can Do Now:
+• Search and connect with other alumni
+• Update your profile information
+• Join school-specific groups
+• Participate in alumni events
+• Access exclusive alumni resources
+
+Need Help?
+If you have any questions or need assistance, please contact us at support@nigeriaalumninetwork.com.
+
+Welcome to the Nigeria Alumni Network!
+
+Best regards,
+The NAN Team
+
+---
+Nigeria Alumni Network (NAN)
+Connecting Alumni Across Nigeria`
+            },
+            rejected: {
+                subject: 'Nigeria Alumni Network — Registration Update',
+                getBody: (data) => `Hello ${data.toName || 'Alumni'},
+
+Thank you for your interest in joining the Nigeria Alumni Network (NAN).
+
+After reviewing your registration, we were unable to verify some of the information provided. This could be due to:
+• School records not matching our database
+• Incomplete or inaccurate information
+• Duplicate registration attempts
+
+Registration Details:
+• Name: ${data.toName || 'N/A'}
+• School: ${data.schoolName || 'N/A'}
+• Alumni ID: ${data.alumniId || 'N/A'}
+
+Next Steps:
+If you believe this is an error, please contact us at support@nigeriaalumninetwork.com with:
+• Your full name and school details
+• Any additional documentation you may have
+• A brief explanation of your situation
+
+We're here to help and will work with you to resolve any issues.
+
+Thank you for your understanding.
+
+Best regards,
+The NAN Team
+
+---
+Nigeria Alumni Network (NAN)
+Connecting Alumni Across Nigeria`
+            }
+        };
+
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `result ${type}`;
+            element.style.display = 'block';
+        }
+
+        function updateStatus(isOnline, message) {
+            const statusIndicator = document.querySelector('.status-indicator');
+            const statusText = document.getElementById('statusText');
+            
+            if (isOnline) {
+                statusIndicator.className = 'status-indicator status-online';
+                statusText.textContent = 'Online - Function is deployed and working';
+            } else if (isOnline === false) {
+                statusIndicator.className = 'status-indicator status-offline';
+                statusText.textContent = 'Offline - Function not deployed or not accessible';
+            } else {
+                statusIndicator.className = 'status-indicator status-unknown';
+                statusText.textContent = message || 'Unknown status';
+            }
+        }
+
+        async function checkDeploymentStatus() {
+            showResult('statusResult', '🔄 Checking deployment status...', 'info');
+            
+            try {
+                const response = await fetch('https://nigeriaalumninetwork.netlify.app/.netlify/functions/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        toEmail: 'test@example.com',
+                        toName: 'Test',
+                        subject: 'Status Check',
+                        body: 'This is a status check.',
+                        type: 'test'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    updateStatus(true);
+                    showResult('statusResult', `✅ Function is online and working!\n\nResponse: ${JSON.stringify(result, null, 2)}`, 'success');
+                } else {
+                    updateStatus(false);
+                    showResult('statusResult', `❌ Function is online but returned an error:\n\n${JSON.stringify(result, null, 2)}`, 'error');
+                }
+            } catch (error) {
+                updateStatus(false);
+                showResult('statusResult', `❌ Function is not accessible:\n\nError: ${error.message}\n\nThis means the function is not deployed yet.`, 'error');
+            }
+        }
+
+        function testEmailTemplate() {
+            const emailType = document.getElementById('emailType').value;
+            const testEmail = document.getElementById('testEmail').value;
+            const testName = document.getElementById('testName').value;
+            
+            const testData = {
+                toEmail: testEmail,
+                toName: testName,
+                alumniId: 'TEST-001',
+                schoolName: 'Test University'
+            };
+            
+            const template = EMAIL_TEMPLATES[emailType];
+            const subject = template.subject;
+            const body = template.getBody(testData);
+            
+            showResult('templateResult', `✅ Template generated successfully!\n\nSubject: ${subject}\n\nBody Length: ${body.length} characters`, 'success');
+            
+            const preview = document.getElementById('emailPreview');
+            preview.textContent = `Subject: ${subject}\n\n${body}`;
+            preview.style.display = 'block';
+        }
+
+        function mockSendEmail() {
+            const testEmail = document.getElementById('testEmail').value;
+            const testName = document.getElementById('testName').value;
+            const emailType = document.getElementById('emailType').value;
+            
+            const testData = {
+                toEmail: testEmail,
+                toName: testName,
+                alumniId: 'TEST-001',
+                schoolName: 'Test University'
+            };
+            
+            const template = EMAIL_TEMPLATES[emailType];
+            const subject = template.subject;
+            const body = template.getBody(testData);
+            
+            // Simulate email sending
+            const mockResult = {
+                success: true,
+                messageId: `mock-${Date.now()}`,
+                message: 'Email sent successfully (mock mode)',
+                toEmail: testEmail,
+                toName: testName,
+                subject: subject,
+                type: emailType,
+                timestamp: new Date().toISOString()
+            };
+            
+            showResult('mockResult', `✅ Mock email sent successfully!\n\n${JSON.stringify(mockResult, null, 2)}`, 'success');
+        }
+
+        function testAllTemplates() {
+            const testEmail = document.getElementById('testEmail').value;
+            const testName = document.getElementById('testName').value;
+            
+            const testData = {
+                toEmail: testEmail,
+                toName: testName,
+                alumniId: 'TEST-001',
+                schoolName: 'Test University'
+            };
+            
+            const results = [];
+            
+            for (const [type, template] of Object.entries(EMAIL_TEMPLATES)) {
+                const subject = template.subject;
+                const body = template.getBody(testData);
+                
+                results.push(`✅ ${type.toUpperCase()}:`);
+                results.push(`   Subject: ${subject}`);
+                results.push(`   Body Length: ${body.length} characters`);
+                results.push('');
+            }
+            
+            showResult('allTemplatesResult', results.join('\n'), 'success');
+        }
+
+        // Check status on page load
+        window.onload = function() {
+            checkDeploymentStatus();
+        };
+    </script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,8 @@
+{
+  "name": "netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify functions for Nigeria Alumni Network",
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  }
+}
