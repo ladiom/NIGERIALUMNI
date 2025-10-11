@@ -955,6 +955,7 @@ function Home() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Features Section */}
       <section className="features-section">
