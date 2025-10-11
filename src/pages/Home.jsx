@@ -736,10 +736,12 @@ function Home() {
               
               {/* Help section for users who can't find their school */}
               <div className="search-help">
-                <p>Can't find your school in the search results?</p>
-                <Link to="/register-school" className="btn btn-outline">
-                  Register Your School
-                </Link>
+                <p>
+                  Can't find your school in the search results?{' '}
+                  <Link to="/register-school" className="btn btn-outline">
+                    Register Your School
+                  </Link>
+                </p>
               </div>
             </form>
           </div>
