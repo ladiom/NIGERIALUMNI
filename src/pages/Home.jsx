@@ -303,7 +303,7 @@ function Home() {
     
     // Add timeout to prevent hanging
     const searchTimeout = setTimeout(() => {
-      console.log('Search timeout: forcing loading to false');
+      console.log('🔍 Search timeout: forcing loading to false');
       setLoading(false);
     }, 20000); // 20 second timeout
     
@@ -583,11 +583,15 @@ function Home() {
       console.error('Search error:', error);
       setResults([]);
     } finally {
+      console.log('🔍 Search finally block - clearing timeout and setting loading to false');
       clearTimeout(searchTimeout);
       setLoading(false);
     }
   };
 
+
+  // Debug logging for render
+  console.log('🔍 Home render state:', { loading, resultsLength: results.length, searchType, searchText });
 
   return (
     <div className="home-container">
@@ -834,6 +838,7 @@ function Home() {
                 <h3>
                   {searchType === 'school' ? 'Schools Found' : 'Alumni Found'} ({results.length} {results.length === 1 ? 'record' : 'records'})
                 </h3>
+                {console.log('🔍 Rendering results:', { loading, resultsLength: results.length, searchType })}
                 <p className="results-subtitle">
                   {searchText && `Searching for "${searchText}"`}
                   {schoolSearch.state && ` • State: ${schoolSearch.state}`}
