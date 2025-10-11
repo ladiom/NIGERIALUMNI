@@ -604,7 +604,7 @@ function Home() {
             </div>
             <h1>Reconnect. Rediscover. Rebuild.</h1>
             <p className="search-description">
-              Join the national alumni network and connect with your alma mater across Nigeria
+              Join the National Alumni Institution Revival Alliance - be among the 100.
             </p>
           </div>
           
