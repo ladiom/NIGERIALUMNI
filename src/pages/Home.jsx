@@ -577,7 +577,24 @@ function Home() {
             <div className="title-line-2">(100NAIRA INITIATIVE)</div>
           </div>
           <h1>Reconnect. Rediscover. Rebuild.</h1>
-          <p>Join the 100NAIRA platform and connect with your alma mater across Nigeria</p>
+          <p className="hero-description">
+            Join the 100NAIRA platform and connect with your alma mater across Nigeria. 
+            Find old classmates, discover new opportunities, and strengthen the bonds that matter most.
+          </p>
+          <div className="hero-stats">
+            <div className="stat-item">
+              <span className="stat-number">6,000+</span>
+              <span className="stat-label">Alumni Connected</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-number">500+</span>
+              <span className="stat-label">Schools Registered</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-number">36</span>
+              <span className="stat-label">States Covered</span>
+            </div>
+          </div>
           {dbStatus === 'checking' && (
             <div style={{ 
               background: '#fff3cd', 
@@ -959,6 +976,35 @@ function Home() {
             <div className="feature-card">
               <h3>Awards & Recognition</h3>
               <p>Nominate and recognize outstanding alumni making significant contributions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="features-section">
+        <div className="features-container">
+          <h2>Why Choose 100NAIRA?</h2>
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon">🔍</div>
+              <h3>Find Alumni</h3>
+              <p>Search and connect with former classmates, teachers, and schoolmates from across Nigeria.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🏫</div>
+              <h3>School Network</h3>
+              <p>Join your school's alumni network and stay updated with school events and news.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">💼</div>
+              <h3>Career Opportunities</h3>
+              <p>Discover job opportunities, mentorship programs, and professional networking within your alumni community.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🤝</div>
+              <h3>Give Back</h3>
+              <p>Support your alma mater through donations, volunteering, and mentoring current students.</p>
             </div>
           </div>
         </div>
