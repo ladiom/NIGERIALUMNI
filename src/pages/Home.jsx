@@ -589,6 +589,13 @@ function Home() {
     }
   };
 
+  // Handle register button click
+  const handleRegisterClick = (alumni) => {
+    // Store alumni data in localStorage for the registration page
+    localStorage.setItem('selectedAlumni', JSON.stringify(alumni));
+    // Navigate to registration page
+    window.location.href = '/register';
+  };
 
   // Debug logging for render
   console.log('🔍 Home render state:', { loading, resultsLength: results.length, searchType, searchText });
@@ -1030,199 +1037,46 @@ function Home() {
           </div>
         </div>
       </section>
-                  </>
-                    );
-                  })()}
-                </div>
-              ) : (
-                <div className="table-container">
-                  {(() => {
-                    const totalPages = Math.ceil(results.length / pageSize);
-                    const start = (currentPage - 1) * pageSize;
-                    const end = start + pageSize;
-                    const pageItems = results.slice(start, end);
-                    return (
-                      <>
-                  <table className="results-table">
-                    <thead>
-                      <tr>
-                        <th onClick={() => handleSort('schoolName')} className={`sortable ${sortBy === 'schoolName' ? 'sorted' : ''} ${sortBy === 'schoolName' && sortDirection === 'asc' ? 'asc' : sortBy === 'schoolName' ? 'desc' : ''}`}>
-                          School <span className="sort-indicator">{sortBy === 'schoolName' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                        </th>
-                        <th onClick={() => handleSort('studentName')} className={`sortable ${sortBy === 'studentName' ? 'sorted' : ''} ${sortBy === 'studentName' && sortDirection === 'asc' ? 'asc' : sortBy === 'studentName' ? 'desc' : ''}`}>
-                          Alumni Name <span className="sort-indicator">{sortBy === 'studentName' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                        </th>
-                        <th onClick={() => handleSort('adm_year')} className={`sortable ${sortBy === 'adm_year' ? 'sorted' : ''} ${sortBy === 'adm_year' && sortDirection === 'asc' ? 'asc' : sortBy === 'adm_year' ? 'desc' : ''}`}>
-                          Adm. Yr. <span className="sort-indicator">{sortBy === 'adm_year' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                        </th>
-                        <th onClick={() => handleSort('year')} className={`sortable ${sortBy === 'year' ? 'sorted' : ''} ${sortBy === 'year' && sortDirection === 'asc' ? 'asc' : sortBy === 'year' ? 'desc' : ''}`}>
-                          Set Yr. (Finish or Left) <span className="sort-indicator">{sortBy === 'year' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                        </th>
-                        <th className="actions-col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {pageItems.map(alumni => (
-                        <tr key={alumni.id}>
-                          <td><Link to={`/schools/${alumni.school_id}`}>{alumni.school?.name || 'Unknown School'}</Link></td>
-                          <td>{alumni.full_name}</td>
-                          <td>{alumni.adm_year ?? ''}</td>
-                          <td>{alumni.graduation_year}</td>
-                          <td className="actions-col">
-                            {alumni.isRegistered ? (
-                              <Link to="/login" className="view-details">Sign In</Link>
-                            ) : (
-                              <RegisterButton alumni={alumni} />
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <div className="pagination">
-                    <button
-                      className="page-btn"
-                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                      disabled={currentPage === 1}
-                    >
-                      Prev
-                    </button>
-                    <span className="page-info">Page {currentPage} of {totalPages}</span>
-                    <button
-                      className="page-btn"
-                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                      disabled={currentPage === totalPages}
-                    >
-                      Next
-                    </button>
-                  </div>
-                  </>
-                    );
-                  })()}
-                </div>
-              )}
-            </div>
-          )}
-      {/* Features Section */}
-      <section className="features-section">
-        <div className="features-container">
-          <h2>Why Choose 100NAIRA?</h2>
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">🔍</div>
-              <h3>Find Alumni</h3>
-              <p>Search and connect with former classmates, teachers, and schoolmates from across Nigeria.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">🏫</div>
-              <h3>School Network</h3>
-              <p>Join your school's alumni network and stay updated with school events and news.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">💼</div>
-              <h3>Career Opportunities</h3>
-              <p>Discover job opportunities, mentorship programs, and professional networking within your alumni community.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">🤝</div>
-              <h3>Give Back</h3>
-              <p>Support your alma mater through donations, volunteering, and mentoring current students.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Testimonials Section */}
-      <section className="testimonials-section">
-        <div className="testimonials-container">
-          <h2>What Our Alumni Say</h2>
-          <div className="testimonials-grid">
-            <div className="testimonial-card">
-              <div className="testimonial-content">
-                <p>"100NAIRA helped me reconnect with my high school friends after 15 years. It's amazing how technology can bring people together!"</p>
-              </div>
-              <div className="testimonial-author">
-                <div className="author-avatar">AO</div>
-                <div className="author-info">
-                  <h4>Adunni Okafor</h4>
-                  <p>Lagos State University, 2008</p>
-                </div>
-              </div>
-            </div>
-            <div className="testimonial-card">
-              <div className="testimonial-content">
-                <p>"Through this platform, I found a mentor who helped me land my dream job. The alumni network is incredibly supportive."</p>
-              </div>
-              <div className="testimonial-author">
-                <div className="author-avatar">CA</div>
-                <div className="author-info">
-                  <h4>Chinedu Adebayo</h4>
-                  <p>University of Ibadan, 2015</p>
-                </div>
-              </div>
-            </div>
-            <div className="testimonial-card">
-              <div className="testimonial-content">
-                <p>"I love being able to give back to my alma mater through this platform. It's fulfilling to support current students."</p>
-              </div>
-              <div className="testimonial-author">
-                <div className="author-avatar">FO</div>
-                <div className="author-info">
-                  <h4>Folake Ogunleye</h4>
-                  <p>St. Patrick's Grammar School, 2000</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      {/* Impact Section */}
       <section className="impact">
         <div className="impact-content">
           <div className="impact-text">
-            <h2>Making a Difference in Education</h2>
-            <p>
-              Our platform supports educational development through alumni contributions and engagement.
-              Join us in building a stronger educational community across Nigeria.
-            </p>
-            <div className="impact-stats">
-              <div className="impact-stat">
-                <span className="impact-number">₦2.5M+</span>
-                <span className="impact-label">Raised for Schools</span>
-              </div>
-              <div className="impact-stat">
-                <span className="impact-number">150+</span>
-                <span className="impact-label">Scholarships Awarded</span>
-              </div>
-              <div className="impact-stat">
-                <span className="impact-number">25+</span>
-                <span className="impact-label">School Projects Funded</span>
-              </div>
+            <h2>Building a Stronger Nigeria Through Education</h2>
+            <p>Join thousands of alumni who are making a difference in their communities and supporting the next generation of Nigerian leaders.</p>
+          </div>
+          <div className="impact-stats">
+            <div className="impact-stat">
+              <div className="impact-number">50+</div>
+              <div className="impact-label">Schools Connected</div>
             </div>
-            <div className="impact-actions">
-              <Link to="/register" className="btn btn-primary">Join the Movement</Link>
-              <Link to="/admin" className="btn btn-outline">View Impact</Link>
+            <div className="impact-stat">
+              <div className="impact-number">6,000+</div>
+              <div className="impact-label">Alumni Registered</div>
+            </div>
+            <div className="impact-stat">
+              <div className="impact-number">100+</div>
+              <div className="impact-label">Success Stories</div>
             </div>
           </div>
-          <div className="impact-visual">
-            <div className="impact-graphic">
-              <div className="graphic-circle">
-                <span className="graphic-text">100NAIRA</span>
-              </div>
+          <div className="impact-actions">
+            <Link to="/register" className="btn btn-primary btn-large">
+              Join the Movement
+            </Link>
+            <Link to="/register-school" className="btn btn-outline btn-large">
+              Register Your School
+            </Link>
+          </div>
+        </div>
+        <div className="impact-visual">
+          <div className="impact-graphic">
+            <div className="graphic-circle">
+              <div className="graphic-text">100NAIRA</div>
             </div>
           </div>
         </div>
       </section>
     </div>
-  );
-}
-
-// Component for handling initial registration via email
-function RegisterButton({ alumni }) {
-  return (
-    <a href={`/register?alumni=${encodeURIComponent(alumni.id)}`} className="btn btn-primary">
-      Register
-    </a>
   );
 }
 
