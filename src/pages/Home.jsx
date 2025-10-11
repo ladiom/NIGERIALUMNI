@@ -757,7 +757,171 @@ function Home() {
         </div>
       </section>
 
-      <section className="hero">
+      {/* Search Results - Show immediately after search form */}
+      {!loading && results.length > 0 && (
+        <section className="search-results-section">
+          <div className="results-list">
+            <div className="results-header">
+              <h3>
+                {searchType === 'school' ? 'Schools Found' : 'Alumni Found'} ({results.length} {results.length === 1 ? 'record' : 'records'})
+              </h3>
+              {console.log('🔍 Rendering results:', { loading, resultsLength: results.length, searchType })}
+              <p className="results-subtitle">
+                {searchText && `Searching for "${searchText}"`}
+                {schoolSearch.state && ` • State: ${schoolSearch.state}`}
+                {schoolSearch.level && ` • Level: ${schoolSearch.level}`}
+                {alumniYearFilter && ` • Year: ${alumniYearFilter}`}
+              </p>
+            </div>
+            {searchType === 'school' ? (
+              <div className="table-container">
+                {(() => {
+                  const totalPages = Math.ceil(results.length / pageSize);
+                  const start = (currentPage - 1) * pageSize;
+                  const end = start + pageSize;
+                  const pageItems = results.slice(start, end);
+                  return (
+                    <>
+                  <table className="results-table">
+                  <thead>
+                    <tr>
+                      <th onClick={() => handleSort('schoolName')} className={`sortable ${sortBy === 'schoolName' ? 'sorted' : ''} ${sortBy === 'schoolName' && sortDirection === 'asc' ? 'asc' : sortBy === 'schoolName' ? 'desc' : ''}`}>
+                        School Name <span className="sort-indicator">{sortBy === 'schoolName' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                      </th>
+                      <th onClick={() => handleSort('state')} className={`sortable ${sortBy === 'state' ? 'sorted' : ''} ${sortBy === 'state' && sortDirection === 'asc' ? 'asc' : sortBy === 'state' ? 'desc' : ''}`}>
+                        State <span className="sort-indicator">{sortBy === 'state' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                      </th>
+                      <th onClick={() => handleSort('lga')} className={`sortable ${sortBy === 'lga' ? 'sorted' : ''} ${sortBy === 'lga' && sortDirection === 'asc' ? 'asc' : sortBy === 'lga' ? 'desc' : ''}`}>
+                        City <span className="sort-indicator">{sortBy === 'lga' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                      </th>
+                      <th onClick={() => handleSort('level')} className={`sortable ${sortBy === 'level' ? 'sorted' : ''} ${sortBy === 'level' && sortDirection === 'asc' ? 'asc' : sortBy === 'level' ? 'desc' : ''}`}>
+                        Level <span className="sort-indicator">{sortBy === 'level' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pageItems.map((school, index) => (
+                      <tr key={school.id || index}>
+                        <td>{school.name || 'N/A'}</td>
+                        <td>{school.state || 'N/A'}</td>
+                        <td>{school.lga || 'N/A'}</td>
+                        <td>
+                          <span className={`level-badge level-${school.level?.toLowerCase() || 'unknown'}`}>
+                            {schoolLevels.find(l => l.value === school.level)?.label || school.level || 'N/A'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {totalPages > 1 && (
+                  <div className="pagination">
+                    <button 
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      className="pagination-btn"
+                    >
+                      Previous
+                    </button>
+                    <span className="pagination-info">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <button 
+                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                      disabled={currentPage === totalPages}
+                      className="pagination-btn"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+                </>
+                );
+                })()}
+              </div>
+            ) : (
+              <div className="table-container">
+                {(() => {
+                  const totalPages = Math.ceil(results.length / pageSize);
+                  const start = (currentPage - 1) * pageSize;
+                  const end = start + pageSize;
+                  const pageItems = results.slice(start, end);
+                  return (
+                    <>
+                  <table className="results-table">
+                  <thead>
+                    <tr>
+                      <th onClick={() => handleSort('schoolName')} className={`sortable ${sortBy === 'schoolName' ? 'sorted' : ''} ${sortBy === 'schoolName' && sortDirection === 'asc' ? 'asc' : sortBy === 'schoolName' ? 'desc' : ''}`}>
+                        School <span className="sort-indicator">{sortBy === 'schoolName' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                      </th>
+                      <th onClick={() => handleSort('fullName')} className={`sortable ${sortBy === 'fullName' ? 'sorted' : ''} ${sortBy === 'fullName' && sortDirection === 'asc' ? 'asc' : sortBy === 'fullName' ? 'desc' : ''}`}>
+                        Alumni Name <span className="sort-indicator">{sortBy === 'fullName' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                      </th>
+                      <th onClick={() => handleSort('admissionYear')} className={`sortable ${sortBy === 'admissionYear' ? 'sorted' : ''} ${sortBy === 'admissionYear' && sortDirection === 'asc' ? 'asc' : sortBy === 'admissionYear' ? 'desc' : ''}`}>
+                        Adm. Yr. <span className="sort-indicator">{sortBy === 'admissionYear' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                      </th>
+                      <th onClick={() => handleSort('graduationYear')} className={`sortable ${sortBy === 'graduationYear' ? 'sorted' : ''} ${sortBy === 'graduationYear' && sortDirection === 'asc' ? 'asc' : sortBy === 'graduationYear' ? 'desc' : ''}`}>
+                        Set Yr. (Finish or Left) <span className="sort-indicator">{sortBy === 'graduationYear' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
+                      </th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pageItems.map((alum, index) => (
+                      <tr key={alum.id || index}>
+                        <td>{alum.school?.name || 'N/A'}</td>
+                        <td>{alum.full_name || 'N/A'}</td>
+                        <td>{alum.admission_year || 'N/A'}</td>
+                        <td>{alum.graduation_year || 'N/A'}</td>
+                        <td>
+                          {alum.isRegistered ? (
+                            <span className="status-badge registered">Registered</span>
+                          ) : (
+                            <button 
+                              className="btn btn-primary btn-sm"
+                              onClick={() => handleRegisterClick(alum)}
+                            >
+                              Register
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {totalPages > 1 && (
+                  <div className="pagination">
+                    <button 
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      className="pagination-btn"
+                    >
+                      Previous
+                    </button>
+                    <span className="pagination-info">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <button 
+                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                      disabled={currentPage === totalPages}
+                      className="pagination-btn"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+                </>
+                );
+                })()}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Hero Section - Only show when no search results */}
+      {!loading && results.length === 0 && (
+        <section className="hero">
         <div className="hero-background">
           <div className="hero-pattern"></div>
         </div>
@@ -789,49 +953,8 @@ function Home() {
           </div>
         </div>
       </section>
+      )}
 
-      <section className="home-search-results">
-        <div className="table-container">
-          {loading && <p className="loading">Searching...</p>}
-          {error && (
-            <div className="error-message" style={{ 
-              color: 'var(--error-color)', 
-              backgroundColor: '#fee2e2', 
-              padding: '1rem', 
-              borderRadius: '8px', 
-              margin: '1rem 0',
-              border: '1px solid #fecaca'
-            }}>
-              {error}
-            </div>
-          )}
-          {!loading && results.length === 0 && !searchText && !schoolSearch.state && !schoolSearch.level && !alumniYearFilter && (
-            <div className="no-results-container">
-              <p className="no-results">Enter search criteria to find alumni or schools</p>
-              <div className="no-results-actions">
-                <p>Search by name, school, or use the filters above</p>
-              </div>
-            </div>
-          )}
-          {!loading && results.length === 0 && (searchText || schoolSearch.state || schoolSearch.level || alumniYearFilter) && (
-            <div className="no-results-container">
-              <p className="no-results">No records found</p>
-              <div className="no-results-actions">
-                <p>Can't find your name or school? Try adjusting your search criteria</p>
-                <div className="registration-options">
-                  <Link to="/register-school" className="btn btn-primary">
-                    Register as Alumni
-                  </Link>
-                  <button 
-                    className="btn btn-secondary"
-                    onClick={clearAllFilters}
-                  >
-                    Clear Search
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
           {!loading && results.length > 0 && (
             <div className="results-list">
               <div className="results-header">
