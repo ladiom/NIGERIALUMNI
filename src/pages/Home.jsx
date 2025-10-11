@@ -575,16 +575,12 @@ function Home() {
       <section className="search-hero">
         <div className="search-hero-content">
           <div className="search-header">
-            <div className="search-badge">
-              <span className="badge-text">100NAIRA INITIATIVE</span>
+            <div className="main-title">
+              <div className="title-line-2">(100NAIRA INITIATIVE)</div>
             </div>
-            <h1 className="search-title">
-              <span className="title-line-1">Reconnect.</span>
-              <span className="title-line-2">Rediscover.</span>
-              <span className="title-line-3">Rebuild.</span>
-            </h1>
+            <h1>Reconnect. Rediscover. Rebuild.</h1>
             <p className="search-description">
-              Find your school and reconnect with former classmates across Nigeria.
+              Join the national alumni network and connect with your alma mater across Nigeria
             </p>
           </div>
           

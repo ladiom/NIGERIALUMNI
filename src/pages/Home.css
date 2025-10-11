@@ -869,7 +869,7 @@
 
 /* Search Hero Section - Now at the top */
 .search-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 3rem 0;
   position: relative;
   overflow: hidden;
@@ -901,29 +901,35 @@
   margin-bottom: 3rem;
 }
 
-.search-badge {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  padding: 0.5rem 1.5rem;
+.main-title {
   margin-bottom: 1.5rem;
 }
 
-.search-title {
-  font-size: 3rem;
+.title-line-2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2563eb;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.search-header h1 {
+  font-size: 3.5rem;
   font-weight: 800;
-  color: white;
+  color: #1e293b;
   margin-bottom: 1rem;
   line-height: 1.1;
 }
 
 .search-description {
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: #64748b;
   margin-bottom: 0;
-  font-weight: 300;
+  font-weight: 400;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .search-form-container {
