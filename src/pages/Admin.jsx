@@ -1870,7 +1870,7 @@ Nigeria Alumni Network Team`,
                         <div className="percentage">30%</div>
                       </div>
                       <div className="distribution-item">
-                        <div className="school-type">High Schools</div>
+                        <div className="school-type">Secondary Schools</div>
                         <div className="progress-bar">
                           <div className="progress-fill" style={{width: '20%'}}></div>
                         </div>

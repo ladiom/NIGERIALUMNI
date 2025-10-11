@@ -16,7 +16,7 @@ function Register() {
     schoolName: '',
     schoolState: '',
     schoolCity: '',
-    schoolLevel: '',
+    schoolLevel: 'HI', // Default to Secondary School
     admissionYear: '',
     currentPosition: '',
     currentCompany: '',
@@ -45,7 +45,7 @@ function Register() {
   // School levels
   const schoolLevels = [
     { value: 'PR', label: 'Primary School' },
-    { value: 'HI', label: 'High School' },
+    { value: 'HI', label: 'Secondary School' },
     { value: 'PO', label: 'Polytechnic' },
     { value: 'UN', label: 'University' }
   ];

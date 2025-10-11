@@ -19,7 +19,7 @@ function SchoolRegistration({ onSchoolRegistered, onCancel, disabled = false }) 
   // School levels
   const schoolLevels = [
     { value: 'PR', label: 'Primary School' },
-    { value: 'HI', label: 'High School' },
+    { value: 'HI', label: 'Secondary School' },
     { value: 'PO', label: 'Polytechnic' },
     { value: 'UN', label: 'University' }
   ];

@@ -12,7 +12,7 @@ function Home() {
     name: '',
     state: '',
     lga: '',
-    level: ''
+    level: 'HI' // Default to Secondary School
   });
   // Removed separate alumniSearch input; use unified searchText
   const [alumniYearFilter, setAlumniYearFilter] = useState('');
@@ -43,7 +43,7 @@ function Home() {
   // School levels
   const schoolLevels = [
     { value: 'PR', label: 'Primary School' },
-    { value: 'HI', label: 'High School' },
+    { value: 'HI', label: 'Secondary School' },
     { value: 'PO', label: 'Polytechnic' },
     { value: 'UN', label: 'University' }
   ];

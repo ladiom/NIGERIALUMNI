@@ -6,7 +6,7 @@ import './SchoolSelector.css';
 function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
   const [searchFilters, setSearchFilters] = useState({
     state: '',
-    level: '',
+    level: 'HI', // Default to Secondary School
     city: ''
   });
   
@@ -18,7 +18,7 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
   // School levels
   const schoolLevels = [
     { value: 'PR', label: 'Primary School' },
-    { value: 'HI', label: 'High School' },
+    { value: 'HI', label: 'Secondary School' },
     { value: 'PO', label: 'Polytechnic' },
     { value: 'UN', label: 'University' }
   ];
