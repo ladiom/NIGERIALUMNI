@@ -576,7 +576,7 @@ function Home() {
         <div className="search-hero-content">
           <div className="search-header">
             <div className="main-title">
-              <div className="title-line-2">(100NAIRA INITIATIVE)</div>
+              <div className="title-line-2">(SPACO ALUMNI INITIATIVE)</div>
             </div>
             <h1>Reconnect. Rediscover. Rebuild.</h1>
             <p className="search-description">

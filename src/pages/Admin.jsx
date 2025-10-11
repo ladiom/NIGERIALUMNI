@@ -129,73 +129,6 @@ function Admin() {
     searchUsers(searchTerm, page, sortField, sortDirection);
   };
 
-  // Clear local storage and refresh data
-  const clearLocalStorageAndRefresh = () => {
-    try {
-      // Clear all local storage related to processed registrations
-      localStorage.removeItem('processedRegistrations');
-      console.log('Local storage cleared');
-      
-      // Refresh all data
-      window.location.reload();
-    } catch (error) {
-      console.warn('Error clearing local storage:', error);
-    }
-  };
-
-  // Test database update function
-  const testDatabaseUpdate = async (registrationId) => {
-    try {
-      console.log('Testing database update for ID:', registrationId);
-      
-      // First, let's check if we can read the record
-      const { data: readData, error: readError } = await supabase
-        .from('pending_registrations')
-        .select('*')
-        .eq('id', registrationId);
-      
-      console.log('Read test result:', { readData, readError });
-      
-      if (readError) {
-        console.error('Read error:', readError);
-        return { success: false, error: readError };
-      }
-      
-      if (!readData || readData.length === 0) {
-        console.error('No record found with ID:', registrationId);
-        return { success: false, error: 'No record found' };
-      }
-      
-      console.log('Found record:', readData[0]);
-      
-      // Try using RPC function if it exists
-      try {
-        const { data: rpcData, error: rpcError } = await supabase
-          .rpc('approve_registration', { registration_id: registrationId });
-        
-        console.log('RPC update result:', { rpcData, rpcError });
-        
-        if (!rpcError) {
-          return { success: true, data: rpcData, method: 'rpc' };
-        }
-      } catch (rpcErr) {
-        console.log('RPC function not available, trying direct update');
-      }
-      
-      // Now try the direct update
-      const { data, error } = await supabase
-        .from('pending_registrations')
-        .update({ status: 'approved' })
-        .eq('id', registrationId)
-        .select();
-      
-      console.log('Test update result:', { data, error });
-      return { success: !error, data, error };
-    } catch (err) {
-      console.error('Test update error:', err);
-      return { success: false, error: err };
-    }
-  };
 
   // Helper functions to get data based on view mode
   const getDisplayData = () => {
@@ -1225,20 +1158,6 @@ Nigeria Alumni Network Team`,
                 <span className="registration-count">
                   {getDisplayCount()} {showAllRegistrations ? 'total' : 'recent'}
                 </span>
-                <button 
-                  className="btn-warning"
-                  onClick={clearLocalStorageAndRefresh}
-                  title="Clear local storage and refresh data"
-                >
-                  🔄 Clear Cache & Refresh
-                </button>
-                <button 
-                  className="btn-info"
-                  onClick={() => testDatabaseUpdate(1)}
-                  title="Test database update"
-                >
-                  🧪 Test DB Update
-                </button>
                 {selectedRegistrationStatus === 'pending' && selectedRegistrations.size > 0 && (
                   <button 
                     className="btn-danger"
