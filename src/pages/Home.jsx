@@ -955,8 +955,10 @@ function Home() {
       </section>
       )}
 
-          {!loading && results.length > 0 && (
-            <div className="results-list">
+      {/* Search Results - Show immediately after search form */}
+      {!loading && results.length > 0 && (
+        <section className="search-results-section">
+          <div className="results-list">
               <div className="results-header">
                 <h3>
                   {searchType === 'school' ? 'Schools Found' : 'Alumni Found'} ({results.length} {results.length === 1 ? 'record' : 'records'})
@@ -1102,9 +1104,9 @@ function Home() {
               )}
             </div>
           )}
-        </div>
-      </section>
-
+          </div>
+        </section>
+      )}
 
       {/* Features Section */}
       <section className="features-section">
