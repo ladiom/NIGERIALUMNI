@@ -571,23 +571,177 @@ function Home() {
 
   return (
     <div className="home-container">
+      {/* Search and Filter Form - Now at the top */}
+      <section className="search-hero">
+        <div className="search-hero-content">
+          <div className="search-header">
+            <div className="search-badge">
+              <span className="badge-text">100NAIRA INITIATIVE</span>
+            </div>
+            <h1 className="search-title">
+              <span className="title-line-1">Reconnect.</span>
+              <span className="title-line-2">Rediscover.</span>
+              <span className="title-line-3">Rebuild.</span>
+            </h1>
+            <p className="search-description">
+              Find your school and reconnect with former classmates across Nigeria.
+            </p>
+          </div>
+          
+          <div className="search-form-container">
+            <form className="home-search-form" onSubmit={handleSearch}>
+              {/* Top section: Search input and actions */}
+              <div className="top-search-section">
+                <div className="search-input-group">
+                  <label htmlFor="search-text">Search by Alumni Name or School</label>
+                  <div className="search-input-container">
+                    <input
+                      type="text"
+                      id="search-text"
+                      value={searchText}
+                      onChange={(e) => setSearchText(e.target.value)}
+                      placeholder="Enter alumni name or school name"
+                      className="form-control search-text-input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom section: Filter fields */}
+              <div className="filter-fields">
+                <div className="form-group">
+                  <label htmlFor="school-level">EDUCATION LEVEL</label>
+                  <select
+                    id="school-level"
+                    name="level"
+                    value={schoolSearch.level}
+                    onChange={handleSchoolInputChange}
+                    className="form-control"
+                  >
+                    <option value="">Select Education Level</option>
+                    {schoolLevels.map(level => (
+                      <option key={level.value} value={level.value}>{level.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="school-state">STATE</label>
+                  <select
+                    id="school-state"
+                    name="state"
+                    value={schoolSearch.state}
+                    onChange={handleSchoolInputChange}
+                    className="form-control"
+                  >
+                    <option value="">Select State</option>
+                    {states.map(state => (
+                      <option key={state} value={state}>{state}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="school-name">SCHOOL NAME</label>
+                  <select
+                    id="school-name"
+                    name="name"
+                    value={schoolSearch.name}
+                    onChange={handleSchoolInputChange}
+                    disabled={isLoadingOptions}
+                    className="form-control"
+                  >
+                    <option value="">Select School Name</option>
+                    {filteredSchoolNames.map(name => (
+                      <option key={name} value={name}>{name}</option>
+                    ))}
+                  </select>
+                  {isLoadingOptions && (
+                    <small className="help-text">Loading school names...</small>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="school-lga">CITY</label>
+                  <select
+                    id="school-lga"
+                    name="lga"
+                    value={schoolSearch.lga}
+                    onChange={handleSchoolInputChange}
+                    disabled={isLoadingOptions}
+                    className="form-control"
+                  >
+                    <option value="">Select City</option>
+                    {filteredLgas.map(lga => (
+                      <option key={lga} value={lga}>{lga}</option>
+                    ))}
+                  </select>
+                  {isLoadingOptions && (
+                    <small className="help-text">Loading cities...</small>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="alumni-year">YR (GRAD or left)</label>
+                  <input
+                    type="text"
+                    id="alumni-year"
+                    value={alumniYearFilter}
+                    onChange={(e) => setAlumniYearFilter(e.target.value)}
+                    placeholder="e.g 2020"
+                    className="form-control"
+                  />
+                </div>
+              </div>
+
+              {/* Search and Clear buttons at bottom */}
+              <div className="filter-actions">
+                <button 
+                  type="submit" 
+                  className="btn btn-primary btn-search"
+                  disabled={loading}
+                >
+                  {loading ? 'Searching...' : 'Search Alumni'}
+                </button>
+                
+                <button 
+                  type="button" 
+                  className="btn btn-secondary"
+                  onClick={clearAllFilters}
+                  disabled={loading}
+                >
+                  Clear
+                </button>
+              </div>
+              
+              {/* Help section for users who can't find their school */}
+              <div className="search-help">
+                <p>Can't find your school in the search results?</p>
+                <Link to="/register-school" className="btn btn-outline">
+                  Register Your School
+                </Link>
+              </div>
+            </form>
+          </div>
+
+          {dbStatus === 'checking' && (
+            <div className="db-status checking">
+              🔄 Testing database connection...
+            </div>
+          )}
+          {dbStatus === 'error' && (
+            <div className="db-status error">
+              ⚠️ Database connection issue - please refresh the page
+            </div>
+          )}
+        </div>
+      </section>
+
       <section className="hero">
         <div className="hero-background">
           <div className="hero-pattern"></div>
         </div>
         <div className="hero-content">
-          <div className="hero-badge">
-            <span className="badge-text">100NAIRA INITIATIVE</span>
-          </div>
-          <h1 className="hero-title">
-            <span className="title-line-1">Reconnect.</span>
-            <span className="title-line-2">Rediscover.</span>
-            <span className="title-line-3">Rebuild.</span>
-          </h1>
-          <p className="hero-description">
-            Join the 100NAIRA platform and connect with your alma mater across Nigeria. 
-            Find old classmates, discover new opportunities, and strengthen the bonds that matter most.
-          </p>
           <div className="hero-stats">
             <div className="stat-item">
               <div className="stat-icon">👥</div>
@@ -613,174 +767,6 @@ function Home() {
               Sign In
             </Link>
           </div>
-          {dbStatus === 'checking' && (
-            <div style={{ 
-              background: '#fff3cd', 
-              border: '1px solid #ffeaa7', 
-              borderRadius: '4px', 
-              padding: '8px', 
-              margin: '10px 0',
-              textAlign: 'center',
-              fontSize: '14px',
-              color: '#856404'
-            }}>
-              🔄 Testing database connection...
-            </div>
-          )}
-          {dbStatus === 'error' && (
-            <div style={{ 
-              background: '#f8d7da', 
-              border: '1px solid #f5c6cb', 
-              borderRadius: '4px', 
-              padding: '8px', 
-              margin: '10px 0',
-              textAlign: 'center',
-              fontSize: '14px',
-              color: '#721c24'
-            }}>
-              ⚠️ Database connection issue - please refresh the page
-            </div>
-          )}
-          
-
-          {/* Level selection moved into search form below */}
-          
-      {/* Search and Filter Form */}
-      <div className="search-form-container">
-        <form className="home-search-form" onSubmit={handleSearch}>
-          {/* Top section: Search input and actions */}
-          <div className="top-search-section">
-            <div className="search-input-group">
-              <label htmlFor="search-text">Search by Alumni Name or School (or filter by selection below)</label>
-                <div className="search-input-container">
-                  <input
-                    type="text"
-                    id="search-text"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    placeholder="Enter alumni name or school name"
-                    className="form-control search-text-input"
-                  />
-                </div>
-            </div>
-          </div>
-
-          {/* Bottom section: Filter fields */}
-          <div className="filter-fields">
-            <div className="form-group">
-              <label htmlFor="school-level">EDUCATION LEVEL</label>
-              <select
-                id="school-level"
-                name="level"
-                value={schoolSearch.level}
-                onChange={handleSchoolInputChange}
-                className="form-control"
-              >
-                <option value="">Select Education Level</option>
-                {schoolLevels.map(level => (
-                  <option key={level.value} value={level.value}>{level.label}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="school-state">STATE</label>
-              <select
-                id="school-state"
-                name="state"
-                value={schoolSearch.state}
-                onChange={handleSchoolInputChange}
-                className="form-control"
-              >
-                <option value="">Select State</option>
-                {states.map(state => (
-                  <option key={state} value={state}>{state}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="school-name">SCHOOL NAME</label>
-              <select
-                id="school-name"
-                name="name"
-                value={schoolSearch.name}
-                onChange={handleSchoolInputChange}
-                disabled={isLoadingOptions}
-                className="form-control"
-              >
-                <option value="">Select School Name</option>
-                {filteredSchoolNames.map(name => (
-                  <option key={name} value={name}>{name}</option>
-                ))}
-              </select>
-              {isLoadingOptions && (
-                <small className="help-text">Loading school names...</small>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="school-lga">CITY</label>
-              <select
-                id="school-lga"
-                name="lga"
-                value={schoolSearch.lga}
-                onChange={handleSchoolInputChange}
-                disabled={isLoadingOptions}
-                className="form-control"
-              >
-                <option value="">Select City</option>
-                {filteredLgas.map(lga => (
-                  <option key={lga} value={lga}>{lga}</option>
-                ))}
-              </select>
-              {isLoadingOptions && (
-                <small className="help-text">Loading cities...</small>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="alumni-year">YR (GRAD or left)</label>
-              <input
-                type="text"
-                id="alumni-year"
-                value={alumniYearFilter}
-                onChange={(e) => setAlumniYearFilter(e.target.value)}
-                placeholder="e.g 2020"
-                className="form-control"
-              />
-            </div>
-          </div>
-
-          {/* Search and Clear buttons at bottom */}
-          <div className="filter-actions">
-            <button 
-              type="submit" 
-              className="btn btn-primary"
-              disabled={loading}
-            >
-              {loading ? 'Searching...' : 'Search'}
-            </button>
-            
-            <button 
-              type="button" 
-              className="btn btn-secondary"
-              onClick={clearAllFilters}
-              disabled={loading}
-            >
-              Clear
-            </button>
-          </div>
-          
-          {/* Help section for users who can't find their school */}
-          <div className="search-help">
-            <p>Can't find your school in the search results?</p>
-            <Link to="/register-school" className="btn btn-outline">
-              Register Your School
-            </Link>
-          </div>
-        </form>
-      </div>
         </div>
       </section>
 
