@@ -296,6 +296,7 @@ function Home() {
   // Handle search submission
   const handleSearch = async (e) => {
     e.preventDefault();
+    console.log('🔍 Search triggered with:', { searchText, schoolSearch, alumniYearFilter });
     setLoading(true);
     setCurrentPage(1);
     setError('');
@@ -309,9 +310,12 @@ function Home() {
     try {
       const hasTopFilters = schoolSearch.state || schoolSearch.level || schoolSearch.name || schoolSearch.lga || alumniYearFilter;
       const hasSearchText = searchText && searchText.trim().length > 0;
+      
+      console.log('🔍 Search conditions:', { hasTopFilters, hasSearchText, searchText: searchText?.trim() });
 
       // If top filters are selected, search based on those filters
       if (hasTopFilters) {
+        console.log('🔍 Taking top filters path');
         // Search alumni based on top selections
         setSearchType('alumni');
         console.log('Searching for alumni with top filters:', {
@@ -413,6 +417,7 @@ function Home() {
           setResults(mockResults);
         } else {
           if (data && data.length > 0) {
+            console.log('🔍 Found alumni data:', data.length, 'records');
             const alumniIds = data.map(alum => alum.id);
             const { data: registeredUsers, error: usersError } = await supabase
               .from('users')
@@ -426,6 +431,7 @@ function Home() {
                 isRegistered: registeredAlumniIds.has(alum.id)
               }));
               const sortedResults = sortResults(alumniWithStatus, sortBy);
+              console.log('🔍 Setting results (with user status):', sortedResults.length);
               setResults(sortedResults);
             } else {
               const alumniWithStatus = data.map(alum => ({
@@ -433,14 +439,16 @@ function Home() {
                 isRegistered: !!alum.email
               }));
               const sortedResults = sortResults(alumniWithStatus, sortBy);
+              console.log('🔍 Setting results (with email status):', sortedResults.length);
               setResults(sortedResults);
             }
           } else {
-            console.log('No alumni found matching the filters');
+            console.log('🔍 No alumni found matching the filters');
             setResults([]);
           }
         }
       } else if (hasSearchText) {
+        console.log('🔍 Taking text search path');
         // Search both alumni and schools by text only (no top filters)
         const term = searchText.toLowerCase();
 
@@ -495,8 +503,11 @@ function Home() {
         (idData || []).forEach(alum => mergedMap.set(alum.id, alum));
         const alumniData = Array.from(mergedMap.values());
 
+        console.log('🔍 Text search results:', { alumniData: alumniData.length, schoolData: schoolData?.length });
+        
         // Determine which results to show based on what was found
         if (alumniData.length > 0 && schoolData && schoolData.length > 0) {
+          console.log('🔍 Both alumni and schools found - showing alumni');
           // Both alumni and schools found - show alumni by default
           setSearchType('alumni');
           const alumniIds = alumniData.map(alum => alum.id);
@@ -512,6 +523,7 @@ function Home() {
               isRegistered: registeredAlumniIds.has(alum.id)
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
+            console.log('🔍 Setting text search results (alumni + schools):', sortedResults.length);
             setResults(sortedResults);
           } else {
             const alumniWithStatus = alumniData.map(alum => ({
@@ -519,9 +531,11 @@ function Home() {
               isRegistered: !!alum.email
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
+            console.log('🔍 Setting text search results (alumni + schools, email status):', sortedResults.length);
             setResults(sortedResults);
           }
         } else if (alumniData.length > 0) {
+          console.log('🔍 Only alumni found');
           // Only alumni found
           setSearchType('alumni');
           const alumniIds = alumniData.map(alum => alum.id);
@@ -537,6 +551,7 @@ function Home() {
               isRegistered: registeredAlumniIds.has(alum.id)
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
+            console.log('🔍 Setting text search results (alumni only):', sortedResults.length);
             setResults(sortedResults);
           } else {
             const alumniWithStatus = alumniData.map(alum => ({
@@ -544,18 +559,23 @@ function Home() {
               isRegistered: !!alum.email
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
+            console.log('🔍 Setting text search results (alumni only, email status):', sortedResults.length);
             setResults(sortedResults);
           }
         } else if (schoolData && schoolData.length > 0) {
+          console.log('🔍 Only schools found');
           // Only schools found
           setSearchType('school');
           const sortedResults = sortResults(schoolData, sortBy);
+          console.log('🔍 Setting text search results (schools only):', sortedResults.length);
           setResults(sortedResults);
         } else {
+          console.log('🔍 No results found in text search');
           // Nothing found
           setResults([]);
         }
       } else {
+        console.log('🔍 No search criteria provided');
         // Nothing provided
         setResults([]);
       }
