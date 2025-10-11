@@ -955,84 +955,80 @@ function Home() {
           </div>
         </div>
       </section>
-      )}
 
-      {/* Search Results - Show immediately after search form */}
-      {!loading && results.length > 0 && (
-        <section className="search-results-section">
-          <div className="results-list">
-              <div className="results-header">
-                <h3>
-                  {searchType === 'school' ? 'Schools Found' : 'Alumni Found'} ({results.length} {results.length === 1 ? 'record' : 'records'})
-                </h3>
-                {console.log('🔍 Rendering results:', { loading, resultsLength: results.length, searchType })}
-                <p className="results-subtitle">
-                  {searchText && `Searching for "${searchText}"`}
-                  {schoolSearch.state && ` • State: ${schoolSearch.state}`}
-                  {schoolSearch.level && ` • Level: ${schoolSearch.level}`}
-                  {alumniYearFilter && ` • Year: ${alumniYearFilter}`}
-                </p>
+      {/* Features Section */}
+      <section className="features-section">
+        <div className="features-container">
+          <h2>Why Choose 100NAIRA?</h2>
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon">🔍</div>
+              <h3>Find Alumni</h3>
+              <p>Search and connect with former classmates, teachers, and schoolmates from across Nigeria.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🏫</div>
+              <h3>School Network</h3>
+              <p>Join your school's alumni network and stay updated with school events and news.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">💼</div>
+              <h3>Career Opportunities</h3>
+              <p>Discover job opportunities, mentorship programs, and professional networking within your alumni community.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🤝</div>
+              <h3>Give Back</h3>
+              <p>Support your alma mater through donations, volunteering, and mentoring current students.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="testimonials-section">
+        <div className="testimonials-container">
+          <h2>What Our Alumni Say</h2>
+          <div className="testimonials-grid">
+            <div className="testimonial-card">
+              <div className="testimonial-content">
+                <p>"100NAIRA helped me reconnect with my high school friends after 15 years. It's amazing how technology can bring people together!"</p>
               </div>
-              {searchType === 'school' ? (
-                <div className="table-container">
-                  {(() => {
-                    const totalPages = Math.ceil(results.length / pageSize);
-                    const start = (currentPage - 1) * pageSize;
-                    const end = start + pageSize;
-                    const pageItems = results.slice(start, end);
-                    return (
-                      <>
-                    <table className="results-table">
-                    <thead>
-                      <tr>
-                        <th onClick={() => handleSort('schoolName')} className={`sortable ${sortBy === 'schoolName' ? 'sorted' : ''} ${sortBy === 'schoolName' && sortDirection === 'asc' ? 'asc' : sortBy === 'schoolName' ? 'desc' : ''}`}>
-                          School Name <span className="sort-indicator">{sortBy === 'schoolName' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                        </th>
-                        <th onClick={() => handleSort('state')} className={`sortable ${sortBy === 'state' ? 'sorted' : ''} ${sortBy === 'state' && sortDirection === 'asc' ? 'asc' : sortBy === 'state' ? 'desc' : ''}`}>
-                          State <span className="sort-indicator">{sortBy === 'state' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                        </th>
-                        <th onClick={() => handleSort('city')} className={`sortable ${sortBy === 'city' ? 'sorted' : ''} ${sortBy === 'city' && sortDirection === 'asc' ? 'asc' : sortBy === 'city' ? 'desc' : ''}`}>
-                          City <span className="sort-indicator">{sortBy === 'city' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                        </th>
-                        <th onClick={() => handleSort('level')} className={`sortable ${sortBy === 'level' ? 'sorted' : ''} ${sortBy === 'level' && sortDirection === 'asc' ? 'asc' : sortBy === 'level' ? 'desc' : ''}`}>
-                          Level <span className="sort-indicator">{sortBy === 'level' && (sortDirection === 'asc' ? '↑' : '↓')}</span>
-                        </th>
-                        <th className="actions-col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {pageItems.map(school => (
-                        <tr key={school.id}>
-                          <td>{school.name}</td>
-                          <td>{school.state}</td>
-                          <td>{school.lga || 'Not specified'}</td>
-                          <td>{school.level}</td>
-                          <td className="actions-col">
-                            <Link to={`/schools/${school.id}`} className="view-details">
-                              View Details
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <div className="pagination">
-                    <button
-                      className="page-btn"
-                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                      disabled={currentPage === 1}
-                    >
-                      Prev
-                    </button>
-                    <span className="page-info">Page {currentPage} of {totalPages}</span>
-                    <button
-                      className="page-btn"
-                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                      disabled={currentPage === totalPages}
-                    >
-                      Next
-                    </button>
-                  </div>
+              <div className="testimonial-author">
+                <div className="author-avatar">AO</div>
+                <div className="author-info">
+                  <h4>Chinedu Adebayo</h4>
+                  <p>St. Patrick's Grammar School, 2000</p>
+                </div>
+              </div>
+            </div>
+            <div className="testimonial-card">
+              <div className="testimonial-content">
+                <p>"The platform made it easy to find my classmates from university. I've already reconnected with 5 old friends!"</p>
+              </div>
+              <div className="testimonial-author">
+                <div className="author-avatar">CA</div>
+                <div className="author-info">
+                  <h4>Chinwe Adebayo</h4>
+                  <p>University of Lagos, 2005</p>
+                </div>
+              </div>
+            </div>
+            <div className="testimonial-card">
+              <div className="testimonial-content">
+                <p>"As a school administrator, 100NAIRA has helped us maintain better relationships with our alumni community."</p>
+              </div>
+              <div className="testimonial-author">
+                <div className="author-avatar">FO</div>
+                <div className="author-info">
+                  <h4>Folake Ogunlesi</h4>
+                  <p>Principal, St. Patrick's Grammar School</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
                   </>
                     );
                   })()}
@@ -1106,9 +1102,6 @@ function Home() {
               )}
             </div>
           )}
-        </section>
-      )}
-
       {/* Features Section */}
       <section className="features-section">
         <div className="features-container">
