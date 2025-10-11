@@ -607,9 +607,9 @@ function Home() {
         <div className="search-hero-content">
           <div className="search-header">
             <div className="main-title">
+              <h1>Reconnect. Rediscover. Rebuild.</h1>
               <div className="title-line-2">(SPACO ALUMNI INITIATIVE)</div>
             </div>
-            <h1>Reconnect. Rediscover. Rebuild.</h1>
             <p className="search-description">
               Join the National Alumni Institution Revival Alliance - be among the 100.
             </p>
