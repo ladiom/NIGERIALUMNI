@@ -572,28 +572,46 @@ function Home() {
   return (
     <div className="home-container">
       <section className="hero">
+        <div className="hero-background">
+          <div className="hero-pattern"></div>
+        </div>
         <div className="hero-content">
-          <div className="main-title">
-            <div className="title-line-2">(100NAIRA INITIATIVE)</div>
+          <div className="hero-badge">
+            <span className="badge-text">100NAIRA INITIATIVE</span>
           </div>
-          <h1>Reconnect. Rediscover. Rebuild.</h1>
+          <h1 className="hero-title">
+            <span className="title-line-1">Reconnect.</span>
+            <span className="title-line-2">Rediscover.</span>
+            <span className="title-line-3">Rebuild.</span>
+          </h1>
           <p className="hero-description">
             Join the 100NAIRA platform and connect with your alma mater across Nigeria. 
             Find old classmates, discover new opportunities, and strengthen the bonds that matter most.
           </p>
           <div className="hero-stats">
             <div className="stat-item">
+              <div className="stat-icon">👥</div>
               <span className="stat-number">6,000+</span>
               <span className="stat-label">Alumni Connected</span>
             </div>
             <div className="stat-item">
+              <div className="stat-icon">🏫</div>
               <span className="stat-number">500+</span>
               <span className="stat-label">Schools Registered</span>
             </div>
             <div className="stat-item">
+              <div className="stat-icon">🗺️</div>
               <span className="stat-number">36</span>
               <span className="stat-label">States Covered</span>
             </div>
+          </div>
+          <div className="hero-actions">
+            <Link to="/register" className="btn btn-primary btn-large">
+              Join Now
+            </Link>
+            <Link to="/login" className="btn btn-outline btn-large">
+              Sign In
+            </Link>
           </div>
           {dbStatus === 'checking' && (
             <div style={{ 
@@ -957,29 +975,6 @@ function Home() {
         </div>
       </section>
 
-      <section className="features">
-        <div className="features-container">
-          <h2>Our Platform Features</h2>
-          <div className="features-grid">
-            <div className="feature-card">
-              <h3>Search & Connect</h3>
-              <p>Find your school and reconnect with former classmates across Nigeria.</p>
-            </div>
-            <div className="feature-card">
-              <h3>Unique Alumni ID</h3>
-              <p>Get your unique alumni identification number tied to your school and graduating year.</p>
-            </div>
-            <div className="feature-card">
-              <h3>School Microsites</h3>
-              <p>Each school gets its own profile page with alumni directory and contribution stats.</p>
-            </div>
-            <div className="feature-card">
-              <h3>Awards & Recognition</h3>
-              <p>Nominate and recognize outstanding alumni making significant contributions.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Features Section */}
       <section className="features-section">
@@ -1010,14 +1005,85 @@ function Home() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="testimonials-section">
+        <div className="testimonials-container">
+          <h2>What Our Alumni Say</h2>
+          <div className="testimonials-grid">
+            <div className="testimonial-card">
+              <div className="testimonial-content">
+                <p>"100NAIRA helped me reconnect with my high school friends after 15 years. It's amazing how technology can bring people together!"</p>
+              </div>
+              <div className="testimonial-author">
+                <div className="author-avatar">AO</div>
+                <div className="author-info">
+                  <h4>Adunni Okafor</h4>
+                  <p>Lagos State University, 2008</p>
+                </div>
+              </div>
+            </div>
+            <div className="testimonial-card">
+              <div className="testimonial-content">
+                <p>"Through this platform, I found a mentor who helped me land my dream job. The alumni network is incredibly supportive."</p>
+              </div>
+              <div className="testimonial-author">
+                <div className="author-avatar">CA</div>
+                <div className="author-info">
+                  <h4>Chinedu Adebayo</h4>
+                  <p>University of Ibadan, 2015</p>
+                </div>
+              </div>
+            </div>
+            <div className="testimonial-card">
+              <div className="testimonial-content">
+                <p>"I love being able to give back to my alma mater through this platform. It's fulfilling to support current students."</p>
+              </div>
+              <div className="testimonial-author">
+                <div className="author-avatar">FO</div>
+                <div className="author-info">
+                  <h4>Folake Ogunleye</h4>
+                  <p>St. Patrick's Grammar School, 2000</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="impact">
         <div className="impact-content">
-          <h2>Making a Difference in Education</h2>
-          <p>
-            Our platform supports educational development through alumni contributions and engagement.
-            Join us in building a stronger educational community across Nigeria.
-          </p>
-          <Link to="#" className="btn btn-primary">Learn More</Link>
+          <div className="impact-text">
+            <h2>Making a Difference in Education</h2>
+            <p>
+              Our platform supports educational development through alumni contributions and engagement.
+              Join us in building a stronger educational community across Nigeria.
+            </p>
+            <div className="impact-stats">
+              <div className="impact-stat">
+                <span className="impact-number">₦2.5M+</span>
+                <span className="impact-label">Raised for Schools</span>
+              </div>
+              <div className="impact-stat">
+                <span className="impact-number">150+</span>
+                <span className="impact-label">Scholarships Awarded</span>
+              </div>
+              <div className="impact-stat">
+                <span className="impact-number">25+</span>
+                <span className="impact-label">School Projects Funded</span>
+              </div>
+            </div>
+            <div className="impact-actions">
+              <Link to="/register" className="btn btn-primary">Join the Movement</Link>
+              <Link to="/admin" className="btn btn-outline">View Impact</Link>
+            </div>
+          </div>
+          <div className="impact-visual">
+            <div className="impact-graphic">
+              <div className="graphic-circle">
+                <span className="graphic-text">100NAIRA</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

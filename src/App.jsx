@@ -6,12 +6,6 @@ import Register from './pages/Register';
 import RegisterWithSchool from './pages/RegisterWithSchool';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import DebugSchools from './pages/DebugSchools';
-import Test from './pages/Test';
-import SupabaseTest from './pages/SupabaseTest';
-import LagosTest from './pages/LagosTest';
-import SimpleSearchTest from './pages/SimpleSearchTest';
-import LagosVerification from './pages/LagosVerification';
 import Admin from './pages/Admin';
 import SetupAdmin from './pages/SetupAdmin';
 import PendingRegistrations from './pages/PendingRegistrations';
@@ -35,12 +29,6 @@ function App() {
             <Route path="/register-school" element={<RegisterWithSchool />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/debug" element={<DebugSchools />} />
-            <Route path="/test" element={<Test />} />
-            <Route path="/supabase-test" element={<SupabaseTest />} />
-            <Route path="/lagos-test" element={<LagosTest />} />
-      <Route path="/simple-search-test" element={<SimpleSearchTest />} />
-      <Route path="/lagos-verification" element={<LagosVerification />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/setup-admin" element={<SetupAdmin />} />
             <Route path="/pending-registrations" element={<PendingRegistrations />} />
