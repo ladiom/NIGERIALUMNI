@@ -558,7 +558,7 @@
 
 .results-table th {
   background-color: #f8fafc;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   text-align: left;
   font-weight: 600;
   color: #374151;
@@ -569,14 +569,15 @@
 }
 
 .results-table td {
-  padding: 1.25rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   border-bottom: 1px solid #f3f4f6;
   vertical-align: middle;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .results-table tbody tr {
   transition: background-color 0.2s ease;
+  line-height: 1.2;
 }
 
 .results-table tbody tr:hover {
