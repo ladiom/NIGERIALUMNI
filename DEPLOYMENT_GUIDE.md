@@ -1,4 +1,4 @@
-# Deployment Guide - Nigeria Alumni Network
+# Deployment Guide - 100NAIRA Platform
 
 ## 🚀 Quick Deployment Steps
 

@@ -574,10 +574,10 @@ function Home() {
       <section className="hero">
         <div className="hero-content">
           <div className="main-title">
-            <div className="title-line-2">(SPACO ALUMNI INITIATIVE)</div>
+            <div className="title-line-2">(100NAIRA INITIATIVE)</div>
           </div>
           <h1>Reconnect. Rediscover. Rebuild.</h1>
-          <p>Join the national alumni network and connect with your alma mater across Nigeria</p>
+          <p>Join the 100NAIRA platform and connect with your alma mater across Nigeria</p>
           {dbStatus === 'checking' && (
             <div style={{ 
               background: '#fff3cd', 

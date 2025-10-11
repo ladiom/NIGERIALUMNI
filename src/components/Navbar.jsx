@@ -17,10 +17,10 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-logo" aria-label="Nigeria Alumni Network Home">
+        <Link to="/" className="navbar-logo" aria-label="100NAIRA Platform Home">
           <img 
             src="/NAIRA100LOGO.JPG" 
-            alt="Nigeria Alumni Network Logo" 
+            alt="100NAIRA Platform Logo" 
             className="logo-image"
           />
         </Link>

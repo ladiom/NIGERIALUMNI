@@ -1,10 +1,10 @@
-# Supabase RLS Policies for Nigeria Alumni Platform
+# Supabase RLS Policies for 100NAIRA Platform
 
-This document explains the Row Level Security (RLS) policies defined in `supabase_policies.sql` and how to apply them to your Supabase database.
+This document explains the Row Level Security (RLS) policies defined in `supabase_policies.sql` and how to apply them to your 100NAIRA Platform Supabase database.
 
 ## Overview
 
-The policies in this file provide a comprehensive security framework for the Nigeria Alumni Platform, including:
+The policies in this file provide a comprehensive security framework for the 100NAIRA Platform, including:
 
 - Public read access to certain data (schools, events, news)
 - User-specific permissions (update own profile)
