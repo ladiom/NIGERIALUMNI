@@ -14,7 +14,7 @@ console.log('Environment variables:', {
   reactKey: env.REACT_APP_SUPABASE_ANON_KEY
 });
 
-// Trigger deployment with environment variables - updated
+// Trigger deployment with environment variables - redeploy
 
 // Get Supabase credentials from environment variables only
 const finalSupabaseUrl = env.VITE_SUPABASE_URL;
