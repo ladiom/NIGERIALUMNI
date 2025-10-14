@@ -744,9 +744,9 @@ function Home() {
               {/* Help section for users who can't find their school */}
               <div className="search-help">
                 <p>
-                  Can't find your school in the search results?{' '}
-                  <Link to="/register-school" className="btn btn-outline">
-                    Register Your School
+                  Can't find yourself or your School?{' '}
+                  <Link to="/register" className="btn btn-outline">
+                    Register
                   </Link>
                 </p>
               </div>
@@ -890,7 +890,7 @@ function Home() {
                               className="btn btn-primary btn-sm"
                               onClick={() => handleRegisterClick(alum)}
                             >
-                              Register
+                              Register as Alumni
                             </button>
                           )}
                         </td>
@@ -1061,7 +1061,7 @@ function Home() {
           </div>
           <div className="impact-actions">
             <Link to="/register" className="btn btn-primary btn-large">
-              Join the Movement
+              Register as Alumni
             </Link>
             <Link to="/register-school" className="btn btn-outline btn-large">
               Register Your School
