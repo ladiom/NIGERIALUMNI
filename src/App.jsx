@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import SchoolProfile from './pages/SchoolProfile';
 import AlumniProfile from './pages/AlumniProfile';
-import Register from './pages/Register';
 import RegisterWithSchool from './pages/RegisterWithSchool';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -25,7 +24,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/schools/:schoolId" element={<SchoolProfile />} />
             <Route path="/alumni/:alumniId" element={<AlumniProfile />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/register" element={<RegisterWithSchool />} />
             <Route path="/register-school" element={<RegisterWithSchool />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />

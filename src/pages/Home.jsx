@@ -745,7 +745,7 @@ function Home() {
               <div className="search-help">
                 <p>
                   Can't find yourself or your School?{' '}
-                  <Link to="/register" className="btn btn-outline">
+                  <Link to="/register-school" className="btn btn-outline">
                     Register
                   </Link>
                 </p>
@@ -953,7 +953,7 @@ function Home() {
             </div>
           </div>
           <div className="hero-actions">
-            <Link to="/register" className="btn btn-primary btn-large">
+            <Link to="/register-school" className="btn btn-primary btn-large">
               Join Now
             </Link>
             <Link to="/login" className="btn btn-outline btn-large">
@@ -1060,7 +1060,7 @@ function Home() {
             </div>
           </div>
           <div className="impact-actions">
-            <Link to="/register" className="btn btn-primary btn-large">
+            <Link to="/register-school" className="btn btn-primary btn-large">
               Register as Alumni
             </Link>
             <Link to="/register-school" className="btn btn-outline btn-large">

@@ -135,7 +135,7 @@ function Login() {
         </form>
         
         <div className="login-footer">
-          <p>Don't have an account? <Link to="/register">Create one here</Link></p>
+          <p>Don't have an account? <Link to="/register-school">Create one here</Link></p>
         </div>
       </div>
     </div>
