@@ -1,0 +1,374 @@
+.search-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+/* Search tabs */
+.search-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tab {
+  padding: 0.8rem 1.5rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  margin-bottom: -2px;
+}
+
+.tab:hover {
+  color: #646cff;
+}
+
+.tab.active {
+  color: #646cff;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #646cff;
+}
+
+/* Search form */
+.search-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.school-search-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.alumni-search-fields {
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  width: 100%;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-control {
+  padding: 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+
+.form-group select:disabled,
+.form-control:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.help-text {
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+.help-text.required-fields {
+  color: #ef4444;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.required {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.search-text-input {
+  font-size: 1.1rem;
+  padding: 0.8rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.btn-search {
+  padding: 0.8rem 1.5rem;
+  background-color: #646cff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-search:hover:not(:disabled) {
+  background-color: #535bf2;
+}
+
+.btn-search:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Search Results */
+.search-results {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.results-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.results-header h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+}
+
+/* Table Container with scrolling */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+/* Results Table - Excel-like style */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-color);
+    font-size: 0.95rem;
+}
+
+.results-table th {
+    background-color: #f8fafc;
+    color: var(--text-primary);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.results-table th:last-child {
+    border-right: none;
+}
+
+/* Sortable columns */
+.results-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.results-table th.sortable:hover {
+    background-color: #f1f5f9;
+}
+
+.results-table th.sorted {
+    background-color: #e0f2fe;
+    color: var(--primary-color);
+}
+
+/* Sort indicators */
+.sort-indicator {
+    margin-left: 0.25rem;
+    font-size: 0.75rem;
+}
+
+/* Table body */
+.results-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.results-table td:last-child {
+    border-right: none;
+}
+
+.results-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Hover effect for rows */
+.results-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.results-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Actions column */
+.actions-col {
+    white-space: nowrap;
+}
+
+/* View details button */
+.view-details {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.view-details:hover {
+  background-color: var(--primary-color-dark);
+}
+
+/* Alumni ID styling */
+.alumni-id {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Status indicators */
+.status-registered {
+    color: #10b981;
+    font-weight: 500;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: #d1fae5;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.status-unregistered {
+    color: #f59e0b;
+    font-weight: 500;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: #fef3c7;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.email-sent {
+  color: #3b82f6;
+  font-weight: 500;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background-color: #dbeafe;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+/* Pagination controls */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.page-btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+
+.page-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.page-info {
+  font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .school-search-fields {
+    grid-template-columns: 1fr;
+  }
+  
+  .alumni-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .search-form,
+  .search-results {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container h1 {
+    font-size: 1.8rem;
+  }
+  
+  .tab {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .search-form,
+  .search-results {
+    padding: 1rem;
+  }
+}

@@ -7,7 +7,8 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
   const [searchFilters, setSearchFilters] = useState({
     state: '',
     level: 'HI', // Default to Secondary School
-    city: ''
+    city: '',
+    name: '' // Add name search
   });
   
   const [filteredSchools, setFilteredSchools] = useState([]);
@@ -35,11 +36,6 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
 
   // Fetch schools based on filters
   const fetchSchools = async () => {
-    if (!searchFilters.state) {
-      setFilteredSchools([]);
-      return;
-    }
-
     setIsLoading(true);
     setError('');
 
@@ -47,7 +43,12 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
       let query = supabase
         .from('schools')
         .select('id, name, state, lga, level, school_code')
-        .eq('state', searchFilters.state);
+        .limit(100); // Limit to prevent large queries
+
+      // Apply filters if provided
+      if (searchFilters.state) {
+        query = query.eq('state', searchFilters.state);
+      }
 
       if (searchFilters.level) {
         query = query.eq('level', searchFilters.level);
@@ -55,6 +56,10 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
 
       if (searchFilters.city) {
         query = query.ilike('lga', `%${searchFilters.city}%`);
+      }
+
+      if (searchFilters.name) {
+        query = query.ilike('name', `%${searchFilters.name}%`);
       }
 
       const { data, error } = await query.order('name');
@@ -73,10 +78,15 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
     }
   };
 
-  // Fetch schools when filters change
+  // Fetch schools when component mounts and when filters change
   useEffect(() => {
     fetchSchools();
-  }, [searchFilters.state, searchFilters.level, searchFilters.city]);
+  }, [searchFilters.state, searchFilters.level, searchFilters.city, searchFilters.name]);
+
+  // Fetch schools on component mount
+  useEffect(() => {
+    fetchSchools();
+  }, []);
 
   // Handle filter changes
   const handleFilterChange = (field, value) => {
@@ -84,20 +94,6 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
       ...prev,
       [field]: value
     }));
-    
-    // Reset dependent fields when state changes
-    if (field === 'state') {
-      setSearchFilters(prev => ({
-        ...prev,
-        level: '',
-        city: ''
-      }));
-    } else if (field === 'level') {
-      setSearchFilters(prev => ({
-        ...prev,
-        city: ''
-      }));
-    }
   };
 
   // Handle school selection
@@ -158,15 +154,26 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
         <div className="school-search">
           <div className="search-filters">
             <div className="filter-group">
-              <label htmlFor="state-filter">State *</label>
+              <label htmlFor="name-filter">School Name</label>
+              <input
+                type="text"
+                id="name-filter"
+                value={searchFilters.name}
+                onChange={(e) => handleFilterChange('name', e.target.value)}
+                placeholder="Search by school name"
+                disabled={disabled}
+              />
+            </div>
+
+            <div className="filter-group">
+              <label htmlFor="state-filter">State</label>
               <select
                 id="state-filter"
                 value={searchFilters.state}
                 onChange={(e) => handleFilterChange('state', e.target.value)}
                 disabled={disabled}
-                required
               >
-                <option value="">Select State</option>
+                <option value="">All States</option>
                 {states.map(state => (
                   <option key={state} value={state}>{state}</option>
                 ))}
@@ -179,7 +186,7 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
                 id="level-filter"
                 value={searchFilters.level}
                 onChange={(e) => handleFilterChange('level', e.target.value)}
-                disabled={disabled || !searchFilters.state}
+                disabled={disabled}
               >
                 <option value="">All Levels</option>
                 {schoolLevels.map(level => (
@@ -196,7 +203,7 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
                 value={searchFilters.city}
                 onChange={(e) => handleFilterChange('city', e.target.value)}
                 placeholder="Filter by city or LGA"
-                disabled={disabled || !searchFilters.state}
+                disabled={disabled}
               />
             </div>
           </div>
@@ -248,7 +255,7 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
                   </div>
                 ))}
               </div>
-            ) : searchFilters.state ? (
+            ) : (
               <div className="no-schools-message">
                 <p>No schools found matching your criteria.</p>
                 <p>Can't find your school? Register it and it will be available for selection.</p>
@@ -260,10 +267,6 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
                 >
                   Register Your School
                 </button>
-              </div>
-            ) : (
-              <div className="select-state-message">
-                <p>Please select a state to see available schools.</p>
               </div>
             )}
           </div>
