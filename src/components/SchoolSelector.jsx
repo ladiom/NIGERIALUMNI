@@ -24,14 +24,14 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
     { value: 'UN', label: 'University' }
   ];
 
-  // Nigerian states
+  // Nigerian states (matching database values)
   const states = [
-    'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa',
-    'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo',
-    'Ekiti', 'Enugu', 'FCT', 'Gombe', 'Imo', 'Jigawa', 'Kaduna',
-    'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos',
-    'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo',
-    'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
+    'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA',
+    'BENUE', 'BORNO', 'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO',
+    'EKITI', 'ENUGU', 'FCT', 'GOMBE', 'IMO', 'JIGAWA', 'KADUNA',
+    'KANO', 'KATSINA', 'KEBBI', 'KOGI', 'KWARA', 'LAGOS',
+    'NASARAWA', 'NIGER', 'OGUN', 'ONDO', 'OSUN', 'OYO',
+    'PLATEAU', 'RIVERS', 'SOKOTO', 'TARABA', 'YOBE', 'ZAMFARA'
   ];
 
   // Fetch schools based on filters
@@ -40,6 +40,8 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
     setError('');
 
     try {
+      console.log('🔍 Fetching schools with filters:', searchFilters);
+      
       let query = supabase
         .from('schools')
         .select('id, name, state, lga, level, school_code')
@@ -47,27 +49,36 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
 
       // Apply filters if provided
       if (searchFilters.state) {
-        query = query.eq('state', searchFilters.state);
+        console.log('🔍 Adding state filter:', searchFilters.state);
+        // Use case-insensitive search for state
+        query = query.ilike('state', searchFilters.state);
       }
 
       if (searchFilters.level) {
+        console.log('🔍 Adding level filter:', searchFilters.level);
         query = query.eq('level', searchFilters.level);
       }
 
       if (searchFilters.city) {
+        console.log('🔍 Adding city filter:', searchFilters.city);
         query = query.ilike('lga', `%${searchFilters.city}%`);
       }
 
       if (searchFilters.name) {
+        console.log('🔍 Adding name filter:', searchFilters.name);
         query = query.ilike('name', `%${searchFilters.name}%`);
       }
 
+      console.log('🔍 Executing query...');
       const { data, error } = await query.order('name');
 
       if (error) {
+        console.error('🔍 Query error:', error);
         throw error;
       }
 
+      console.log('🔍 Query result:', data?.length, 'schools found');
+      console.log('🔍 Schools data:', data);
       setFilteredSchools(data || []);
     } catch (err) {
       console.error('Error fetching schools:', err);
