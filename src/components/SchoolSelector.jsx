@@ -232,25 +232,30 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
                 <p>Loading schools...</p>
               </div>
             ) : filteredSchools.length > 0 ? (
-              <div className="schools-grid">
+              <div className="schools-list">
                 {filteredSchools.map(school => (
                   <div 
                     key={school.id} 
-                    className="school-card"
+                    className="school-list-item"
                     onClick={() => handleSchoolSelect(school)}
                   >
-                    <div className="school-card-header">
-                      <h4>{school.name}</h4>
-                      <span className="school-level">
-                        {schoolLevels.find(l => l.value === school.level)?.label}
-                      </span>
+                    <div className="school-list-content">
+                      <div className="school-list-main">
+                        <h4 className="school-name">{school.name}</h4>
+                        <span className="school-level">
+                          {schoolLevels.find(l => l.value === school.level)?.label}
+                        </span>
+                      </div>
+                      <div className="school-list-details">
+                        <p className="school-location">
+                          {school.lga && `${school.lga}, `}
+                          {school.state}
+                        </p>
+                        <p className="school-code">Code: {school.school_code}</p>
+                      </div>
                     </div>
-                    <div className="school-card-details">
-                      <p className="school-location">
-                        {school.lga && `${school.lga}, `}
-                        {school.state}
-                      </p>
-                      <p className="school-code">Code: {school.school_code}</p>
+                    <div className="school-list-action">
+                      <span className="select-indicator">Select</span>
                     </div>
                   </div>
                 ))}
