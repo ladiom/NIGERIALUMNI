@@ -30,7 +30,7 @@ function SimpleSearchTest() {
       const { data, error } = await supabase
         .from('schools')
         .select('name')
-        .eq('state', state);
+        .ilike('state', state);
         
       console.log('Query result:', data, 'Error:', error);
       

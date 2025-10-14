@@ -15,7 +15,7 @@ function LagosTest() {
         const { data, error } = await supabase
           .from('schools')
           .select('*')
-          .eq('state', 'Lagos');
+          .ilike('state', 'Lagos');
           
         console.log('Lagos schools query result:', data, 'Error:', error);
         

@@ -103,8 +103,8 @@ function Home() {
       let query = supabase.from('schools').select('name').limit(100); // Add limit to prevent large queries
       
       if (schoolSearch.state) {
-        // Use exact match first, then fallback to ilike
-        query = query.eq('state', schoolSearch.state);
+        // Use case-insensitive search for state
+        query = query.ilike('state', schoolSearch.state);
         console.log('Adding state filter:', schoolSearch.state);
       }
       
@@ -183,8 +183,8 @@ function Home() {
       let query = supabase.from('schools').select('lga').limit(100); // Add limit to prevent large queries
       
       if (schoolSearch.state) {
-        // Use exact match
-        query = query.eq('state', schoolSearch.state);
+        // Use case-insensitive search for state
+        query = query.ilike('state', schoolSearch.state);
       }
       
       const { data, error } = await query;
@@ -331,7 +331,7 @@ function Home() {
         if (schoolSearch.state || schoolSearch.level || schoolSearch.name || schoolSearch.lga) {
           let sQuery = supabase.from('schools').select('id').limit(50); // Add limit
           if (schoolSearch.state) {
-            sQuery = sQuery.eq('state', schoolSearch.state); // Use exact match
+            sQuery = sQuery.ilike('state', schoolSearch.state); // Use case-insensitive search
           }
           if (schoolSearch.level) {
             sQuery = sQuery.eq('level', schoolSearch.level);
