@@ -252,16 +252,13 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
                     <div className="school-list-content">
                       <div className="school-list-main">
                         <h4 className="school-name">{school.name}</h4>
+                        <span className="school-location">
+                          {school.lga && `${school.lga}, `}
+                          {school.state}
+                        </span>
                         <span className="school-level">
                           {schoolLevels.find(l => l.value === school.level)?.label}
                         </span>
-                      </div>
-                      <div className="school-list-details">
-                        <p className="school-location">
-                          {school.lga && `${school.lga}, `}
-                          {school.state}
-                        </p>
-                        <p className="school-code">Code: {school.school_code}</p>
                       </div>
                     </div>
                     <div className="school-list-action">

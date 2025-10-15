@@ -235,8 +235,9 @@
 .school-list-main {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.5rem;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .school-name {
@@ -252,6 +253,14 @@
   white-space: nowrap;
 }
 
+.school-location {
+  color: #718096;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 .school-level {
   background: #667eea;
   color: white;
@@ -261,33 +270,6 @@
   font-weight: 500;
   white-space: nowrap;
   flex-shrink: 0;
-}
-
-.school-list-details {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.school-list-details p {
-  margin: 0;
-  font-size: 0.875rem;
-  color: #718096;
-}
-
-.school-location {
-  font-weight: 500;
-  color: #4a5568 !important;
-}
-
-.school-code {
-  font-family: 'Courier New', monospace;
-  background: #f7fafc;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  border: 1px solid #e2e8f0;
 }
 
 .school-list-action {
@@ -398,10 +380,12 @@
     gap: 0.5rem;
   }
   
-  .school-list-details {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+  .school-name {
+    font-size: 0.875rem;
+  }
+  
+  .school-location {
+    font-size: 0.75rem;
   }
   
   .selected-school {
@@ -428,11 +412,7 @@
     font-size: 0.875rem;
   }
   
-  .school-list-details {
-    gap: 0.25rem;
-  }
-  
-  .school-list-details p {
+  .school-location {
     font-size: 0.75rem;
   }
 }
