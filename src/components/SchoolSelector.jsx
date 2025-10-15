@@ -15,6 +15,8 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [showSchoolRegistration, setShowSchoolRegistration] = useState(false);
+  const [sortField, setSortField] = useState('name');
+  const [sortDirection, setSortDirection] = useState('asc');
 
   // School levels
   const schoolLevels = [
@@ -79,7 +81,31 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
 
       console.log('🔍 Query result:', data?.length, 'schools found');
       console.log('🔍 Schools data:', data);
-      setFilteredSchools(data || []);
+      
+      // Sort the data
+      const sortedData = (data || []).sort((a, b) => {
+        let aValue = a[sortField] || '';
+        let bValue = b[sortField] || '';
+        
+        // Handle special cases
+        if (sortField === 'lga') {
+          aValue = a.lga || '';
+          bValue = b.lga || '';
+        }
+        
+        if (typeof aValue === 'string') {
+          aValue = aValue.toLowerCase();
+          bValue = bValue.toLowerCase();
+        }
+        
+        if (sortDirection === 'asc') {
+          return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+        } else {
+          return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
+        }
+      });
+      
+      setFilteredSchools(sortedData);
     } catch (err) {
       console.error('Error fetching schools:', err);
       setError('Failed to load schools. Please try again.');
@@ -99,12 +125,51 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
     fetchSchools();
   }, []);
 
+  // Re-sort data when sort field or direction changes
+  useEffect(() => {
+    if (filteredSchools.length > 0) {
+      const sortedData = [...filteredSchools].sort((a, b) => {
+        let aValue = a[sortField] || '';
+        let bValue = b[sortField] || '';
+        
+        // Handle special cases
+        if (sortField === 'lga') {
+          aValue = a.lga || '';
+          bValue = b.lga || '';
+        }
+        
+        if (typeof aValue === 'string') {
+          aValue = aValue.toLowerCase();
+          bValue = bValue.toLowerCase();
+        }
+        
+        if (sortDirection === 'asc') {
+          return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+        } else {
+          return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
+        }
+      });
+      
+      setFilteredSchools(sortedData);
+    }
+  }, [sortField, sortDirection]);
+
   // Handle filter changes
   const handleFilterChange = (field, value) => {
     setSearchFilters(prev => ({
       ...prev,
       [field]: value
     }));
+  };
+
+  // Handle sorting
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
   };
 
   // Handle school selection
@@ -244,6 +309,21 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
               </div>
             ) : filteredSchools.length > 0 ? (
               <div className="schools-list">
+                <div className="schools-list-header">
+                  <div className="header-name" onClick={() => handleSort('name')}>
+                    Name {sortField === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  </div>
+                  <div className="header-state" onClick={() => handleSort('state')}>
+                    State {sortField === 'state' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  </div>
+                  <div className="header-location" onClick={() => handleSort('lga')}>
+                    City/LGA {sortField === 'lga' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  </div>
+                  <div className="header-level" onClick={() => handleSort('level')}>
+                    Level {sortField === 'level' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  </div>
+                  <div className="header-action">Action</div>
+                </div>
                 {filteredSchools.map(school => (
                   <div 
                     key={school.id} 
@@ -252,10 +332,8 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
                     <div className="school-list-content">
                       <div className="school-list-main">
                         <h4 className="school-name">{school.name}</h4>
-                        <span className="school-location">
-                          {school.lga && `${school.lga}, `}
-                          {school.state}
-                        </span>
+                        <span className="school-state">{school.state}</span>
+                        <span className="school-location">{school.lga || 'N/A'}</span>
                         <span className="school-level">
                           {schoolLevels.find(l => l.value === school.level)?.label}
                         </span>
