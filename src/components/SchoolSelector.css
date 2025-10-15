@@ -225,12 +225,6 @@
 
 .school-list-item:hover {
   background: #f8fafc;
-  border-left: 4px solid #667eea;
-}
-
-.school-list-item:hover .select-indicator {
-  color: #667eea;
-  transform: translateX(4px);
 }
 
 .school-list-content {
@@ -301,20 +295,42 @@
   margin-left: 1rem;
 }
 
-.select-indicator {
-  color: #a0aec0;
+.btn-select-school {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
   font-size: 0.875rem;
   font-weight: 500;
+  cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 0.25rem;
 }
 
-.select-indicator::after {
+.btn-select-school:hover:not(:disabled) {
+  background: #5a67d8;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.btn-select-school:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-select-school::after {
   content: '→';
   font-size: 0.75rem;
   transition: transform 0.3s ease;
+}
+
+.btn-select-school:hover:not(:disabled)::after {
+  transform: translateX(2px);
 }
 
 /* Error Message */

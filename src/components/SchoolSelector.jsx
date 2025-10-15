@@ -248,7 +248,6 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
                   <div 
                     key={school.id} 
                     className="school-list-item"
-                    onClick={() => handleSchoolSelect(school)}
                   >
                     <div className="school-list-content">
                       <div className="school-list-main">
@@ -266,7 +265,14 @@ function SchoolSelector({ onSchoolSelect, selectedSchool, disabled = false }) {
                       </div>
                     </div>
                     <div className="school-list-action">
-                      <span className="select-indicator">Select</span>
+                      <button 
+                        type="button"
+                        className="btn-select-school"
+                        onClick={() => handleSchoolSelect(school)}
+                        disabled={disabled}
+                      >
+                        Select
+                      </button>
                     </div>
                   </div>
                 ))}
