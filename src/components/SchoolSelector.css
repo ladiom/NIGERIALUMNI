@@ -333,11 +333,8 @@
 }
 
 .school-level {
-  background: #667eea;
-  color: white;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  color: #718096;
+  font-size: 0.875rem;
   font-weight: 500;
   white-space: nowrap;
   width: 120px;
