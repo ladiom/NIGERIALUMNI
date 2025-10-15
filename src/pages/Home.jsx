@@ -941,13 +941,18 @@ function Home() {
           <div className="hero-stats">
             <div className="stat-item">
               <div className="stat-icon">👥</div>
-              <span className="stat-number">6,000+</span>
+              <span className="stat-number">10K+</span>
               <span className="stat-label">Alumni Connected</span>
             </div>
             <div className="stat-item">
               <div className="stat-icon">🏫</div>
-              <span className="stat-number">500+</span>
+              <span className="stat-number">100+</span>
               <span className="stat-label">Schools Registered</span>
+            </div>
+            <div className="stat-item">
+              <div className="stat-icon">🏆</div>
+              <span className="stat-number">3</span>
+              <span className="stat-label">Member Tiers</span>
             </div>
             <div className="stat-item">
               <div className="stat-icon">🗺️</div>
@@ -970,70 +975,88 @@ function Home() {
       {/* Features Section */}
       <section className="features-section">
         <div className="features-container">
-          <h2>Why Choose 100NAIRA?</h2>
+          <h2>NAIRA-100 Core Features</h2>
+          <p className="features-subtitle">Transforming nostalgia into nation-building power</p>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">🔍</div>
-              <h3>Find Alumni</h3>
-              <p>Search and connect with former classmates, teachers, and schoolmates from across Nigeria.</p>
+              <div className="feature-icon">🎓</div>
+              <h3>Unified Alumni Database</h3>
+              <p>Connect graduates from Primary, Secondary, Vocational, and Tertiary institutions across Nigeria through our secure digital platform.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🏫</div>
-              <h3>School Network</h3>
-              <p>Join your school's alumni network and stay updated with school events and news.</p>
+              <div className="feature-icon">🔐</div>
+              <h3>Secure Verification</h3>
+              <p>Get your unique NAIRA-100 ID with verified credentials. Example: STP-1998-0023-AO (School-Year-Sequence-Initials).</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">💼</div>
-              <h3>Career Opportunities</h3>
-              <p>Discover job opportunities, mentorship programs, and professional networking within your alumni community.</p>
+              <div className="feature-icon">🏛️</div>
+              <h3>CAC Registered Chapters</h3>
+              <p>All alumni associations are legally registered with Corporate Affairs Commission ensuring transparency and accountability.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🤝</div>
-              <h3>Give Back</h3>
-              <p>Support your alma mater through donations, volunteering, and mentoring current students.</p>
+              <div className="feature-icon">💰</div>
+              <h3>Bank Partnerships</h3>
+              <p>Partner banks provide ₦100,000 startup support for verified alumni organizations with multi-signatory governance.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🚀</div>
+              <h3>STEM & Innovation</h3>
+              <p>Facilitate cross-institutional collaboration in STEM, AI education, digital literacy, and career mentorship programs.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🏆</div>
+              <h3>Member Recognition</h3>
+              <p>Silver, Gold, and Diamond membership tiers with official NAIRA-100 brooch pins and Hall of Contributors recognition.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Member Recognition Tiers */}
       <section className="testimonials-section">
         <div className="testimonials-container">
-          <h2>What Our Alumni Say</h2>
+          <h2>NAIRA-100 Member Recognition</h2>
+          <p className="testimonials-subtitle">Join our tiered membership system and get recognized for your contributions</p>
           <div className="testimonials-grid">
-            <div className="testimonial-card">
+            <div className="testimonial-card silver-tier">
+              <div className="tier-badge silver">🥈</div>
               <div className="testimonial-content">
-                <p>"100NAIRA helped me reconnect with my high school friends after 15 years. It's amazing how technology can bring people together!"</p>
+                <h3>Silver Member</h3>
+                <p>"As a registered and verified member, I received my unique NAIRA-100 ID and official brooch pin. It's a badge of pride and commitment to my alma mater."</p>
               </div>
               <div className="testimonial-author">
                 <div className="author-avatar">AO</div>
                 <div className="author-info">
                   <h4>Chinedu Adebayo</h4>
-                  <p>St. Patrick's Grammar School, 2000</p>
+                  <p>STP-1998-0023-AO • St. Patrick's Grammar School</p>
                 </div>
               </div>
             </div>
-            <div className="testimonial-card">
+            <div className="testimonial-card gold-tier">
+              <div className="tier-badge gold">🥇</div>
               <div className="testimonial-content">
-                <p>"The platform made it easy to find my classmates from university. I've already reconnected with 5 old friends!"</p>
+                <h3>Gold Member</h3>
+                <p>"Being an active contributor in school projects has been rewarding. The platform connects me with like-minded alumni working to improve education in Nigeria."</p>
               </div>
               <div className="testimonial-author">
                 <div className="author-avatar">CA</div>
                 <div className="author-info">
                   <h4>Chinwe Adebayo</h4>
-                  <p>University of Lagos, 2005</p>
+                  <p>UNI-2005-0156-CA • University of Lagos</p>
                 </div>
               </div>
             </div>
-            <div className="testimonial-card">
+            <div className="testimonial-card diamond-tier">
+              <div className="tier-badge diamond">💎</div>
               <div className="testimonial-content">
-                <p>"As a school administrator, 100NAIRA has helped us maintain better relationships with our alumni community."</p>
+                <h3>Diamond Member</h3>
+                <p>"As a major donor and project sponsor, I'm honored to be in the Hall of Contributors. NAIRA-100 has given me a platform to make real impact in education."</p>
               </div>
               <div className="testimonial-author">
                 <div className="author-avatar">FO</div>
                 <div className="author-info">
                   <h4>Folake Ogunlesi</h4>
-                  <p>Principal, St. Patrick's Grammar School</p>
+                  <p>POL-1995-0089-FO • Yaba College of Technology</p>
                 </div>
               </div>
             </div>
@@ -1045,26 +1068,30 @@ function Home() {
       <section className="impact">
         <div className="impact-content">
           <div className="impact-text">
-            <h2>Building a Stronger Nigeria Through Education</h2>
-            <p>Join thousands of alumni who are making a difference in their communities and supporting the next generation of Nigerian leaders.</p>
+            <h2>Reviving Nigeria's Educational Institutions</h2>
+            <p>NAIRA-100 bridges the gap between alumni and their alma maters, transforming nostalgia into nation-building power. Join us in addressing decades of underfunding and neglect in Nigeria's educational sector.</p>
           </div>
           <div className="impact-stats">
             <div className="impact-stat">
-              <div className="impact-number">50+</div>
+              <div className="impact-number">100+</div>
               <div className="impact-label">Schools Connected</div>
             </div>
             <div className="impact-stat">
-              <div className="impact-number">6,000+</div>
+              <div className="impact-number">10K+</div>
               <div className="impact-label">Alumni Registered</div>
             </div>
             <div className="impact-stat">
-              <div className="impact-number">100+</div>
-              <div className="impact-label">Success Stories</div>
+              <div className="impact-number">₦100K</div>
+              <div className="impact-label">Startup Support</div>
+            </div>
+            <div className="impact-stat">
+              <div className="impact-number">36</div>
+              <div className="impact-label">States Covered</div>
             </div>
           </div>
           <div className="impact-actions">
             <Link to="/register-school" className="btn btn-primary btn-large">
-              Register as Alumni
+              Get Your NAIRA-100 ID
             </Link>
             <Link to="/register-school" className="btn btn-outline btn-large">
               Register Your School
@@ -1074,7 +1101,7 @@ function Home() {
         <div className="impact-visual">
           <div className="impact-graphic">
             <div className="graphic-circle">
-              <div className="graphic-text">100NAIRA</div>
+              <div className="graphic-text">NAIRA-100</div>
             </div>
           </div>
         </div>

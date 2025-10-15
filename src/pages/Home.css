@@ -1720,3 +1720,59 @@
     font-size: 1.5rem;
   }
 }
+
+/* NAIRA-100 Enhanced Styles */
+.features-subtitle {
+  font-size: 1.125rem;
+  color: #667eea;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.testimonials-subtitle {
+  font-size: 1.125rem;
+  color: #718096;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-weight: 500;
+}
+
+/* Member Recognition Tiers */
+.tier-badge {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.silver-tier {
+  border-left: 4px solid #c0c0c0;
+}
+
+.gold-tier {
+  border-left: 4px solid #ffd700;
+}
+
+.diamond-tier {
+  border-left: 4px solid #b9f2ff;
+}
+
+.testimonial-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.75rem;
+}
+
+.testimonial-card p {
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.author-info p {
+  color: #667eea;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
