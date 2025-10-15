@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
+import About from './pages/About';
 import SchoolProfile from './pages/SchoolProfile';
 import AlumniProfile from './pages/AlumniProfile';
 import RegisterWithSchool from './pages/RegisterWithSchool';
@@ -22,6 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/schools/:schoolId" element={<SchoolProfile />} />
             <Route path="/alumni/:alumniId" element={<AlumniProfile />} />
             <Route path="/register" element={<RegisterWithSchool />} />

@@ -25,6 +25,7 @@ function Navbar() {
           />
         </Link>
         <div className="navbar-links">
+          <Link to="/about" className="navbar-link">About</Link>
           {user ? (
             // User is signed in
             <>
