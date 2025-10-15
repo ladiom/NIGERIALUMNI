@@ -611,7 +611,10 @@ function Home() {
               <div className="title-line-2">(SPACO ALUMNI INITIATIVE)</div>
             </div>
             <p className="search-description">
-              Join the National Alumni Institution Revival Alliance - be among the 100.
+              National Alumni Institutions Revival Alliance (NAIRA)
+            </p>
+            <p className="search-description">
+              Get your NAIRA-100 ID NOW!
             </p>
           </div>
           
