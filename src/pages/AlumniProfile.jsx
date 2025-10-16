@@ -7,10 +7,14 @@ function AlumniProfile() {
   const [showMessageForm, setShowMessageForm] = useState(false);
   const [message, setMessage] = useState('');
   
-  // Sample alumni data
+  // Sample alumni data - updated with new fields
   const alumniData = {
     id: 'XYZLA202012345UN',
+    admissionNum: '1',
+    admissionDate: '20-Jan-1962',
     name: 'John Doe',
+    dateOfBirth: '25-Sep-1947',
+    sex: 'M',
     phoneNumber: '+234 801 234 5678',
     email: 'johndoe@example.com',
     schoolName: 'University of Lagos',
@@ -18,9 +22,13 @@ function AlumniProfile() {
     schoolLGA: 'Yaba',
     schoolLevel: 'University',
     graduationYear: '2020',
+    graduationDate: '31-Dec-1967',
     fieldOfStudy: 'Computer Science',
     currentPosition: 'Software Engineer',
     currentCompany: 'Tech Innovations Ltd.',
+    parentGuardianNames: 'Mr. John Doe Sr.',
+    addressAtSchool: 'Box 542, Ibadan',
+    lastSchoolAttended: 'St. Thomas, Kano',
     bio: 'Passionate about technology and community development. Alumni of University of Lagos class of 2020. Experienced software engineer with expertise in frontend and backend development, currently working on innovative tech solutions for African markets.',
     skills: ['JavaScript', 'React', 'Node.js', 'Python', 'UI/UX Design', 'Machine Learning'],
     achievements: [
@@ -130,24 +138,40 @@ function AlumniProfile() {
           
           <div className="profile-details">
             <div className="detail-item">
-              <span className="detail-label">Current Position:</span>
-              <span className="detail-value">{alumniData.currentPosition}</span>
+              <span className="detail-label">Admission Number:</span>
+              <span className="detail-value">{alumniData.admissionNum}</span>
             </div>
             <div className="detail-item">
-              <span className="detail-label">Company:</span>
-              <span className="detail-value">{alumniData.currentCompany}</span>
+              <span className="detail-label">Admission Date:</span>
+              <span className="detail-value">{alumniData.admissionDate}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Date of Birth:</span>
+              <span className="detail-value">{alumniData.dateOfBirth}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Gender:</span>
+              <span className="detail-value">{alumniData.sex === 'M' ? 'Male' : 'Female'}</span>
             </div>
             <div className="detail-item">
               <span className="detail-label">Alma Mater:</span>
               <span className="detail-value">{alumniData.schoolName}</span>
             </div>
             <div className="detail-item">
-              <span className="detail-label">Graduation Year:</span>
-              <span className="detail-value">{alumniData.graduationYear}</span>
+              <span className="detail-label">Graduation Date:</span>
+              <span className="detail-value">{alumniData.graduationDate}</span>
             </div>
             <div className="detail-item">
               <span className="detail-label">Field of Study:</span>
               <span className="detail-value">{alumniData.fieldOfStudy}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Parent/Guardian:</span>
+              <span className="detail-value">{alumniData.parentGuardianNames}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Previous School:</span>
+              <span className="detail-value">{alumniData.lastSchoolAttended}</span>
             </div>
           </div>
           

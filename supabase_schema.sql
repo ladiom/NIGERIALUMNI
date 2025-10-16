@@ -17,11 +17,16 @@ CREATE TABLE schools (
 -- Create alumni table
 CREATE TABLE alumni (
   id VARCHAR(20) PRIMARY KEY, -- Format: [SchoolCode][StateCode][Year][ClassSeq][Level]
+  admission_num VARCHAR(50),
+  admission_date DATE,
   title VARCHAR(50),
   full_name VARCHAR(255) NOT NULL,
+  date_of_birth DATE,
+  sex VARCHAR(10) CHECK (sex IN ('M', 'F', 'Male', 'Female')),
   phone_number VARCHAR(20),
   email VARCHAR(255) UNIQUE,
-  graduation_year INTEGER NOT NULL,
+  graduation_year INTEGER,
+  graduation_date DATE,
   school_id BIGINT REFERENCES schools(id),
   current_position VARCHAR(255),
   current_company VARCHAR(255),
@@ -31,6 +36,10 @@ CREATE TABLE alumni (
   linkedin VARCHAR(255),
   twitter VARCHAR(255),
   facebook VARCHAR(255),
+  parent_guardian_names VARCHAR(255),
+  address_at_school TEXT,
+  last_school_attended VARCHAR(255),
+  combo_fields TEXT,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );

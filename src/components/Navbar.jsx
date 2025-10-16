@@ -36,7 +36,7 @@ function Navbar() {
           ) : (
             // User is not signed in
             <>
-              <Link to="/register-school" className="navbar-link">Register School</Link>
+              <Link to="/register-school" className="navbar-link">Register</Link>
               <Link to="/login" className="navbar-link login-button">Login</Link>
             </>
           )}
