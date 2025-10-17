@@ -428,6 +428,7 @@ function Home() {
               const registeredAlumniIds = new Set(registeredUsers.map(user => user.alumni_id));
               const alumniWithStatus = data.map(alum => ({
                 ...alum,
+                admission_year: alum.adm_year,
                 isRegistered: registeredAlumniIds.has(alum.id)
               }));
               const sortedResults = sortResults(alumniWithStatus, sortBy);
@@ -436,6 +437,7 @@ function Home() {
             } else {
               const alumniWithStatus = data.map(alum => ({
                 ...alum,
+                admission_year: alum.adm_year,
                 isRegistered: !!alum.email
               }));
               const sortedResults = sortResults(alumniWithStatus, sortBy);
@@ -520,6 +522,7 @@ function Home() {
             const registeredAlumniIds = new Set(registeredUsers.map(user => user.alumni_id));
             const alumniWithStatus = alumniData.map(alum => ({
               ...alum,
+              admission_year: alum.adm_year,
               isRegistered: registeredAlumniIds.has(alum.id)
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
@@ -528,6 +531,7 @@ function Home() {
           } else {
             const alumniWithStatus = alumniData.map(alum => ({
               ...alum,
+              admission_year: alum.adm_year,
               isRegistered: !!alum.email
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
@@ -548,6 +552,7 @@ function Home() {
             const registeredAlumniIds = new Set(registeredUsers.map(user => user.alumni_id));
             const alumniWithStatus = alumniData.map(alum => ({
               ...alum,
+              admission_year: alum.adm_year,
               isRegistered: registeredAlumniIds.has(alum.id)
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
@@ -556,6 +561,7 @@ function Home() {
           } else {
             const alumniWithStatus = alumniData.map(alum => ({
               ...alum,
+              admission_year: alum.adm_year,
               isRegistered: !!alum.email
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
