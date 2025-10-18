@@ -97,11 +97,16 @@ function Dashboard() {
           return;
         }
         
+        console.log('Fetching alumni data for alumni_id:', userProfile.alumni_id);
+        
         const { data: alumniData, error: alumniError } = await supabase
           .from('alumni')
           .select('*')
           .eq('id', userProfile.alumni_id)
           .single();
+        
+        console.log('Alumni data result:', alumniData);
+        console.log('Alumni error:', alumniError);
         
         if (alumniError) {
           console.error('Error fetching alumni data:', alumniError);
