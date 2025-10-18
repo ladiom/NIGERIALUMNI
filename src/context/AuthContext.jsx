@@ -35,7 +35,24 @@ export const AuthProvider = ({ children }) => {
       
       if (error && error.code !== 'PGRST116') {
         console.warn('Fetch users row error:', error);
-        setUserProfile(null);
+        // If user record doesn't exist, try to create it
+        console.log('User record not found, attempting to create...');
+        await ensureUserRow({ id: uid });
+        
+        // Try fetching again after creating the record
+        const { data: retryData, error: retryError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', uid)
+          .single();
+        
+        if (retryError) {
+          console.warn('Retry fetch users row error:', retryError);
+          setUserProfile(null);
+        } else {
+          console.log('User profile fetched after creation:', retryData);
+          setUserProfile(retryData || null);
+        }
       } else {
         console.log('User profile fetched:', data);
         setUserProfile(data || null);
@@ -49,9 +66,46 @@ export const AuthProvider = ({ children }) => {
   const ensureUserRow = async (u) => {
     if (!u?.id) return;
     try {
+      // First, check if user record already exists
+      const { data: existingUser } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', u.id)
+        .single();
+      
+      if (existingUser) {
+        console.log('User record already exists:', existingUser);
+        return;
+      }
+      
+      // If no existing record, try to find alumni_id from pending_registrations
+      let alumniId = null;
+      if (u.email) {
+        const { data: pendingData } = await supabase
+          .from('pending_registrations')
+          .select('alumni_id')
+          .eq('email', u.email)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single();
+        
+        if (pendingData?.alumni_id) {
+          alumniId = pendingData.alumni_id;
+          console.log('Found alumni_id from pending_registrations:', alumniId);
+        }
+      }
+      
+      // Create user record with alumni_id if available
       await supabase
         .from('users')
-        .upsert({ id: u.id, email: u.email || '' }, { onConflict: 'id' });
+        .upsert({ 
+          id: u.id, 
+          email: u.email || '',
+          alumni_id: alumniId,
+          created_at: new Date().toISOString()
+        }, { onConflict: 'id' });
+        
+      console.log('Created/updated user record with alumni_id:', alumniId);
     } catch (e) {
       console.warn('Upsert users row error:', e);
     }
