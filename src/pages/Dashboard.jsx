@@ -7,6 +7,11 @@ import supabase from '../supabaseClient';
 function Dashboard() {
   const { user, userProfile, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+  
+  // Debug: Log when userProfile changes
+  useEffect(() => {
+    console.log('Dashboard: userProfile changed:', userProfile);
+  }, [userProfile]);
   const [activeTab, setActiveTab] = useState('profile');
   
   // Redirect to login if user is not authenticated
