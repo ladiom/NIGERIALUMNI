@@ -425,14 +425,14 @@ function Home() {
               .in('alumni_id', alumniIds);
 
             if (!usersError && registeredUsers) {
-              const registeredAlumniIds = new Set(registeredUsers.map(user => user.alumni_id));
+              // Temporarily disable isRegistered check - all alumni need to create auth accounts
               const alumniWithStatus = data.map(alum => ({
                 ...alum,
                 admission_year: alum.adm_year,
-                isRegistered: registeredAlumniIds.has(alum.id)
+                isRegistered: false // Force all to show clickable buttons
               }));
               const sortedResults = sortResults(alumniWithStatus, sortBy);
-              console.log('🔍 Setting results (with user status):', sortedResults.length);
+              console.log('🔍 Setting results (all clickable):', sortedResults.length);
               setResults(sortedResults);
             } else {
               // If we can't check users table, assume no one is registered
@@ -521,11 +521,11 @@ function Home() {
             .in('alumni_id', alumniIds);
 
           if (!usersError && registeredUsers) {
-            const registeredAlumniIds = new Set(registeredUsers.map(user => user.alumni_id));
+            // Temporarily disable isRegistered check - all alumni need to create auth accounts
             const alumniWithStatus = alumniData.map(alum => ({
               ...alum,
               admission_year: alum.adm_year,
-              isRegistered: registeredAlumniIds.has(alum.id)
+              isRegistered: false // Force all to show clickable buttons
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
             console.log('🔍 Setting text search results (alumni + schools):', sortedResults.length);
@@ -552,11 +552,11 @@ function Home() {
             .in('alumni_id', alumniIds);
 
           if (!usersError && registeredUsers) {
-            const registeredAlumniIds = new Set(registeredUsers.map(user => user.alumni_id));
+            // Temporarily disable isRegistered check - all alumni need to create auth accounts
             const alumniWithStatus = alumniData.map(alum => ({
               ...alum,
               admission_year: alum.adm_year,
-              isRegistered: registeredAlumniIds.has(alum.id)
+              isRegistered: false // Force all to show clickable buttons
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
             console.log('🔍 Setting text search results (alumni only):', sortedResults.length);
