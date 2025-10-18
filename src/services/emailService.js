@@ -2,7 +2,7 @@ import supabase from '../supabaseClient';
 
 // Office 365 SMTP API endpoint
 const SMTP_API_URL = import.meta.env.DEV 
-  ? 'https://nigeriaalumninetwork.netlify.app/.netlify/functions/send-email'
+  ? 'https://100naira-platform.netlify.app/.netlify/functions/send-email'
   : '/.netlify/functions/send-email';
 
 /**
@@ -196,7 +196,7 @@ const EMAIL_TEMPLATES = {
       <div class="login-box">
         <h3>🔐 Access Your Account</h3>
         <p>Your account is ready! Click the button below to get started:</p>
-        <a href="${data.loginUrl || 'https://nigeriaalumninetwork.netlify.app/login'}" class="login-button">Login to Your Account</a>
+        <a href="${data.loginUrl || 'https://100naira-platform.netlify.app/login'}" class="login-button">Login to Your Account</a>
         <p style="margin-top: 1rem; font-size: 0.9rem; color: #4a5568;">
           <strong>Login Instructions:</strong><br>
           1. Use your email: <strong>${data.toEmail}</strong><br>
@@ -503,7 +503,7 @@ export async function sendApprovalEmail({
   toName,
   alumniId,
   schoolName,
-  loginUrl = 'https://nigeriaalumninetwork.netlify.app/login'
+  loginUrl = 'https://100naira-platform.netlify.app/login'
 }) {
   const template = EMAIL_TEMPLATES.REGISTRATION_APPROVED;
   

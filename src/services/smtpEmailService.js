@@ -52,7 +52,7 @@ Registration Details:
 • Email: ${data.toEmail}
 
 How to Access Your Account:
-1. Visit: ${data.loginUrl || 'https://nigeriaalumninetwork.netlify.app/login'}
+1. Visit: ${data.loginUrl || 'https://100naira-platform.netlify.app/login'}
 2. Use your email: ${data.toEmail}
 3. Click "Forgot Password" to set up your password
 4. Complete your profile setup
@@ -190,7 +190,7 @@ export async function sendApprovalEmailSMTP({
   toName,
   alumniId,
   schoolName,
-  loginUrl = 'https://nigeriaalumninetwork.netlify.app/login'
+  loginUrl = 'https://100naira-platform.netlify.app/login'
 }) {
   const template = EMAIL_TEMPLATES.REGISTRATION_APPROVED;
   
