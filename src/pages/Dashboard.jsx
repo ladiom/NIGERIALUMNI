@@ -88,6 +88,8 @@ function Dashboard() {
   
   // Fetch user data from Supabase
   useEffect(() => {
+    console.log('Dashboard useEffect triggered with userProfile:', userProfile);
+    
     const fetchUserData = async () => {
       try {
         // Use the userProfile.alumni_id to fetch the correct alumni data
