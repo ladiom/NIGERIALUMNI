@@ -5,7 +5,7 @@ import './Dashboard.css';
 import supabase from '../supabaseClient';
 
 function Dashboard() {
-  const { user, loading: authLoading } = useAuth();
+  const { user, userProfile, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('profile');
   
@@ -90,36 +90,41 @@ function Dashboard() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // In a real application, we would get the current user ID from authentication
-        // For now, we'll just get the first alumni record
+        // Use the userProfile.alumni_id to fetch the correct alumni data
+        if (!userProfile?.alumni_id) {
+          console.log('No alumni_id found in userProfile:', userProfile);
+          setLoading(false);
+          return;
+        }
+        
         const { data: alumniData, error: alumniError } = await supabase
           .from('alumni')
           .select('*')
-          .limit(1)
+          .eq('id', userProfile.alumni_id)
           .single();
         
         if (alumniError) {
           console.error('Error fetching alumni data:', alumniError);
-          // If there's no data, set some default values
+          // If there's no alumni data, use userProfile data as fallback
           setUserData({
-            fullName: 'John Doe',
-            email: 'johndoe@example.com',
-            phoneNumber: '+234 801 234 5678',
-            graduationYear: '2020',
-            schoolName: 'XYZ University',
-            schoolState: 'Lagos',
-            schoolLGA: 'Ikeja',
-            schoolLevel: 'University',
-            currentPosition: 'Software Engineer',
-            currentCompany: 'Tech Innovations Ltd.',
-            bio: 'Passionate about technology and community development. Alumni of XYZ University class of 2020.',
-            profilePicture: '',
-            alumniId: 'XYZLA202012345UN',
-            fieldOfStudy: 'Computer Science',
+            fullName: user?.user_metadata?.fullName || 'User',
+            email: user?.email || '',
+            phoneNumber: '',
+            graduationYear: '',
+            schoolName: '',
+            schoolState: '',
+            schoolLGA: '',
+            schoolLevel: '',
+            currentPosition: '',
+            currentCompany: '',
+            bio: '',
+            profilePicture: null,
+            alumniId: userProfile?.alumni_id || '',
+            fieldOfStudy: '',
             socialLinks: {
-              linkedin: 'linkedin.com/in/johndoe',
-              twitter: '@johndoe',
-              facebook: 'facebook.com/johndoe'
+              linkedin: '',
+              twitter: '',
+              facebook: ''
             }
           });
         } else {
@@ -147,7 +152,7 @@ function Dashboard() {
             currentCompany: alumniData.current_company || '',
             bio: alumniData.bio || '',
             profilePicture: alumniData.profile_picture || null,
-            alumniId: alumniData.alumni_id || '',
+            alumniId: alumniData.id || userProfile.alumni_id || '',
             fieldOfStudy: alumniData.field_of_study || '',
             socialLinks: {
               linkedin: alumniData.linkedin || '',
@@ -164,7 +169,7 @@ function Dashboard() {
     };
     
     fetchUserData();
-  }, []);
+  }, [userProfile]);
 
   // Handle form changes during editing
   const handleEditChange = (e) => {
