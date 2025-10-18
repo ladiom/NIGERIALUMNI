@@ -11,7 +11,6 @@ function RegisterWithSchool() {
   const { register } = useAuth();
   
   const [formData, setFormData] = useState({
-    title: '',
     fullName: '',
     phoneNumber: '',
     email: '',
@@ -249,7 +248,6 @@ function RegisterWithSchool() {
         const { data: alumniData, error: alumniError } = await supabase
           .from('alumni')
           .update({
-            title: formData.title || null,
             full_name: formData.fullName,
             phone_number: formData.phoneNumber,
             email: formData.email,
@@ -296,7 +294,6 @@ function RegisterWithSchool() {
           .from('alumni')
           .insert([{
             id: alumniId,
-            title: formData.title || null,
             full_name: formData.fullName,
             phone_number: formData.phoneNumber,
             email: formData.email,
@@ -337,7 +334,7 @@ function RegisterWithSchool() {
       try {
         await enqueueRegistrationReceivedEmail({
           toEmail: formData.email,
-          toName: `${formData.title ? formData.title + ' ' : ''}${formData.fullName}`.trim(),
+          toName: formData.fullName,
           alumniId: alumniId,
           schoolName: selectedSchool.name
         });
@@ -417,24 +414,6 @@ function RegisterWithSchool() {
         <div className="form-section">
           <h3>Personal Information</h3>
           <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="title">Title</label>
-              <select
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                disabled={submitting}
-              >
-                <option value="">Select Title</option>
-                <option value="Dr.">Dr.</option>
-                <option value="Mr.">Mr.</option>
-                <option value="Mrs.">Mrs.</option>
-                <option value="Ms.">Ms.</option>
-                <option value="Chief">Chief</option>
-                <option value="Prof.">Prof.</option>
-              </select>
-            </div>
             
             <div className="form-group">
               <label htmlFor="fullName">Full Name *</label>
