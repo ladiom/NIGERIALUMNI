@@ -249,11 +249,12 @@ function Admin() {
       }
 
       // Create a user account for the approved alumni
-      // Use a simple approach - let Supabase generate the UUID
+      // Generate a UUID for the user ID
       console.log('Creating user account for:', registration.email);
       const { data: userData, error: userError } = await supabase
         .from('users')
         .insert({
+          id: crypto.randomUUID(), // Generate a UUID for the user ID
           email: registration.email,
           alumni_id: registration.alumni_id, // Store the alumni ID as a separate field
           created_at: new Date().toISOString()
@@ -296,7 +297,6 @@ Your Alumni ID: ${registration.alumni_id}
 Login Link: ${window.location.origin}/login
 
 Welcome to the Nigeria Alumni Network!`,
-              email_type: 'registration_approved',
               status: 'sent',
               sent_at: new Date().toISOString(),
               created_at: new Date().toISOString()
