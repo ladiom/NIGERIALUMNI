@@ -21,6 +21,8 @@ function Dashboard() {
   const [activeTab, setActiveTab] = useState('profile');
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [showSaveConfirm, setShowSaveConfirm] = useState(false);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   
   // Redirect to login if user is not authenticated
   useEffect(() => {
@@ -64,8 +66,17 @@ function Dashboard() {
     }
   });
   
+  // Debug: Log current user data after state declaration
+  console.log('📊 CURRENT USER DATA:', userData);
+  
   // Form state for editing profile
   const [editForm, setEditForm] = useState({...userData});
+  
+  // Update editForm when userData changes
+  useEffect(() => {
+    console.log('🔄 Updating editForm with userData:', userData);
+    setEditForm({...userData});
+  }, [userData]);
   
   // Personal metrics and activities
   const [personalMetrics, setPersonalMetrics] = useState({
@@ -112,6 +123,8 @@ function Dashboard() {
         }
         
         console.log('Fetching alumni data for alumni_id:', userProfile.alumni_id);
+        console.log('Exact alumni_id value:', JSON.stringify(userProfile.alumni_id));
+        console.log('Type of alumni_id:', typeof userProfile.alumni_id);
         
         const { data: alumniData, error: alumniError } = await supabase
           .from('alumni')
@@ -158,9 +171,9 @@ function Dashboard() {
             console.error('Error fetching school data:', schoolError);
           }
           
-          setUserData({
+          const newUserData = {
             fullName: alumniData.full_name || '',
-            email: alumniData.email || '',
+            email: alumniData.email || user?.email || '',
             phoneNumber: alumniData.phone_number || '',
             graduationYear: alumniData.graduation_year || '',
             schoolName: schoolData?.name || '',
@@ -178,7 +191,10 @@ function Dashboard() {
               twitter: alumniData.twitter || '',
               facebook: alumniData.facebook || ''
             }
-          });
+          };
+          
+          console.log('🎯 SETTING USER DATA:', newUserData);
+          setUserData(newUserData);
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -193,17 +209,36 @@ function Dashboard() {
   // Handle form changes during editing
   const handleEditChange = (e) => {
     const { name, value } = e.target;
-    setUserData(prev => ({ ...prev, [name]: value }));
+    
+    // Handle nested objects like socialLinks
+    if (name.includes('.')) {
+      const [parentKey, childKey] = name.split('.');
+      setEditForm(prev => ({
+        ...prev,
+        [parentKey]: {
+          ...prev[parentKey],
+          [childKey]: value
+        }
+      }));
+    } else {
+      setEditForm(prev => ({ ...prev, [name]: value }));
+    }
   };
   
   // Handle save changes during editing
-  const handleSaveChanges = async () => {
+  const handleSaveChanges = () => {
+    setShowSaveConfirm(true);
+  };
+
+  // Confirm save changes
+  const confirmSaveChanges = async () => {
+    setShowSaveConfirm(false);
     try {
       // Find the alumni record by name (in a real app, we would use user ID from auth)
       const { data: alumniRecords, error: findError } = await supabase
         .from('alumni')
         .select('id')
-        .eq('full_name', userData.fullName)
+        .eq('full_name', editForm.fullName)
         .limit(1)
         .single();
       
@@ -216,11 +251,14 @@ function Dashboard() {
         const { error: updateError } = await supabase
           .from('alumni')
           .update({
-            phone_number: userData.phoneNumber,
-            email: userData.email,
-            current_position: userData.currentPosition,
-            current_company: userData.currentCompany,
-            bio: userData.bio
+            phone_number: editForm.phoneNumber,
+            email: editForm.email,
+            current_position: editForm.currentPosition,
+            current_company: editForm.currentCompany,
+            bio: editForm.bio,
+            linkedin: editForm.socialLinks.linkedin,
+            twitter: editForm.socialLinks.twitter,
+            facebook: editForm.socialLinks.facebook
             // Add more fields to update as needed
           })
           .eq('id', alumniRecords.id);
@@ -230,6 +268,9 @@ function Dashboard() {
         }
         
         console.log('Profile updated successfully');
+        
+        // Update userData with the saved changes
+        setUserData(editForm);
       }
       
       setIsEditing(false);
@@ -241,6 +282,12 @@ function Dashboard() {
   
   // Handle cancel editing
   const handleCancelEdit = () => {
+    setShowCancelConfirm(true);
+  };
+
+  // Confirm cancel editing
+  const confirmCancelEdit = () => {
+    setShowCancelConfirm(false);
     setEditForm({...userData});
     setIsEditing(false);
   };
@@ -453,6 +500,42 @@ function Dashboard() {
                     <button className="btn-primary" onClick={handleSaveChanges}>Save Changes</button>
                     <button className="btn-secondary" onClick={handleCancelEdit}>Cancel</button>
                   </div>
+                  
+                  {/* Save Confirmation Dialog */}
+                  {showSaveConfirm && (
+                    <div className="confirmation-overlay">
+                      <div className="confirmation-dialog">
+                        <h3>Save Changes</h3>
+                        <p>Are you sure you want to save these changes to your profile?</p>
+                        <div className="confirmation-actions">
+                          <button className="btn-primary" onClick={confirmSaveChanges}>
+                            Yes, Save
+                          </button>
+                          <button className="btn-secondary" onClick={() => setShowSaveConfirm(false)}>
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Cancel Confirmation Dialog */}
+                  {showCancelConfirm && (
+                    <div className="confirmation-overlay">
+                      <div className="confirmation-dialog">
+                        <h3>Discard Changes</h3>
+                        <p>Are you sure you want to discard your changes? All unsaved changes will be lost.</p>
+                        <div className="confirmation-actions">
+                          <button className="btn-danger" onClick={confirmCancelEdit}>
+                            Yes, Discard
+                          </button>
+                          <button className="btn-secondary" onClick={() => setShowCancelConfirm(false)}>
+                            Keep Editing
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="profile-display">

@@ -942,6 +942,17 @@
   margin-right: auto;
 }
 
+.search-description.tagline {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .search-form-container {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);

@@ -630,14 +630,14 @@ function Home() {
         <div className="search-hero-content">
           <div className="search-header">
             <div className="main-title">
-              <h1>Reconnect. Rediscover. Rebuild.</h1>
-              <div className="title-line-2">(SPACO ALUMNI INITIATIVE)</div>
+              <h1>National Alumni Institutions Revival Alliance</h1>
+              <div className="title-line-2">Get your NAIRA 100 ID NOW!</div>
             </div>
             <p className="search-description">
-              National Alumni Institutions Revival Alliance (NAIRA)
+              SPACO ALUMNI INITIATIVE - Support your alma mater
             </p>
-            <p className="search-description">
-              Get your NAIRA-100 ID NOW!
+            <p className="search-description tagline">
+              Reconnect. Rediscover. Rebuild.
             </p>
           </div>
           

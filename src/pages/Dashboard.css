@@ -638,3 +638,115 @@
     gap: 0.5rem;
   }
 }
+
+/* Confirmation Dialog Styles */
+.confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.confirmation-dialog {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: dialogSlideIn 0.2s ease-out;
+}
+
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.confirmation-dialog h3 {
+  margin: 0 0 1rem 0;
+  color: var(--heading-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.confirmation-dialog p {
+  margin: 0 0 1.5rem 0;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.confirmation-actions button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.confirmation-actions .btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.confirmation-actions .btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.confirmation-actions .btn-secondary {
+  background: #f8fafc;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.confirmation-actions .btn-secondary:hover {
+  background: #f1f5f9;
+  transform: translateY(-1px);
+}
+
+.confirmation-actions .btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.confirmation-actions .btn-danger:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+/* Mobile responsiveness for confirmation dialogs */
+@media (max-width: 768px) {
+  .confirmation-dialog {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .confirmation-actions {
+    flex-direction: column;
+  }
+  
+  .confirmation-actions button {
+    width: 100%;
+  }
+}
