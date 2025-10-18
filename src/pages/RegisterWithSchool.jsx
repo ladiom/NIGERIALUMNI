@@ -264,14 +264,17 @@ function RegisterWithSchool() {
             facebook: formData.facebook || null
           })
           .eq('id', existingAlumniId)
-          .select()
-          .single();
+          .select();
 
         if (alumniError) {
           throw new Error('Failed to update alumni record: ' + alumniError.message);
         }
         
-        console.log('Successfully updated alumni record');
+        if (!alumniData || alumniData.length === 0) {
+          throw new Error('No alumni record was updated. The record may not exist or you may not have permission to update it.');
+        }
+        
+        console.log('Successfully updated alumni record:', alumniData[0]);
       } else {
         // Create new alumni record
         console.log('Creating new alumni record');
