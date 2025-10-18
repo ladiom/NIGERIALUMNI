@@ -245,6 +245,8 @@ function RegisterWithSchool() {
         // Update existing alumni record
         console.log('Updating existing alumni record:', existingAlumniId);
         
+        console.log('Attempting to update alumni record with ID:', existingAlumniId);
+        
         const { data: alumniData, error: alumniError } = await supabase
           .from('alumni')
           .update({
@@ -266,12 +268,27 @@ function RegisterWithSchool() {
           .eq('id', existingAlumniId)
           .select();
 
+        console.log('Update result:', { alumniData, alumniError });
+
         if (alumniError) {
           throw new Error('Failed to update alumni record: ' + alumniError.message);
         }
         
         if (!alumniData || alumniData.length === 0) {
-          throw new Error('No alumni record was updated. The record may not exist or you may not have permission to update it.');
+          // Try to check if the record exists first
+          const { data: checkData, error: checkError } = await supabase
+            .from('alumni')
+            .select('id, full_name')
+            .eq('id', existingAlumniId)
+            .single();
+          
+          console.log('Record check result:', { checkData, checkError });
+          
+          if (checkError || !checkData) {
+            throw new Error(`Alumni record with ID ${existingAlumniId} not found. Please try searching again.`);
+          } else {
+            throw new Error('No alumni record was updated. You may not have permission to update this record. Please contact support.');
+          }
         }
         
         console.log('Successfully updated alumni record:', alumniData[0]);
