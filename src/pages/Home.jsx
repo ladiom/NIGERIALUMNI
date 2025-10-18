@@ -903,7 +903,7 @@ function Home() {
                               className="btn btn-primary btn-sm"
                               onClick={() => handleRegisterClick(alum)}
                             >
-                              Register as Alumni
+                              Update your Profile
                             </button>
                           )}
                         </td>

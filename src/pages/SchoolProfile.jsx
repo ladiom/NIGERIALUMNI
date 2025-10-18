@@ -170,7 +170,7 @@ function SchoolProfile() {
                 </div>
               </div>
               <div className="school-actions">
-                <button className="btn-primary">Register as Alumni</button>
+                <button className="btn-primary">Update your Profile</button>
                 <button className="btn-secondary">View School Website</button>
               </div>
             </div>
