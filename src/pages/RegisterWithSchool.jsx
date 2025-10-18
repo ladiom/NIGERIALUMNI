@@ -242,10 +242,23 @@ function RegisterWithSchool() {
       let alumniId = existingAlumniId;
       
       if (isUpdatingExisting && existingAlumniId) {
-        // Create pending update request instead of direct update
-        console.log('Creating pending update request for alumni:', existingAlumniId);
+        // For existing alumni, create both auth user and pending update request
+        console.log('Creating auth user and update request for existing alumni:', existingAlumniId);
         
-        // Create a pending update record that admins can review
+        // Step 1: Register user account (create Supabase Auth user)
+        const registerResult = await register(
+          formData.email, 
+          formData.password, 
+          formData.fullName
+        );
+        
+        if (!registerResult.success) {
+          throw new Error(registerResult.error.message || 'Registration failed');
+        }
+        
+        console.log('Auth user created successfully for existing alumni');
+        
+        // Step 2: Create a pending update record that admins can review
         const { data: pendingUpdate, error: pendingError } = await supabase
           .from('pending_registrations')
           .insert([{
@@ -496,7 +509,7 @@ function RegisterWithSchool() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Create a password"
+                placeholder={isUpdatingExisting ? "Create a password for your account" : "Create a password"}
                 disabled={submitting}
               />
               {errors.password && <span className="error-message">{errors.password}</span>}
@@ -510,7 +523,7 @@ function RegisterWithSchool() {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                placeholder="Confirm your password"
+                placeholder={isUpdatingExisting ? "Confirm your password" : "Confirm your password"}
                 disabled={submitting}
               />
               {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
