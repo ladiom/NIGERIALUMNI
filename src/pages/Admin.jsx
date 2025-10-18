@@ -655,7 +655,7 @@ Nigeria Alumni Network Team`,
           alumniCount = alumniRes.count ?? 0;
           
           console.log('Testing pending registrations query...');
-          const pendingRes = await supabase.from('pending_registrations').select('id', { count: 'exact', head: true }).eq('status', 'pending');
+          const pendingRes = await supabase.from('pending_registrations').select('id', { count: 'exact', head: true }).in('status', ['pending', 'pending_update']);
           console.log('Pending query result:', pendingRes);
           pendingCount = pendingRes.count ?? 0;
           
@@ -682,8 +682,8 @@ Nigeria Alumni Network Team`,
           console.log('Testing recent pending registrations query...');
           const recentPendingRes = await supabase
             .from('pending_registrations')
-            .select('id, alumni_id, email, created_at, status')
-            .eq('status', 'pending')
+            .select('id, alumni_id, email, created_at, status, update_data')
+            .in('status', ['pending', 'pending_update'])
             .order('created_at', { ascending: false })
             .limit(20);
           console.log('Recent pending query result:', recentPendingRes);
@@ -1090,7 +1090,7 @@ Nigeria Alumni Network Team`,
                             <td className="col-alumni-id">{p.alumni?.id || p.alumni_id || 'Loading...'}</td>
                             <td className="col-status">
                               <span className={`status-badge ${p.status || 'pending'}`}>
-                                {p.status || 'pending'}
+                                {p.status === 'pending_update' ? 'Update Request' : (p.status || 'pending')}
                               </span>
                             </td>
                             <td className="col-requested">
