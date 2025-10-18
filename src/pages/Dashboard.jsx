@@ -15,6 +15,7 @@ function Dashboard() {
   
   // Debug: Log when component renders
   console.log('Dashboard: Component rendered with userProfile:', userProfile);
+  console.log('🚀 DASHBOARD COMPONENT IS RENDERING! 🚀');
   
   // State declarations - moved before early returns
   const [activeTab, setActiveTab] = useState('profile');
@@ -99,6 +100,7 @@ function Dashboard() {
   // Fetch user data from Supabase
   useEffect(() => {
     console.log('Dashboard useEffect triggered with userProfile:', userProfile);
+    console.log('🔥 DASHBOARD USEEFFECT IS RUNNING! 🔥');
     
     const fetchUserData = async () => {
       try {
