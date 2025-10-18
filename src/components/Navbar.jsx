@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 function Navbar() {
-  const { user, logout, isAdmin } = useAuth();
+  const { user, logout, isAdmin, userProfile } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -31,6 +31,9 @@ function Navbar() {
             <>
               {isAdmin && <Link to="/admin" className="navbar-link">Admin</Link>}
               <Link to="/dashboard" className="navbar-link">Dashboard</Link>
+              {userProfile?.alumni_id && (
+                <Link to={`/alumni/${userProfile.alumni_id}`} className="navbar-link">My Profile</Link>
+              )}
               <button onClick={handleLogout} className="navbar-link logout-button">Logout</button>
             </>
           ) : (
