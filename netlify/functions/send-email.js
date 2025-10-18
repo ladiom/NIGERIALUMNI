@@ -39,25 +39,23 @@ export const handler = async (event, context) => {
       };
     }
 
-    // Check if Office 365 credentials are configured
-    if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
-      console.log('Office 365 credentials not configured, using fallback mode');
-      
-      // Return success with fallback message
-      return {
-        statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          success: true,
-          messageId: `fallback-${Date.now()}`,
-          message: 'Email queued (Office 365 not configured)',
-          fallback: true
-        })
-      };
-    }
+    // Temporarily disable email sending due to Gmail rate limits
+    console.log('Email sending temporarily disabled due to Gmail rate limits');
+    
+    // Return success without sending email
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        success: true,
+        messageId: `disabled-${Date.now()}`,
+        message: 'Registration successful (email sending temporarily disabled)',
+        fallback: true
+      })
+    };
 
     // Gmail SMTP configuration - updated
     const transporter = nodemailer.createTransport({
