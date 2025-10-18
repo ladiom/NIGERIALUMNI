@@ -15,7 +15,11 @@ function Dashboard() {
   
   // Debug: Log when component renders
   console.log('Dashboard: Component rendered with userProfile:', userProfile);
+  
+  // State declarations - moved before early returns
   const [activeTab, setActiveTab] = useState('profile');
+  const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
   
   // Redirect to login if user is not authenticated
   useEffect(() => {
@@ -35,8 +39,6 @@ function Dashboard() {
   
   // If not authenticated, we'll be redirected before reaching here
   if (!user) return null;
-  const [loading, setLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
   
   // User data state
   const [userData, setUserData] = useState({
