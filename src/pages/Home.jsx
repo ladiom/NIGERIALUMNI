@@ -435,13 +435,15 @@ function Home() {
               console.log('🔍 Setting results (with user status):', sortedResults.length);
               setResults(sortedResults);
             } else {
+              // If we can't check users table, assume no one is registered
+              // This ensures buttons are clickable
               const alumniWithStatus = data.map(alum => ({
                 ...alum,
                 admission_year: alum.adm_year,
-                isRegistered: !!alum.email
+                isRegistered: false
               }));
               const sortedResults = sortResults(alumniWithStatus, sortBy);
-              console.log('🔍 Setting results (with email status):', sortedResults.length);
+              console.log('🔍 Setting results (no user status check):', sortedResults.length);
               setResults(sortedResults);
             }
           } else {
@@ -529,13 +531,14 @@ function Home() {
             console.log('🔍 Setting text search results (alumni + schools):', sortedResults.length);
             setResults(sortedResults);
           } else {
+            // If we can't check users table, assume no one is registered
             const alumniWithStatus = alumniData.map(alum => ({
               ...alum,
               admission_year: alum.adm_year,
-              isRegistered: !!alum.email
+              isRegistered: false
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
-            console.log('🔍 Setting text search results (alumni + schools, email status):', sortedResults.length);
+            console.log('🔍 Setting text search results (alumni + schools):', sortedResults.length);
             setResults(sortedResults);
           }
         } else if (alumniData.length > 0) {
@@ -559,13 +562,14 @@ function Home() {
             console.log('🔍 Setting text search results (alumni only):', sortedResults.length);
             setResults(sortedResults);
           } else {
+            // If we can't check users table, assume no one is registered
             const alumniWithStatus = alumniData.map(alum => ({
               ...alum,
               admission_year: alum.adm_year,
-              isRegistered: !!alum.email
+              isRegistered: false
             }));
             const sortedResults = sortResults(alumniWithStatus, sortBy);
-            console.log('🔍 Setting text search results (alumni only, email status):', sortedResults.length);
+            console.log('🔍 Setting text search results (alumni only):', sortedResults.length);
             setResults(sortedResults);
           }
         } else if (schoolData && schoolData.length > 0) {
