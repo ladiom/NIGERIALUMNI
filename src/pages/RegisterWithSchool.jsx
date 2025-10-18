@@ -242,56 +242,42 @@ function RegisterWithSchool() {
       let alumniId = existingAlumniId;
       
       if (isUpdatingExisting && existingAlumniId) {
-        // Update existing alumni record
-        console.log('Updating existing alumni record:', existingAlumniId);
+        // Create pending update request instead of direct update
+        console.log('Creating pending update request for alumni:', existingAlumniId);
         
-        console.log('Attempting to update alumni record with ID:', existingAlumniId);
-        
-        const { data: alumniData, error: alumniError } = await supabase
-          .from('alumni')
-          .update({
-            full_name: formData.fullName,
-            phone_number: formData.phoneNumber,
+        // Create a pending update record that admins can review
+        const { data: pendingUpdate, error: pendingError } = await supabase
+          .from('pending_registrations')
+          .insert([{
+            alumni_id: existingAlumniId,
             email: formData.email,
-            graduation_year: parseInt(formData.graduationYear),
-            school_id: selectedSchool.id,
-            adm_year: formData.admissionYear ? parseInt(formData.admissionYear) : null,
-            current_position: formData.currentPosition || null,
-            current_company: formData.currentCompany || null,
-            field_of_study: formData.fieldOfStudy || null,
-            bio: formData.bio || null,
-            profile_picture: formData.profilePicture || null,
-            linkedin: formData.linkedin || null,
-            twitter: formData.twitter || null,
-            facebook: formData.facebook || null
-          })
-          .eq('id', existingAlumniId)
-          .select();
+            status: 'pending_update',
+            update_data: {
+              full_name: formData.fullName,
+              phone_number: formData.phoneNumber,
+              email: formData.email,
+              graduation_year: parseInt(formData.graduationYear),
+              school_id: selectedSchool.id,
+              adm_year: formData.admissionYear ? parseInt(formData.admissionYear) : null,
+              current_position: formData.currentPosition || null,
+              current_company: formData.currentCompany || null,
+              field_of_study: formData.fieldOfStudy || null,
+              bio: formData.bio || null,
+              profile_picture: formData.profilePicture || null,
+              linkedin: formData.linkedin || null,
+              twitter: formData.twitter || null,
+              facebook: formData.facebook || null
+            }
+          }])
+          .select()
+          .single();
 
-        console.log('Update result:', { alumniData, alumniError });
-
-        if (alumniError) {
-          throw new Error('Failed to update alumni record: ' + alumniError.message);
+        if (pendingError) {
+          throw new Error('Failed to create update request: ' + pendingError.message);
         }
         
-        if (!alumniData || alumniData.length === 0) {
-          // Try to check if the record exists first
-          const { data: checkData, error: checkError } = await supabase
-            .from('alumni')
-            .select('id, full_name')
-            .eq('id', existingAlumniId)
-            .single();
-          
-          console.log('Record check result:', { checkData, checkError });
-          
-          if (checkError || !checkData) {
-            throw new Error(`Alumni record with ID ${existingAlumniId} not found. Please try searching again.`);
-          } else {
-            throw new Error('No alumni record was updated. You may not have permission to update this record. Please contact support.');
-          }
-        }
-        
-        console.log('Successfully updated alumni record:', alumniData[0]);
+        console.log('Successfully created pending update request:', pendingUpdate);
+        alumniId = existingAlumniId; // Use the existing alumni ID
       } else {
         // Create new alumni record
         console.log('Creating new alumni record');
@@ -352,12 +338,24 @@ function RegisterWithSchool() {
 
       // Step 4: Queue notification email
       try {
-        await enqueueRegistrationReceivedEmail({
-          toEmail: formData.email,
-          toName: formData.fullName,
-          alumniId: alumniId,
-          schoolName: selectedSchool.name
-        });
+        if (isUpdatingExisting) {
+          // Send update request confirmation email
+          await enqueueRegistrationReceivedEmail({
+            toEmail: formData.email,
+            toName: formData.fullName,
+            alumniId: alumniId,
+            schoolName: selectedSchool.name,
+            isUpdateRequest: true
+          });
+        } else {
+          // Send new registration confirmation email
+          await enqueueRegistrationReceivedEmail({
+            toEmail: formData.email,
+            toName: formData.fullName,
+            alumniId: alumniId,
+            schoolName: selectedSchool.name
+          });
+        }
       } catch (emailError) {
         console.warn('Failed to queue email notification:', emailError);
       }
@@ -388,11 +386,20 @@ function RegisterWithSchool() {
       <div className="register-container">
         <div className="success-message">
           <div className="success-icon">✅</div>
-          <h2>Registration Submitted Successfully!</h2>
-          <p>Thank you for registering with Nigeria Alumni Network (NAN).</p>
-          <p>Your registration is now pending approval.</p>
+          <h2>{isUpdatingExisting ? 'Update Request Submitted Successfully!' : 'Registration Submitted Successfully!'}</h2>
+          <p>{isUpdatingExisting 
+            ? 'Thank you for updating your information in the Nigeria Alumni Network (NAN).' 
+            : 'Thank you for registering with Nigeria Alumni Network (NAN).'
+          }</p>
+          <p>{isUpdatingExisting 
+            ? 'Your update request is now pending approval.' 
+            : 'Your registration is now pending approval.'
+          }</p>
           <p>A confirmation email will be sent to <strong>{formData.email}</strong>.</p>
-          <p>You'll receive an email with your unique alumni ID once approved.</p>
+          <p>{isUpdatingExisting 
+            ? 'You\'ll receive an email notification once your updates are approved.' 
+            : 'You\'ll receive an email with your unique alumni ID once approved.'
+          }</p>
           <div className="success-actions">
             <button 
               className="btn-primary"
