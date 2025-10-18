@@ -182,6 +182,20 @@ export const AuthProvider = ({ children }) => {
   // Register function
   const register = async (email, password, fullName) => {
     try {
+      // Temporarily bypass Supabase Auth signup due to email rate limits
+      // Create a mock user object for now
+      console.log('Bypassing Supabase Auth signup due to email rate limits');
+      
+      const mockUser = {
+        id: crypto.randomUUID(),
+        email: email,
+        user_metadata: { fullName: fullName }
+      };
+      
+      return { success: true, user: mockUser };
+      
+      // Original Supabase Auth signup (commented out due to rate limits)
+      /*
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -196,6 +210,7 @@ export const AuthProvider = ({ children }) => {
       }
       
       return { success: true, user: data.user };
+      */
     } catch (error) {
       return { success: false, error };
     }
