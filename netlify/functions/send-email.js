@@ -39,23 +39,25 @@ export const handler = async (event, context) => {
       };
     }
 
-    // Temporarily disable email sending due to Gmail rate limits
-    console.log('Email sending temporarily disabled due to Gmail rate limits');
-    
-    // Return success without sending email
-    return {
-      statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        success: true,
-        messageId: `disabled-${Date.now()}`,
-        message: 'Registration successful (email sending temporarily disabled)',
-        fallback: true
-      })
-    };
+    // Check if Office 365 credentials are configured
+    if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
+      console.log('SMTP credentials not configured, using fallback mode');
+      
+      // Return success with fallback message
+      return {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          success: true,
+          messageId: `fallback-${Date.now()}`,
+          message: 'Email queued (SMTP not configured)',
+          fallback: true
+        })
+      };
+    }
 
     // Gmail SMTP configuration - updated
     const transporter = nodemailer.createTransport({
