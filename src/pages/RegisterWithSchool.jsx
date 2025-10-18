@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import SchoolSelector from '../components/SchoolSelector';
 import supabase from '../supabaseClient';
@@ -33,6 +33,122 @@ function RegisterWithSchool() {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isUpdatingExisting, setIsUpdatingExisting] = useState(false);
+  const [existingAlumniId, setExistingAlumniId] = useState(null);
+
+  const location = useLocation();
+
+  // Pre-populate form with existing alumni data
+  useEffect(() => {
+    const prePopulateForm = async () => {
+      try {
+        // Check for alumni data in localStorage (from Home.jsx)
+        const storedAlumni = localStorage.getItem('selectedAlumni');
+        if (storedAlumni) {
+          const alumniData = JSON.parse(storedAlumni);
+          console.log('Pre-populating form with stored alumni data:', alumniData);
+          
+          // Pre-populate form fields
+          setFormData(prev => ({
+            ...prev,
+            fullName: alumniData.full_name || '',
+            graduationYear: alumniData.graduation_year || '',
+            admissionYear: alumniData.adm_year || alumniData.admission_year || '',
+            currentPosition: alumniData.current_position || '',
+            currentCompany: alumniData.current_company || '',
+            fieldOfStudy: alumniData.field_of_study || '',
+            bio: alumniData.bio || '',
+            profilePicture: alumniData.profile_picture || '',
+            linkedin: alumniData.linkedin || '',
+            twitter: alumniData.twitter || '',
+            facebook: alumniData.facebook || '',
+            phoneNumber: alumniData.phone_number || '',
+            email: alumniData.email || ''
+          }));
+          
+          // Set school if available
+          if (alumniData.school) {
+            setSelectedSchool({
+              id: alumniData.school_id,
+              name: alumniData.school.name,
+              state: alumniData.school.state,
+              lga: alumniData.school.lga,
+              level: alumniData.school.level
+            });
+          }
+          
+          setIsUpdatingExisting(true);
+          setExistingAlumniId(alumniData.id);
+          
+          // Clear localStorage after using the data
+          localStorage.removeItem('selectedAlumni');
+          return;
+        }
+        
+        // Check for alumni ID in URL parameters (from Search.jsx)
+        const urlParams = new URLSearchParams(location.search);
+        const alumniId = urlParams.get('alumni');
+        if (alumniId) {
+          console.log('Fetching alumni data for ID:', alumniId);
+          
+          // Fetch alumni data from database
+          const { data: alumniData, error } = await supabase
+            .from('alumni')
+            .select(`
+              *,
+              school:schools(name, state, lga, level)
+            `)
+            .eq('id', alumniId)
+            .single();
+          
+          if (error) {
+            console.error('Error fetching alumni data:', error);
+            return;
+          }
+          
+          if (alumniData) {
+            console.log('Pre-populating form with fetched alumni data:', alumniData);
+            
+            // Pre-populate form fields
+            setFormData(prev => ({
+              ...prev,
+              fullName: alumniData.full_name || '',
+              graduationYear: alumniData.graduation_year || '',
+              admissionYear: alumniData.adm_year || alumniData.admission_year || '',
+              currentPosition: alumniData.current_position || '',
+              currentCompany: alumniData.current_company || '',
+              fieldOfStudy: alumniData.field_of_study || '',
+              bio: alumniData.bio || '',
+              profilePicture: alumniData.profile_picture || '',
+              linkedin: alumniData.linkedin || '',
+              twitter: alumniData.twitter || '',
+              facebook: alumniData.facebook || '',
+              phoneNumber: alumniData.phone_number || '',
+              email: alumniData.email || ''
+            }));
+            
+            // Set school if available
+            if (alumniData.school) {
+              setSelectedSchool({
+                id: alumniData.school_id,
+                name: alumniData.school.name,
+                state: alumniData.school.state,
+                lga: alumniData.school.lga,
+                level: alumniData.school.level
+              });
+            }
+            
+            setIsUpdatingExisting(true);
+            setExistingAlumniId(alumniData.id);
+          }
+        }
+      } catch (error) {
+        console.error('Error pre-populating form:', error);
+      }
+    };
+    
+    prePopulateForm();
+  }, [location.search]);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -124,58 +240,97 @@ function RegisterWithSchool() {
     setSubmitting(true);
     
     try {
-      // Step 1: Register user account
-      const registerResult = await register(
-        formData.email, 
-        formData.password, 
-        formData.fullName
-      );
+      let alumniId = existingAlumniId;
       
-      if (!registerResult.success) {
-        throw new Error(registerResult.error.message || 'Registration failed');
-      }
+      if (isUpdatingExisting && existingAlumniId) {
+        // Update existing alumni record
+        console.log('Updating existing alumni record:', existingAlumniId);
+        
+        const { data: alumniData, error: alumniError } = await supabase
+          .from('alumni')
+          .update({
+            title: formData.title || null,
+            full_name: formData.fullName,
+            phone_number: formData.phoneNumber,
+            email: formData.email,
+            graduation_year: parseInt(formData.graduationYear),
+            school_id: selectedSchool.id,
+            adm_year: formData.admissionYear ? parseInt(formData.admissionYear) : null,
+            current_position: formData.currentPosition || null,
+            current_company: formData.currentCompany || null,
+            field_of_study: formData.fieldOfStudy || null,
+            bio: formData.bio || null,
+            profile_picture: formData.profilePicture || null,
+            linkedin: formData.linkedin || null,
+            twitter: formData.twitter || null,
+            facebook: formData.facebook || null
+          })
+          .eq('id', existingAlumniId)
+          .select()
+          .single();
 
-      // Step 2: Create alumni record
-      const alumniId = generateAlumniId(selectedSchool, formData.graduationYear);
-      
-      const { data: alumniData, error: alumniError } = await supabase
-        .from('alumni')
-        .insert([{
-          id: alumniId,
-          title: formData.title || null,
-          full_name: formData.fullName,
-          phone_number: formData.phoneNumber,
-          email: formData.email,
-          graduation_year: parseInt(formData.graduationYear),
-          school_id: selectedSchool.id,
-          adm_year: formData.admissionYear ? parseInt(formData.admissionYear) : null,
-          current_position: formData.currentPosition || null,
-          current_company: formData.currentCompany || null,
-          field_of_study: formData.fieldOfStudy || null,
-          bio: formData.bio || null,
-          profile_picture: formData.profilePicture || null,
-          linkedin: formData.linkedin || null,
-          twitter: formData.twitter || null,
-          facebook: formData.facebook || null
-        }])
-        .select()
-        .single();
+        if (alumniError) {
+          throw new Error('Failed to update alumni record: ' + alumniError.message);
+        }
+        
+        console.log('Successfully updated alumni record');
+      } else {
+        // Create new alumni record
+        console.log('Creating new alumni record');
+        
+        // Step 1: Register user account
+        const registerResult = await register(
+          formData.email, 
+          formData.password, 
+          formData.fullName
+        );
+        
+        if (!registerResult.success) {
+          throw new Error(registerResult.error.message || 'Registration failed');
+        }
 
-      if (alumniError) {
-        throw new Error('Failed to create alumni record: ' + alumniError.message);
-      }
+        // Step 2: Create alumni record
+        alumniId = generateAlumniId(selectedSchool, formData.graduationYear);
+        
+        const { data: alumniData, error: alumniError } = await supabase
+          .from('alumni')
+          .insert([{
+            id: alumniId,
+            title: formData.title || null,
+            full_name: formData.fullName,
+            phone_number: formData.phoneNumber,
+            email: formData.email,
+            graduation_year: parseInt(formData.graduationYear),
+            school_id: selectedSchool.id,
+            adm_year: formData.admissionYear ? parseInt(formData.admissionYear) : null,
+            current_position: formData.currentPosition || null,
+            current_company: formData.currentCompany || null,
+            field_of_study: formData.fieldOfStudy || null,
+            bio: formData.bio || null,
+            profile_picture: formData.profilePicture || null,
+            linkedin: formData.linkedin || null,
+            twitter: formData.twitter || null,
+            facebook: formData.facebook || null
+          }])
+          .select()
+          .single();
 
-      // Step 3: Create pending registration
-      const { error: pendingError } = await supabase
-        .from('pending_registrations')
-        .insert([{
-          alumni_id: alumniId,
-          email: formData.email,
-          status: 'pending'
-        }]);
+        if (alumniError) {
+          throw new Error('Failed to create alumni record: ' + alumniError.message);
+        }
 
-      if (pendingError) {
-        console.warn('Failed to create pending registration:', pendingError);
+        // Step 3: Create pending registration
+        const { error: pendingError } = await supabase
+          .from('pending_registrations')
+          .insert([{
+            alumni_id: alumniId,
+            email: formData.email,
+            status: 'pending'
+          }]);
+
+        if (pendingError) {
+          console.warn('Failed to create pending registration:', pendingError);
+        }
       }
 
       // Step 4: Queue notification email
@@ -243,8 +398,8 @@ function RegisterWithSchool() {
   return (
     <div className="register-container">
       <div className="register-header">
-        <h1>Register as Alumni</h1>
-        <p>Join the Nigeria Alumni Network by registering with your school</p>
+        <h1>{isUpdatingExisting ? 'Update Your Alumni Profile' : 'Register as Alumni'}</h1>
+        <p>{isUpdatingExisting ? 'Update your information in the Nigeria Alumni Network' : 'Join the Nigeria Alumni Network by registering with your school'}</p>
       </div>
 
       <form className="register-form" onSubmit={handleSubmit}>
@@ -534,7 +689,7 @@ function RegisterWithSchool() {
           className="btn-primary submit-btn"
           disabled={submitting || !selectedSchool}
         >
-          {submitting ? 'Registering...' : 'Register as Alumni'}
+          {submitting ? (isUpdatingExisting ? 'Updating...' : 'Registering...') : (isUpdatingExisting ? 'Update Profile' : 'Register as Alumni')}
         </button>
       </form>
     </div>

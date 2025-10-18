@@ -675,10 +675,20 @@ function Search() {
 
 // Component for handling initial registration via email
 function RegisterButton({ alumni }) {
+  const handleRegisterClick = () => {
+    // Store alumni data in localStorage for the registration page
+    localStorage.setItem('selectedAlumni', JSON.stringify(alumni));
+    // Navigate to registration page
+    window.location.href = '/register';
+  };
+
   return (
-    <Link to={`/register?alumni=${encodeURIComponent(alumni.id)}`} className="btn-register">
+    <button 
+      onClick={handleRegisterClick}
+      className="btn-register"
+    >
       Register
-    </Link>
+    </button>
   );
 }
 
