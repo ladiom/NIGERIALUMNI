@@ -12,6 +12,9 @@ function Dashboard() {
   useEffect(() => {
     console.log('Dashboard: userProfile changed:', userProfile);
   }, [userProfile]);
+  
+  // Debug: Log when component renders
+  console.log('Dashboard: Component rendered with userProfile:', userProfile);
   const [activeTab, setActiveTab] = useState('profile');
   
   // Redirect to login if user is not authenticated
