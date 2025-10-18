@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SchoolProfile.css';
+import { useAuth } from '../context/AuthContext';
 
 function SchoolProfile() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('about');
   const [expandedAlumni, setExpandedAlumni] = useState(false);
   const [expandedEvents, setExpandedEvents] = useState(false);
@@ -170,7 +174,19 @@ function SchoolProfile() {
                 </div>
               </div>
               <div className="school-actions">
-                <button className="btn-primary">Update your Profile</button>
+                <button 
+                  className="btn-primary"
+                  onClick={() => {
+                    if (!user) {
+                      navigate('/login');
+                    } else {
+                      // User is logged in, redirect to profile update
+                      navigate('/register');
+                    }
+                  }}
+                >
+                  Update your Profile
+                </button>
                 <button className="btn-secondary">View School Website</button>
               </div>
             </div>

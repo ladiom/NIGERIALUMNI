@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Home.css';
 import supabase from '../supabaseClient';
+import { useAuth } from '../context/AuthContext';
 // Immediate registration approach: route directly to /register with alumni context
 
 function Home() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  
   // Search form state
   const [searchMode, setSearchMode] = useState('select'); // 'select' or 'search'
   const [searchType, setSearchType] = useState('alumni'); // Default to alumni search for text box
@@ -601,7 +605,16 @@ function Home() {
 
   // Handle register button click
   const handleRegisterClick = (alumni) => {
-    // Store alumni data in localStorage for the registration page
+    // Check if user is logged in
+    if (!user) {
+      // Store alumni data in localStorage for after login
+      localStorage.setItem('selectedAlumni', JSON.stringify(alumni));
+      // Redirect to login page
+      navigate('/login');
+      return;
+    }
+    
+    // User is logged in, proceed with profile update
     localStorage.setItem('selectedAlumni', JSON.stringify(alumni));
     // Navigate to registration page
     window.location.href = '/register';
