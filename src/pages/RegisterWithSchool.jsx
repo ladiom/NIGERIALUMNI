@@ -258,10 +258,10 @@ function RegisterWithSchool() {
         
         console.log('Auth user created successfully for existing alumni');
         
-        // Step 2: Create a pending update record that admins can review
+        // Step 2: Create or update a pending update record that admins can review
         const { data: pendingUpdate, error: pendingError } = await supabase
           .from('pending_registrations')
-          .insert([{
+          .upsert([{
             alumni_id: existingAlumniId,
             email: formData.email,
             status: 'pending_update',
@@ -281,7 +281,9 @@ function RegisterWithSchool() {
               twitter: formData.twitter || null,
               facebook: formData.facebook || null
             }
-          }])
+          }], {
+            onConflict: 'alumni_id,email'
+          })
           .select()
           .single();
 
