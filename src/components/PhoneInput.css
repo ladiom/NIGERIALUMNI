@@ -1,0 +1,278 @@
+.phone-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.phone-input-wrapper {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  transition: border-color 0.3s ease;
+}
+
+.phone-input-wrapper:focus-within {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.country-selector {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.country-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 10px;
+  background: #f8f9fa;
+  border: none;
+  border-right: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 14px;
+  min-width: 100px;
+  transition: background-color 0.2s ease;
+}
+
+.country-button:hover:not(:disabled) {
+  background: #e9ecef;
+}
+
+.country-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.country-flag {
+  font-size: 16px;
+}
+
+.country-code {
+  font-weight: 500;
+  color: #495057;
+}
+
+.dropdown-arrow {
+  font-size: 10px;
+  color: #6c757d;
+  transition: transform 0.2s ease;
+}
+
+.country-button:focus .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.country-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.country-search {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.country-search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+.country-search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.country-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.country-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.country-option:hover {
+  background: #f8f9fa;
+}
+
+.country-option.selected {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.country-name {
+  flex: 1;
+  font-weight: 500;
+}
+
+.country-dial-code {
+  color: #6c757d;
+  font-size: 12px;
+}
+
+.phone-number-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background: transparent;
+}
+
+.phone-number-input:disabled {
+  background: #f8f9fa;
+  color: #6c757d;
+}
+
+.phone-number-input::placeholder {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.error-message {
+  display: block;
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .phone-input-container {
+    width: 100%;
+  }
+  
+  .phone-input-wrapper {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .country-selector {
+    width: 100%;
+  }
+  
+  .country-button {
+    min-width: 100px;
+    padding: 12px 10px;
+    font-size: 0.9rem;
+  }
+  
+  .country-code {
+    font-size: 0.9rem;
+  }
+  
+  .phone-number-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+  }
+  
+  .country-dropdown {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .country-button {
+    min-width: 80px;
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+  
+  .country-code {
+    font-size: 0.85rem;
+  }
+  
+  .phone-number-input {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+  
+  .country-dropdown {
+    font-size: 0.9rem;
+  }
+  
+  .country-dropdown input {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+  
+  .country-dropdown button {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .phone-input-wrapper {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+  
+  .country-button {
+    background: #4a5568;
+    border-color: #718096;
+    color: #e2e8f0;
+  }
+  
+  .country-button:hover:not(:disabled) {
+    background: #718096;
+  }
+  
+  .country-dropdown {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+  
+  .country-search-input {
+    background: #4a5568;
+    border-color: #718096;
+    color: #e2e8f0;
+  }
+  
+  .country-option:hover {
+    background: #4a5568;
+  }
+  
+  .country-option.selected {
+    background: #2b6cb0;
+    color: #e2e8f0;
+  }
+  
+  .phone-number-input {
+    color: #e2e8f0;
+  }
+  
+  .phone-number-input::placeholder {
+    color: #a0aec0;
+  }
+}

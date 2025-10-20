@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import PhoneInput from '../components/PhoneInput';
 import './Dashboard.css';
 import supabase from '../supabaseClient';
 
@@ -413,11 +414,11 @@ function Dashboard() {
                     </div>
                     <div className="form-group">
                       <label>Phone Number</label>
-                      <input
-                        type="tel"
+                      <PhoneInput
                         name="phoneNumber"
                         value={editForm.phoneNumber}
                         onChange={handleEditChange}
+                        placeholder="Enter your phone number"
                       />
                     </div>
                   </div>

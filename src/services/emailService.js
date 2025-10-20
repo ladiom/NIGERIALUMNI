@@ -24,7 +24,7 @@ const EMAIL_TEMPLATES = {
   <style>
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f8f9fa; }
     .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; text-align: center; }
+    .header { background: linear-gradient(135deg, var(--spaco-primary) 0%, var(--spaco-secondary) 100%); color: white; padding: 2rem; text-align: center; }
     .header h1 { margin: 0; font-size: 1.8rem; font-weight: 700; }
     .header p { margin: 0.5rem 0 0; opacity: 0.9; font-size: 1.1rem; }
     .content { padding: 2rem; }

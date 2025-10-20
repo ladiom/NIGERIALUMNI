@@ -327,7 +327,7 @@
   }
   
   .form-input:focus {
-    border-color: #667eea;
+    border-color: var(--spaco-primary);
     background-color: #2d3748;
   }
   

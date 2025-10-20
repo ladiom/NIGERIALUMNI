@@ -600,7 +600,7 @@
 }
 
 .stat-card.secondary {
-  border-left: 4px solid #8b5cf6;
+  border-left: 4px solid var(--spaco-primary);
 }
 
 .stat-card.accent {
@@ -907,9 +907,9 @@
 }
 
 .qa-btn.secondary {
-  background: #8b5cf6;
+  background: var(--spaco-primary);
   color: white;
-  border-color: #8b5cf6;
+  border-color: var(--spaco-primary);
 }
 
 .qa-btn.secondary:hover {
@@ -1291,7 +1291,7 @@
 
 .bar {
   flex: 1;
-  background: linear-gradient(to top, var(--primary-color), #667eea);
+  background: linear-gradient(to top, var(--primary-color), var(--spaco-primary));
   border-radius: 2px 2px 0 0;
   min-height: 10px;
   transition: all 0.3s ease;
@@ -1369,7 +1369,7 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary-color), #667eea);
+  background: linear-gradient(90deg, var(--primary-color), var(--spaco-primary));
   border-radius: 4px;
   transition: width 0.3s ease;
 }

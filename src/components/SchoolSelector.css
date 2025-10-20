@@ -32,7 +32,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--spaco-primary) 0%, var(--spaco-secondary) 100%);
   border-radius: 8px;
   color: white;
 }
@@ -91,8 +91,8 @@
 .filter-group select:focus,
 .filter-group input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--spaco-primary);
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
 }
 
 .filter-group select:disabled,
@@ -120,7 +120,7 @@
   width: 24px;
   height: 24px;
   border: 2px solid #e2e8f0;
-  border-top: 2px solid #667eea;
+  border-top: 2px solid var(--spaco-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 0.5rem;
@@ -144,7 +144,7 @@
 }
 
 .btn-register-school {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--spaco-primary) 0%, var(--spaco-secondary) 100%);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -179,8 +179,8 @@
 
 .btn-register-school-inline {
   background: transparent;
-  color: #667eea;
-  border: 1px solid #667eea;
+  color: var(--spaco-primary);
+  border: 1px solid var(--spaco-primary);
   padding: 0.5rem 1rem;
   border-radius: 6px;
   font-weight: 500;
@@ -190,7 +190,7 @@
 }
 
 .btn-register-school-inline:hover:not(:disabled) {
-  background: #667eea;
+  background: var(--spaco-primary);
   color: white;
   transform: translateY(-1px);
 }
@@ -229,7 +229,7 @@
 }
 
 .header-name:hover {
-  color: #667eea;
+  color: var(--spaco-primary);
 }
 
 .header-state {
@@ -240,7 +240,7 @@
 }
 
 .header-state:hover {
-  color: #667eea;
+  color: var(--spaco-primary);
 }
 
 .header-location {
@@ -251,7 +251,7 @@
 }
 
 .header-location:hover {
-  color: #667eea;
+  color: var(--spaco-primary);
 }
 
 .header-level {
@@ -262,7 +262,7 @@
 }
 
 .header-level:hover {
-  color: #667eea;
+  color: var(--spaco-primary);
 }
 
 .header-action {
@@ -348,7 +348,7 @@
 }
 
 .btn-select-school {
-  background: #667eea;
+  background: var(--spaco-primary);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -398,9 +398,9 @@
 
 /* Buttons */
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, var(--spaco-primary) 0%, var(--spaco-secondary) 100%);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: none;
   padding: 0.5rem 1rem;
   border-radius: 6px;
   font-size: 0.875rem;
@@ -410,13 +410,16 @@
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(135deg, var(--spaco-dark) 0%, var(--spaco-primary) 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
 }
 
 .btn-secondary:disabled {
-  opacity: 0.6;
+  background: #cbd5e0;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Responsive Design */

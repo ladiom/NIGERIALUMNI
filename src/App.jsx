@@ -10,6 +10,7 @@ import Admin from './pages/Admin';
 import SetupAdmin from './pages/SetupAdmin';
 import PendingRegistrations from './pages/PendingRegistrations';
 import EmailQueue from './pages/EmailQueue';
+import PhoneTest from './pages/PhoneTest';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import './App.css';
@@ -34,6 +35,7 @@ function App() {
             <Route path="/setup-admin" element={<SetupAdmin />} />
             <Route path="/pending-registrations" element={<PendingRegistrations />} />
             <Route path="/email-queue" element={<EmailQueue />} />
+            <Route path="/phone-test" element={<PhoneTest />} />
           </Routes>
         </main>
         <Footer />

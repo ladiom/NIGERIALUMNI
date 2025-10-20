@@ -39,8 +39,8 @@ function Home() {
     'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA',
     'BENUE', 'BORNO', 'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO',
     'EKITI', 'ENUGU', 'FCT', 'GOMBE', 'IMO', 'JIGAWA', 'KADUNA',
-    'KANO', 'KATSINA', 'KEBBI', 'KOGI', 'KWARA', 'LAGOS',
-    'NASARAWA', 'NIGER', 'OGUN', 'ONDO', 'OSUN', 'OYO',
+    'KANO', 'KATSINA', 'KEBBI', 'KOGI', 'KWARA', 'Lagos',
+    'NASARAWA', 'NIGER', 'OGUN', 'ONDO', 'OSUN', 'Oyo',
     'PLATEAU', 'RIVERS', 'SOKOTO', 'TARABA', 'YOBE', 'ZAMFARA'
   ];
 
@@ -90,6 +90,11 @@ function Home() {
     }
   }, [schoolSearch.state, schoolSearch.level]);
 
+  // Debug effect to monitor filteredLgas state
+  useEffect(() => {
+    console.log('🔍 filteredLgas updated:', filteredLgas);
+  }, [filteredLgas]);
+
   // Fetch school names based on selected state and level
   const fetchFilteredSchoolNames = async () => {
     setIsLoadingOptions(true);
@@ -107,8 +112,8 @@ function Home() {
       let query = supabase.from('schools').select('name').limit(100); // Add limit to prevent large queries
       
       if (schoolSearch.state) {
-        // Use case-insensitive search for state
-        query = query.ilike('state', schoolSearch.state);
+        // Use exact match for state
+        query = query.eq('state', schoolSearch.state);
         console.log('Adding state filter:', schoolSearch.state);
       }
       
@@ -187,8 +192,8 @@ function Home() {
       let query = supabase.from('schools').select('lga').limit(100); // Add limit to prevent large queries
       
       if (schoolSearch.state) {
-        // Use case-insensitive search for state
-        query = query.ilike('state', schoolSearch.state);
+        // Use exact match for state first, then case-insensitive as fallback
+        query = query.eq('state', schoolSearch.state);
       }
       
       const { data, error } = await query;
@@ -207,8 +212,8 @@ function Home() {
         ];
         setFilteredLgas(mockLgas);
       } else {
-        // Get unique LGAs by creating a Set
-        const uniqueLgas = [...new Set(data.map(item => item.lga))].sort();
+        // Get unique LGAs by creating a Set, filter out null/empty values
+        const uniqueLgas = [...new Set(data.map(item => item.lga).filter(lga => lga && lga.trim()))].sort();
         console.log('Filtered LGAs count:', uniqueLgas.length);
         setFilteredLgas(uniqueLgas);
       }
@@ -629,13 +634,13 @@ function Home() {
       <section className="search-hero">
         <div className="search-hero-content">
           <div className="search-header">
+            <div className="spaco-beta-title">
+              St. Patrick's Ibadan (SPACO) ALUMNI - Beta
+            </div>
             <div className="main-title">
               <h1>National Alumni Institutions Revival Alliance</h1>
               <div className="title-line-2">Get your NAIRA 100 ID NOW!</div>
             </div>
-            <p className="search-description">
-              SPACO ALUMNI INITIATIVE - Support your alma mater
-            </p>
             <p className="search-description tagline">
               Reconnect. Rediscover. Rebuild.
             </p>

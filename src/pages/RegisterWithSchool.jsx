@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import SchoolSelector from '../components/SchoolSelector';
+import PhoneInput from '../components/PhoneInput';
 import supabase from '../supabaseClient';
 import { enqueueRegistrationReceivedEmail } from '../utils/registration';
 import './RegisterWithSchool.css';
@@ -189,8 +190,8 @@ function RegisterWithSchool() {
     
     if (!formData.phoneNumber.trim()) {
       newErrors.phoneNumber = 'Phone number is required';
-    } else if (!/^\+?[1-9]\d{1,14}$/.test(formData.phoneNumber)) {
-      newErrors.phoneNumber = 'Please enter a valid phone number';
+    } else if (!/^\+[1-9]\d{1,14}$/.test(formData.phoneNumber)) {
+      newErrors.phoneNumber = 'Please enter a valid international phone number (e.g., +234 123 456 7890)';
     }
     
     if (!formData.email.trim()) {
@@ -475,16 +476,15 @@ function RegisterWithSchool() {
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="phoneNumber">Phone Number *</label>
-              <input
-                type="tel"
-                id="phoneNumber"
+              <PhoneInput
+                key="phone-input"
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={handleChange}
                 placeholder="Enter your phone number"
                 disabled={submitting}
+                error={errors.phoneNumber}
               />
-              {errors.phoneNumber && <span className="error-message">{errors.phoneNumber}</span>}
             </div>
             
             <div className="form-group">
