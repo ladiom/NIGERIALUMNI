@@ -116,3 +116,17 @@ button:focus-visible {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
+
+/* Ensure mobile menu appears above everything */
+.navbar-links.mobile-open {
+  z-index: 99999 !important;
+  position: fixed !important;
+}
+
+.mobile-close-button {
+  z-index: 100000 !important;
+}
+
+.mobile-menu-button {
+  z-index: 100001 !important;
+}
