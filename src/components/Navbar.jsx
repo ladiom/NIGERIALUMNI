@@ -51,6 +51,7 @@ function Navbar() {
 
         <div className={`navbar-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
           <Link to="/about" className="navbar-link" onClick={closeMobileMenu}>About</Link>
+          <Link to="/partners" className="navbar-link" onClick={closeMobileMenu}>Partners</Link>
           {user ? (
             // User is signed in
             <>
