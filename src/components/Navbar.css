@@ -151,6 +151,20 @@
   box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
 }
 
+.login-button:focus {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  color: white !important;
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+}
+
+.login-button:active {
+  background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+  color: white !important;
+  transform: translateY(0);
+}
+
 /* Mobile menu button */
 .mobile-menu-button {
   display: none;

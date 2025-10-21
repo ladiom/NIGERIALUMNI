@@ -268,8 +268,8 @@
 
 .search-text-input {
   flex: 1;
-  font-size: 1.1rem;
-  padding: 0.8rem;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -773,7 +773,7 @@
   
   .search-text-input {
     font-size: 1rem;
-    padding: 0.875rem 1rem;
+    padding: 0.75rem 1rem;
   }
   
   .filter-fields {
@@ -792,8 +792,8 @@
   }
   
   .filter-fields .form-control {
-    padding: 0.75rem;
-    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
   }
   
   .filter-actions {
@@ -1446,7 +1446,7 @@
   
   .search-text-input {
     font-size: 1rem;
-    padding: 0.875rem 1rem;
+    padding: 0.75rem 1rem;
   }
   
   .filter-fields .form-group label {
@@ -1455,8 +1455,8 @@
   }
   
   .filter-fields .form-control {
-    padding: 0.75rem;
-    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
   }
 }
 
