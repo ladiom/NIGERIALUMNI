@@ -169,42 +169,22 @@
   }
   
   .phone-input-wrapper {
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-direction: row;
+    gap: 0;
+    border-radius: 8px;
   }
   
   .country-selector {
-    width: 100%;
+    flex-shrink: 0;
+    width: auto;
   }
   
-  .country-button {
-    min-width: 100px;
-    padding: 12px 10px;
-    font-size: 0.9rem;
-  }
-  
-  .country-code {
-    font-size: 0.9rem;
-  }
-  
-  .phone-number-input {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 1rem;
-  }
-  
-  .country-dropdown {
-    width: 100% !important;
-    max-width: 100% !important;
-    left: 0 !important;
-  }
-}
-
-@media (max-width: 480px) {
   .country-button {
     min-width: 80px;
     padding: 10px 8px;
     font-size: 0.85rem;
+    border-radius: 8px 0 0 8px;
+    border-right: 1px solid #ddd;
   }
   
   .country-code {
@@ -212,11 +192,17 @@
   }
   
   .phone-number-input {
+    flex: 1;
     padding: 10px 12px;
     font-size: 0.95rem;
+    border-radius: 0 8px 8px 0;
+    border-left: none;
   }
   
   .country-dropdown {
+    width: 280px !important;
+    max-width: 90vw !important;
+    left: 0 !important;
     font-size: 0.9rem;
   }
   
@@ -228,6 +214,72 @@
   .country-dropdown button {
     padding: 8px 10px;
     font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .country-button {
+    min-width: 70px;
+    padding: 8px 6px;
+    font-size: 0.8rem;
+  }
+  
+  .country-code {
+    font-size: 0.8rem;
+  }
+  
+  .phone-number-input {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+  
+  .country-dropdown {
+    width: 260px !important;
+    max-width: 85vw !important;
+    font-size: 0.85rem;
+  }
+  
+  .country-dropdown input {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+  
+  .country-dropdown button {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .country-button {
+    min-width: 60px;
+    padding: 6px 4px;
+    font-size: 0.75rem;
+  }
+  
+  .country-code {
+    font-size: 0.75rem;
+  }
+  
+  .phone-number-input {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+  
+  .country-dropdown {
+    width: 240px !important;
+    max-width: 80vw !important;
+    font-size: 0.8rem;
+  }
+  
+  .country-dropdown input {
+    padding: 5px 6px;
+    font-size: 0.8rem;
+  }
+  
+  .country-dropdown button {
+    padding: 5px 6px;
+    font-size: 0.75rem;
   }
 }
 
