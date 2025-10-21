@@ -64,15 +64,6 @@ function Navbar() {
         </button>
 
         <div className={`navbar-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
-          {/* Close button for mobile menu */}
-          <button 
-            className="mobile-close-button"
-            onClick={closeMobileMenu}
-            aria-label="Close mobile menu"
-          >
-            ✕
-          </button>
-          
           <Link to="/about" className="navbar-link" onClick={closeMobileMenu}>About</Link>
           <Link to="/partners" className="navbar-link" onClick={closeMobileMenu}>Partners</Link>
           {user ? (
