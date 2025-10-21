@@ -43,8 +43,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark mode styles */
-@media (prefers-color-scheme: dark) {
+/* Dark mode styles - disabled on mobile for consistency */
+@media (prefers-color-scheme: dark) and (min-width: 769px) {
   :root {
     --bg-color: #0f172a;
     --text-color: #f1f5f9;
