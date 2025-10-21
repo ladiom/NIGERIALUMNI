@@ -121,6 +121,14 @@ button:focus-visible {
 .navbar-links.mobile-open {
   z-index: 99999 !important;
   position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
 }
 
 .mobile-close-button {

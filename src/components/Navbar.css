@@ -251,12 +251,14 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(15px);
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
     flex-direction: column;
     padding: 2rem 1rem;
     gap: 1rem;
-    transform: translateX(-100%);
+    transform: scale(0.8) translateY(-50px);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -264,14 +266,16 @@
     justify-content: flex-start;
     padding-top: 4rem;
     overflow-y: auto;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
     isolation: isolate;
+    pointer-events: none;
   }
   
   .navbar-links.mobile-open {
-    transform: translateX(0);
+    transform: scale(1) translateY(0);
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
   }
 
   .mobile-close-button {
