@@ -251,7 +251,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    width: 80vw;
+    width: 100vw;
     height: 50vh;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(15px);
@@ -269,13 +269,10 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     isolation: isolate;
     pointer-events: none;
-    margin: 0 auto;
-    left: 50%;
-    transform: translateX(-50%) scale(0.8) translateY(-50px);
   }
   
   .navbar-links.mobile-open {
-    transform: translateX(-50%) scale(1) translateY(0);
+    transform: scale(1) translateY(0);
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
