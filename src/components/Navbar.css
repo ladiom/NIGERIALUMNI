@@ -349,3 +349,10 @@
     }
   }
 }
+
+/* Hide mobile close button on desktop */
+@media (min-width: 769px) {
+  .mobile-close-button {
+    display: none !important;
+  }
+}
