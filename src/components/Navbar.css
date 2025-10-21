@@ -295,6 +295,7 @@
     text-decoration: none;
     display: block;
     margin-bottom: 0.25rem;
+    box-sizing: border-box;
   }
 
   .navbar-link:hover {
@@ -310,13 +311,15 @@
     font-size: 1rem;
     border-radius: 8px;
     width: 100%;
+    max-width: 100%;
     text-align: left;
     background: rgba(37, 99, 235, 0.08);
     border: 1px solid rgba(37, 99, 235, 0.15);
-    color: var(--spaco-dark);
+    color: #000000 !important;
     font-weight: 500;
     margin-bottom: 0.25rem;
     transition: all 0.3s ease;
+    box-sizing: border-box;
   }
 
   .login-button:hover {
