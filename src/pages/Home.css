@@ -1121,8 +1121,8 @@
   overflow: hidden;
 }
 
-/* Dark mode support for search-hero */
-@media (prefers-color-scheme: dark) {
+/* Dark mode support for search-hero - disabled on mobile for consistency */
+@media (prefers-color-scheme: dark) and (min-width: 769px) {
   .search-hero {
     background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
   }
@@ -1220,8 +1220,8 @@
   margin-bottom: 1rem;
 }
 
-/* Dark mode support for search form */
-@media (prefers-color-scheme: dark) {
+/* Dark mode support for search form - disabled on mobile for consistency */
+@media (prefers-color-scheme: dark) and (min-width: 769px) {
   .search-form-container {
     background: rgba(30, 41, 59, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);

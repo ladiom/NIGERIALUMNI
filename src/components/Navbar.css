@@ -9,8 +9,8 @@
   border-bottom: 1px solid rgba(37, 99, 235, 0.1);
   backdrop-filter: blur(10px);
   
-  /* Dark mode styles */
-  @media (prefers-color-scheme: dark) {
+  /* Dark mode styles - disabled on mobile for consistency */
+  @media (prefers-color-scheme: dark) and (min-width: 769px) {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     color: #f1f5f9;
   }
@@ -70,8 +70,8 @@
   color: var(--spaco-dark);
   font-weight: 600;
   
-  /* Dark mode styles */
-  @media (prefers-color-scheme: dark) {
+  /* Dark mode styles - disabled on mobile for consistency */
+  @media (prefers-color-scheme: dark) and (min-width: 769px) {
     color: #f1f5f9;
   }
 }
@@ -91,8 +91,8 @@
   border-radius: 6px;
   transition: all 0.2s ease;
   
-  /* Dark mode styles */
-  @media (prefers-color-scheme: dark) {
+  /* Dark mode styles - disabled on mobile for consistency */
+  @media (prefers-color-scheme: dark) and (min-width: 769px) {
     color: #f1f5f9;
   }
 }
@@ -294,8 +294,8 @@
     text-align: center;
   }
   
-  /* Dark mode mobile styles */
-  @media (prefers-color-scheme: dark) {
+  /* Dark mode mobile styles - disabled for consistency */
+  @media (prefers-color-scheme: dark) and (min-width: 769px) {
     .navbar-links {
       background: rgba(15, 23, 42, 0.98);
     }
