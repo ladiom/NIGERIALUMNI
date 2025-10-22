@@ -764,7 +764,7 @@ function Home() {
                 
                 <button 
                   type="button" 
-                  className="btn btn-secondary"
+                  className="btn btn-primary btn-search"
                   onClick={clearAllFilters}
                   disabled={loading}
                 >
