@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import AdminImageManagement from '../components/AdminImageManagement';
 import './Admin.css';
 import supabase from '../supabaseClient';
 
@@ -913,6 +914,13 @@ Nigeria Alumni Network Team`,
             >
               <span className="nav-icon">📧</span>
               <span>Email Queue</span>
+            </li>
+            <li 
+              className={activeTab === 'images' ? 'active' : ''}
+              onClick={() => setActiveTab('images')}
+            >
+              <span className="nav-icon">📷</span>
+              <span>Image Management</span>
             </li>
           </ul>
         </div>
@@ -1983,6 +1991,13 @@ Nigeria Alumni Network Team`,
               </div>
             </section>
           </div>
+        </div>
+      )}
+
+      {/* Image Management Tab */}
+      {activeTab === 'images' && (
+        <div className="tab-content">
+          <AdminImageManagement />
         </div>
       )}
         </div>
