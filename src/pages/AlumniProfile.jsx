@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import supabase from '../supabaseClient';
 import { useAuth } from '../context/AuthContext';
+import ImageUpload from '../components/ImageUpload';
 import './AlumniProfile.css';
 
 function AlumniProfile() {
@@ -15,6 +16,8 @@ function AlumniProfile() {
   const [alumniData, setAlumniData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showImageUpload, setShowImageUpload] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   
   useEffect(() => {
     const fetchAlumniData = async () => {
@@ -152,6 +155,33 @@ function AlumniProfile() {
     console.log(isConnected ? 'Disconnected from alumni' : 'Connected to alumni');
   };
 
+  // Handle image upload
+  const handleImageUpload = async (imageUrl) => {
+    setUploadingImage(true);
+    try {
+      const { error } = await supabase
+        .from('alumni')
+        .update({ profile_picture: imageUrl })
+        .eq('id', alumniId);
+        
+      if (error) throw error;
+      
+      // Update local state
+      setAlumniData(prev => ({
+        ...prev,
+        profile_picture: imageUrl
+      }));
+      
+      setShowImageUpload(false);
+      alert('Profile picture updated successfully!');
+    } catch (error) {
+      console.error('Error updating profile picture:', error);
+      alert('Failed to update profile picture. Please try again.');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   return (
     <div className="alumni-profile-container">
       {/* Profile Header */}
@@ -163,6 +193,27 @@ function AlumniProfile() {
           <div className="alumni-badge">
             <span>Alumni</span>
           </div>
+          {user && userProfile?.alumni_id === alumniId && (
+            <div className="image-upload-section">
+              <button 
+                onClick={() => setShowImageUpload(!showImageUpload)}
+                className="upload-image-button"
+                disabled={uploadingImage}
+              >
+                {uploadingImage ? 'Uploading...' : '📷 Update Photo'}
+              </button>
+              {showImageUpload && (
+                <div className="image-upload-modal">
+                  <ImageUpload
+                    alumniId={alumniId}
+                    onImageUploaded={handleImageUpload}
+                    currentImage={transformedData.profilePicture}
+                    type="profile"
+                  />
+                </div>
+              )}
+            </div>
+          )}
         </div>
         
         <div className="profile-info">
