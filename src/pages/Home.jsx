@@ -992,7 +992,7 @@ function Home() {
             <Link to="/register-school" className="btn btn-primary btn-large">
               Join Now
             </Link>
-            <Link to="/login" className="btn btn-outline btn-large">
+            <Link to="/login" className="btn btn-primary btn-large">
               Sign In
             </Link>
           </div>
