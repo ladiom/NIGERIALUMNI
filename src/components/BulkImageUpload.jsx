@@ -144,6 +144,9 @@ const BulkImageUpload = ({
         setResults([...uploadResults]);
       }
       
+      // Get current user ID
+      const { data: { user } } = await supabase.auth.getUser();
+      
       // Save upload records to database
       const bulkUploadRecords = uploadResults.map(result => ({
         upload_batch_id: currentBatchId,
@@ -151,7 +154,7 @@ const BulkImageUpload = ({
         image_url: result.url || null,
         status: result.success ? 'success' : 'error',
         error_message: result.error || null,
-        uploaded_by: (await supabase.auth.getUser()).data.user?.id
+        uploaded_by: user?.id
       }));
       
       const { error: dbError } = await supabase
