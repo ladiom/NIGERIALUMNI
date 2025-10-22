@@ -878,7 +878,10 @@
   .btn-secondary,
   .btn-download-kit {
     width: 100%;
-    max-width: 300px;
+    max-width: 280px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    margin: 0.25rem 0;
   }
 }
 
@@ -924,6 +927,16 @@
   
   .cta-content p {
     font-size: 1rem;
+  }
+  
+  .btn-primary,
+  .btn-secondary,
+  .btn-download-kit {
+    width: 100%;
+    max-width: 250px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+    margin: 0.25rem 0;
   }
 }
 
