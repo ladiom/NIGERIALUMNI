@@ -79,7 +79,7 @@ function Navbar() {
           ) : (
             // User is not signed in
             <>
-              <Link to="/register-school" className="navbar-link" onClick={closeMobileMenu}>Register</Link>
+              <Link to="/register-school" className="navbar-link login-button" onClick={closeMobileMenu}>Register</Link>
               <Link to="/login" className="navbar-link login-button" onClick={closeMobileMenu}>Login</Link>
             </>
           )}
