@@ -12,6 +12,17 @@ const AdminImageManagement = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [uploadHistory, setUploadHistory] = useState([]);
+  
+  // Enhanced search functionality
+  const [searchFilters, setSearchFilters] = useState({
+    state: '',
+    level: '',
+    graduationYear: '',
+    schoolName: ''
+  });
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [useAdvancedSearch, setUseAdvancedSearch] = useState(false);
 
   useEffect(() => {
     fetchAlumniList();
@@ -23,7 +34,8 @@ const AdminImageManagement = () => {
       const { data, error } = await supabase
         .from('alumni')
         .select('id, full_name, school:schools(name)')
-        .order('full_name');
+        .order('full_name')
+        .limit(100); // Limit for performance
         
       if (error) throw error;
       setAlumniList(data || []);
@@ -32,6 +44,80 @@ const AdminImageManagement = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Enhanced search function
+  const performAdvancedSearch = async () => {
+    setIsSearching(true);
+    try {
+      const hasFilters = Object.values(searchFilters).some(value => value.trim() !== '');
+      const hasSearchText = searchTerm.trim() !== '';
+      
+      if (!hasFilters && !hasSearchText) {
+        setSearchResults([]);
+        return;
+      }
+
+      // Build query based on filters
+      let query = supabase
+        .from('alumni')
+        .select('*, school:schools(name, state, level, lga)')
+        .limit(100);
+
+      // Apply filters
+      if (searchFilters.state) {
+        query = query.eq('school.state', searchFilters.state);
+      }
+      
+      if (searchFilters.level) {
+        query = query.eq('school.level', searchFilters.level);
+      }
+      
+      if (searchFilters.graduationYear) {
+        query = query.eq('graduation_year', searchFilters.graduationYear);
+      }
+      
+      if (searchFilters.schoolName) {
+        query = query.ilike('school.name', `%${searchFilters.schoolName}%`);
+      }
+
+      // Apply text search
+      if (hasSearchText) {
+        const term = searchTerm.toLowerCase();
+        query = query.or(`full_name.ilike.%${term}%,id.ilike.%${term}%`);
+      }
+
+      const { data, error } = await query;
+      
+      if (error) throw error;
+      
+      setSearchResults(data || []);
+    } catch (error) {
+      console.error('Error performing advanced search:', error);
+      setSearchResults([]);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  // Handle filter changes
+  const handleFilterChange = (filterName, value) => {
+    setSearchFilters(prev => ({
+      ...prev,
+      [filterName]: value
+    }));
+  };
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    setSearchTerm('');
+    setSearchFilters({
+      state: '',
+      level: '',
+      graduationYear: '',
+      schoolName: ''
+    });
+    setSearchResults([]);
   };
 
   const fetchUploadHistory = async () => {
@@ -103,7 +189,8 @@ const AdminImageManagement = () => {
     alert(`Bulk upload completed! ${results.filter(r => r.success).length} successful, ${results.filter(r => !r.success).length} failed.`);
   };
 
-  const filteredAlumni = alumniList.filter(alumni =>
+  // Use advanced search results if available, otherwise fall back to basic filtering
+  const filteredAlumni = useAdvancedSearch ? searchResults : alumniList.filter(alumni =>
     alumni.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     alumni.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
     alumni.school?.name?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -142,13 +229,88 @@ const AdminImageManagement = () => {
             <div className="alumni-selector">
               <h3>Select Alumni for Profile Picture</h3>
               <div className="search-container">
-                <input
-                  type="text"
-                  placeholder="Search alumni by name, ID, or school..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="search-input"
-                />
+                <div className="search-header">
+                  <input
+                    type="text"
+                    placeholder="Search alumni by name, ID, or school..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-input"
+                  />
+                  <button
+                    type="button"
+                    className={`search-mode-toggle ${useAdvancedSearch ? 'active' : ''}`}
+                    onClick={() => setUseAdvancedSearch(!useAdvancedSearch)}
+                  >
+                    {useAdvancedSearch ? '🔍 Advanced' : '📋 Basic'}
+                  </button>
+                </div>
+                
+                {useAdvancedSearch && (
+                  <div className="advanced-search-filters">
+                    <div className="filter-row">
+                      <select
+                        value={searchFilters.state}
+                        onChange={(e) => handleFilterChange('state', e.target.value)}
+                        className="filter-select"
+                      >
+                        <option value="">All States</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Oyo">Oyo</option>
+                        <option value="Kano">Kano</option>
+                        <option value="Rivers">Rivers</option>
+                        <option value="FCT">FCT</option>
+                        {/* Add more states as needed */}
+                      </select>
+                      
+                      <select
+                        value={searchFilters.level}
+                        onChange={(e) => handleFilterChange('level', e.target.value)}
+                        className="filter-select"
+                      >
+                        <option value="">All Levels</option>
+                        <option value="PR">Primary</option>
+                        <option value="HI">Secondary</option>
+                        <option value="PO">Polytechnic</option>
+                        <option value="UN">University</option>
+                      </select>
+                      
+                      <input
+                        type="text"
+                        placeholder="Graduation Year"
+                        value={searchFilters.graduationYear}
+                        onChange={(e) => handleFilterChange('graduationYear', e.target.value)}
+                        className="filter-input"
+                      />
+                      
+                      <input
+                        type="text"
+                        placeholder="School Name"
+                        value={searchFilters.schoolName}
+                        onChange={(e) => handleFilterChange('schoolName', e.target.value)}
+                        className="filter-input"
+                      />
+                    </div>
+                    
+                    <div className="search-actions">
+                      <button
+                        type="button"
+                        onClick={performAdvancedSearch}
+                        disabled={isSearching}
+                        className="search-button"
+                      >
+                        {isSearching ? 'Searching...' : '🔍 Search Database'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={clearAllFilters}
+                        className="clear-button"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
               
               {loading ? (
@@ -194,13 +356,87 @@ const AdminImageManagement = () => {
             <div className="alumni-selector">
               <h3>Select Alumni for Gallery Images</h3>
               <div className="search-container">
-                <input
-                  type="text"
-                  placeholder="Search alumni by name, ID, or school..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="search-input"
-                />
+                <div className="search-header">
+                  <input
+                    type="text"
+                    placeholder="Search alumni by name, ID, or school..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-input"
+                  />
+                  <button
+                    type="button"
+                    className={`search-mode-toggle ${useAdvancedSearch ? 'active' : ''}`}
+                    onClick={() => setUseAdvancedSearch(!useAdvancedSearch)}
+                  >
+                    {useAdvancedSearch ? '🔍 Advanced' : '📋 Basic'}
+                  </button>
+                </div>
+                
+                {useAdvancedSearch && (
+                  <div className="advanced-search-filters">
+                    <div className="filter-row">
+                      <select
+                        value={searchFilters.state}
+                        onChange={(e) => handleFilterChange('state', e.target.value)}
+                        className="filter-select"
+                      >
+                        <option value="">All States</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Oyo">Oyo</option>
+                        <option value="Kano">Kano</option>
+                        <option value="Rivers">Rivers</option>
+                        <option value="FCT">FCT</option>
+                      </select>
+                      
+                      <select
+                        value={searchFilters.level}
+                        onChange={(e) => handleFilterChange('level', e.target.value)}
+                        className="filter-select"
+                      >
+                        <option value="">All Levels</option>
+                        <option value="PR">Primary</option>
+                        <option value="HI">Secondary</option>
+                        <option value="PO">Polytechnic</option>
+                        <option value="UN">University</option>
+                      </select>
+                      
+                      <input
+                        type="text"
+                        placeholder="Graduation Year"
+                        value={searchFilters.graduationYear}
+                        onChange={(e) => handleFilterChange('graduationYear', e.target.value)}
+                        className="filter-input"
+                      />
+                      
+                      <input
+                        type="text"
+                        placeholder="School Name"
+                        value={searchFilters.schoolName}
+                        onChange={(e) => handleFilterChange('schoolName', e.target.value)}
+                        className="filter-input"
+                      />
+                    </div>
+                    
+                    <div className="search-actions">
+                      <button
+                        type="button"
+                        onClick={performAdvancedSearch}
+                        disabled={isSearching}
+                        className="search-button"
+                      >
+                        {isSearching ? 'Searching...' : '🔍 Search Database'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={clearAllFilters}
+                        className="clear-button"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
               
               {loading ? (
