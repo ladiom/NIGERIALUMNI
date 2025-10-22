@@ -196,9 +196,15 @@ const ImageUpload = ({
       )}
 
       {currentImage && !preview && (
-        <div className="current-image">
-          <img src={currentImage} alt="Current" className="current-image-preview" />
-          <p className="current-image-label">Current image</p>
+        <div 
+          className="current-image"
+          onClick={() => {
+            const fileInput = document.getElementById(`image-upload-${alumniId}`);
+            fileInput.click();
+          }}
+        >
+          <img src={currentImage} alt="Current Profile Picture" className="current-image-preview" />
+          <p className="current-image-label">📷 Click to change profile picture</p>
         </div>
       )}
     </div>

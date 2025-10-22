@@ -23,6 +23,7 @@ const AdminImageManagement = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [useAdvancedSearch, setUseAdvancedSearch] = useState(false);
+  const [currentProfilePicture, setCurrentProfilePicture] = useState(null);
 
   useEffect(() => {
     fetchAlumniList();
@@ -135,6 +136,24 @@ const AdminImageManagement = () => {
     }
   };
 
+  // Fetch current profile picture when alumni is selected
+  const fetchCurrentProfilePicture = async (alumniId) => {
+    try {
+      const { data, error } = await supabase
+        .from('alumni')
+        .select('profile_picture')
+        .eq('id', alumniId)
+        .single();
+        
+      if (error) throw error;
+      
+      setCurrentProfilePicture(data?.profile_picture || null);
+    } catch (error) {
+      console.error('Error fetching profile picture:', error);
+      setCurrentProfilePicture(null);
+    }
+  };
+
   const handleSingleImageUpload = async (imageUrl) => {
     if (!selectedAlumni) {
       alert('Please select an alumni first');
@@ -148,6 +167,9 @@ const AdminImageManagement = () => {
         .eq('id', selectedAlumni.id);
         
       if (error) throw error;
+      
+      // Update the current profile picture state
+      setCurrentProfilePicture(imageUrl);
       
       alert(`Profile picture updated for ${selectedAlumni.full_name}`);
       fetchAlumniList(); // Refresh the list
@@ -321,7 +343,10 @@ const AdminImageManagement = () => {
                     <div
                       key={alumni.id}
                       className={`alumni-item ${selectedAlumni?.id === alumni.id ? 'selected' : ''}`}
-                      onClick={() => setSelectedAlumni(alumni)}
+                      onClick={() => {
+                        setSelectedAlumni(alumni);
+                        fetchCurrentProfilePicture(alumni.id);
+                      }}
                     >
                       <div className="alumni-info">
                         <div className="alumni-name">{alumni.full_name}</div>
@@ -341,9 +366,34 @@ const AdminImageManagement = () => {
             {selectedAlumni && (
               <div className="upload-section">
                 <h3>Upload Profile Picture for {selectedAlumni.full_name}</h3>
+                
+                {/* Show current profile picture prominently */}
+                {currentProfilePicture && (
+                  <div className="current-profile-section">
+                    <h4>Current Profile Picture</h4>
+                    <div 
+                      className="current-profile-container"
+                      onClick={() => {
+                        const fileInput = document.querySelector(`#image-upload-${selectedAlumni.id}`);
+                        if (fileInput) fileInput.click();
+                      }}
+                    >
+                      <img 
+                        src={currentProfilePicture} 
+                        alt={`${selectedAlumni.full_name}'s profile picture`}
+                        className="current-profile-image"
+                      />
+                      <div className="current-profile-overlay">
+                        <span className="overlay-text">📷 Click to change</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
                 <ImageUpload
                   alumniId={selectedAlumni.id}
                   onImageUploaded={handleSingleImageUpload}
+                  currentImage={currentProfilePicture}
                   type="profile"
                 />
               </div>
@@ -447,7 +497,10 @@ const AdminImageManagement = () => {
                     <div
                       key={alumni.id}
                       className={`alumni-item ${selectedAlumni?.id === alumni.id ? 'selected' : ''}`}
-                      onClick={() => setSelectedAlumni(alumni)}
+                      onClick={() => {
+                        setSelectedAlumni(alumni);
+                        fetchCurrentProfilePicture(alumni.id);
+                      }}
                     >
                       <div className="alumni-info">
                         <div className="alumni-name">{alumni.full_name}</div>
