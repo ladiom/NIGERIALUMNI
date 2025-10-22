@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import supabase from '../supabaseClient';
 import ImageUpload from './ImageUpload';
 import MultipleImageUpload from './MultipleImageUpload';
 import BulkImageUpload from './BulkImageUpload';
