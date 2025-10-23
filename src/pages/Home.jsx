@@ -1147,13 +1147,6 @@ function Home() {
             </Link>
           </div>
         </div>
-        <div className="impact-visual">
-          <div className="impact-graphic">
-            <div className="graphic-circle">
-              <div className="graphic-text">NAIRA-100</div>
-            </div>
-          </div>
-        </div>
       </section>
     </div>
   );
