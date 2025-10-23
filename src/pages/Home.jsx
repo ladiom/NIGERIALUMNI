@@ -1026,36 +1026,58 @@ function Home() {
         <div className="features-container">
           <h2>NAIRA-100 Core Features</h2>
           <p className="features-subtitle">Transforming nostalgia into nation-building power</p>
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">🎓</div>
-              <h3>Unified Alumni Database</h3>
-              <p>Connect graduates from Primary, Secondary, Vocational, and Tertiary institutions across Nigeria through our secure digital platform.</p>
+          
+          {/* Data Intelligence & Decision Support */}
+          <div className="feature-category">
+            <h3 className="category-title">🧠 Data Intelligence & Decision Support</h3>
+            <p className="category-subtitle">"You can't revive what you haven't diagnosed. NAIRA turns school data into action."</p>
+            <div className="features-grid">
+              <div className="feature-card">
+                <div className="feature-icon">🎓</div>
+                <h4>Alumni Registry</h4>
+                <p>Secure profiling of alumni across institutions and generations with unique NAIRA-100 IDs and verified credentials.</p>
+              </div>
+              <div className="feature-card">
+                <div className="feature-icon">📊</div>
+                <h4>School Intelligence Dashboard</h4>
+                <p>Real-time data on infrastructure, staffing, curriculum, and performance to drive fact-based revival strategies.</p>
+              </div>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">🔐</div>
-              <h3>Secure Verification</h3>
-              <p>Get your unique NAIRA-100 ID with verified credentials. Example: STP-1998-0023-AO (School-Year-Sequence-Initials).</p>
+          </div>
+
+          {/* Knowledge Sharing & Innovation Access */}
+          <div className="feature-category">
+            <h3 className="category-title">🚀 Knowledge Sharing & Innovation Access</h3>
+            <p className="category-subtitle">"NAIRA transforms alumni wisdom into student opportunity."</p>
+            <div className="features-grid">
+              <div className="feature-card">
+                <div className="feature-icon">🚀</div>
+                <h4>STEM & Innovation</h4>
+                <p>Facilitate cross-institutional collaboration in STEM, AI education, digital literacy, and career mentorship programs.</p>
+              </div>
+              <div className="feature-card">
+                <div className="feature-icon">💰</div>
+                <h4>Innovation Grants</h4>
+                <p>Support for schools adopting robotics, coding, and digital labs with ready-to-deploy curriculum modules.</p>
+              </div>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">🏛️</div>
-              <h3>CAC Registered Chapters</h3>
-              <p>All alumni associations are legally registered with Corporate Affairs Commission ensuring transparency and accountability.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">💰</div>
-              <h3>Bank Partnerships</h3>
-              <p>Partner banks provide ₦100,000 startup support for verified alumni organizations with multi-signatory governance.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">🚀</div>
-              <h3>STEM & Innovation</h3>
-              <p>Facilitate cross-institutional collaboration in STEM, AI education, digital literacy, and career mentorship programs.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">🏆</div>
-              <h3>Member Recognition</h3>
-              <p>Silver, Gold, and Diamond membership tiers with official NAIRA-100 brooch pins and Hall of Contributors recognition.</p>
+          </div>
+
+          {/* Alumni Connection & Support Network */}
+          <div className="feature-category">
+            <h3 className="category-title">🤝 Alumni Connection & Support Network</h3>
+            <p className="category-subtitle">"NAIRA is not just a platform — it's a movement of reconnection."</p>
+            <div className="features-grid">
+              <div className="feature-card">
+                <div className="feature-icon">🏛️</div>
+                <h4>CAC Registered Chapters</h4>
+                <p>All alumni associations are legally registered with Corporate Affairs Commission ensuring transparency and accountability.</p>
+              </div>
+              <div className="feature-card">
+                <div className="feature-icon">🏆</div>
+                <h4>Recognition System</h4>
+                <p>Silver, Gold, and Diamond membership tiers with official NAIRA-100 brooch pins and Hall of Contributors recognition.</p>
+              </div>
             </div>
           </div>
         </div>
