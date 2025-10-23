@@ -96,6 +96,21 @@
   padding-top: 1rem;
   text-align: center;
   color: #64748b;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.kajopo-branding {
+  font-size: 0.9rem;
+  color: #2563eb;
+  margin: 0;
+  font-weight: 500;
+}
+
+.kajopo-branding strong {
+  color: #1e40af;
+  font-weight: 700;
 }
 
 /* Responsive styles */
@@ -144,5 +159,9 @@
   .footer-link,
   .contact-item {
     font-size: 0.9rem;
+  }
+  
+  .kajopo-branding {
+    font-size: 0.85rem;
   }
 }

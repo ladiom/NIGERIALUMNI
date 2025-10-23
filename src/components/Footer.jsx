@@ -49,6 +49,7 @@ function Footer() {
         
         <div className="footer-bottom">
           <p>&copy; {new Date().getFullYear()} NAIRA-100 - National Alumni Institutions Revival Alliance. All rights reserved.</p>
+          <p className="kajopo-branding">Product of <strong>Kajopo Solutions</strong></p>
         </div>
       </div>
     </footer>
