@@ -2287,35 +2287,26 @@
     margin-bottom: 0.5rem;
   }
   
-  .feature-category {
-    margin-bottom: 2rem;
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
   }
   
-  .category-title {
-    font-size: 1.3rem;
-  }
-  
-  .category-subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .category-description {
+  .feature-card {
     padding: 1.5rem;
-    margin: 0 1rem;
   }
   
-  .category-description p {
-    font-size: 1rem;
+  .feature-icon {
+    font-size: 2rem;
   }
   
-  .key-components h4 {
-    font-size: 1rem;
+  .feature-card h3 {
+    font-size: 1.1rem;
   }
   
-  .key-components li {
+  .feature-card p {
     font-size: 0.9rem;
-    padding: 0.5rem 0;
   }
 }
 
@@ -2535,73 +2526,48 @@
   font-style: italic;
 }
 
-.feature-category {
-  margin-bottom: 3rem;
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
 }
 
-.category-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1e293b;
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-.category-subtitle {
-  font-size: 1rem;
-  color: #64748b;
-  text-align: center;
-  font-style: italic;
-  margin-bottom: 1.5rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.category-description {
-  background: #f8fafc;
+.feature-card {
+  background: #ffffff;
   padding: 2rem;
   border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
-  max-width: 800px;
-  margin: 0 auto;
+  border-left: 4px solid #2563eb;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
 }
 
-.category-description p {
-  font-size: 1.1rem;
-  color: #1e293b;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-.key-components h4 {
-  font-size: 1.1rem;
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.feature-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
   color: #1e293b;
   margin-bottom: 1rem;
-  font-weight: 600;
+  line-height: 1.4;
 }
 
-.key-components ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.key-components li {
-  padding: 0.75rem 0;
-  border-bottom: 1px solid #e2e8f0;
+.feature-card p {
+  color: #64748b;
+  line-height: 1.6;
   font-size: 1rem;
-  line-height: 1.5;
-  color: #475569;
-}
-
-.key-components li:last-child {
-  border-bottom: none;
-}
-
-.key-components li strong {
-  color: #1e293b;
-  font-weight: 600;
+  margin: 0;
 }
 
 .testimonials-subtitle {

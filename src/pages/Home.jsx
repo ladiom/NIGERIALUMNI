@@ -1027,57 +1027,21 @@ function Home() {
           <h2>NAIRA-100 Core Features</h2>
           <p className="features-subtitle">Transforming nostalgia into nation-building power</p>
           
-          {/* Data Intelligence & Decision Support */}
-          <div className="feature-category">
-            <h3 className="category-title">🧠 Data Intelligence & Decision Support</h3>
-            <p className="category-subtitle">"You can't revive what you haven't diagnosed. NAIRA turns school data into action."</p>
-            <div className="category-description">
-              <p><strong>Purpose:</strong> Build a national database of alumni and schools to drive fact-based revival strategies.</p>
-              <div className="key-components">
-                <h4>Key Components:</h4>
-                <ul>
-                  <li><strong>Alumni Registry:</strong> Secure profiling of alumni across institutions and generations.</li>
-                  <li><strong>School Intelligence Dashboard:</strong> Real-time data on infrastructure, staffing, curriculum, and performance.</li>
-                  <li><strong>Maturity Mode Index:</strong> Classify schools by development stage (e.g., Basic, Transitional, Advanced) to prioritize interventions.</li>
-                  <li><strong>Decision Analytics:</strong> Use data to guide funding, partnerships, and policy advocacy.</li>
-                </ul>
-              </div>
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon">🧠</div>
+              <h3>Data Intelligence & Decision Support</h3>
+              <p>Build a national database of alumni and schools to drive fact-based revival strategies. "You can't revive what you haven't diagnosed. NAIRA turns school data into action."</p>
             </div>
-          </div>
-
-          {/* Knowledge Sharing & Innovation Access */}
-          <div className="feature-category">
-            <h3 className="category-title">🚀 Knowledge Sharing & Innovation Access</h3>
-            <p className="category-subtitle">"NAIRA transforms alumni wisdom into student opportunity."</p>
-            <div className="category-description">
-              <p><strong>Purpose:</strong> Equip alumni and schools with tools for 21st-century learning.</p>
-              <div className="key-components">
-                <h4>Key Components:</h4>
-                <ul>
-                  <li><strong>STEM & AI Curriculum Kits:</strong> Ready-to-deploy modules for secondary schools.</li>
-                  <li><strong>Alumni-Led Masterclasses:</strong> Experts from tech, finance, medicine, and more share insights.</li>
-                  <li><strong>Innovation Grants:</strong> Support for schools adopting robotics, coding, and digital labs.</li>
-                  <li><strong>Virtual Learning Hubs:</strong> Online platforms for continuous learning and collaboration.</li>
-                </ul>
-              </div>
+            <div className="feature-card">
+              <div className="feature-icon">🚀</div>
+              <h3>Knowledge Sharing & Innovation Access</h3>
+              <p>Equip alumni and schools with tools for 21st-century learning. "NAIRA transforms alumni wisdom into student opportunity."</p>
             </div>
-          </div>
-
-          {/* Alumni Connection & Support Network */}
-          <div className="feature-category">
-            <h3 className="category-title">🤝 Alumni Connection & Support Network</h3>
-            <p className="category-subtitle">"NAIRA is not just a platform — it's a movement of reconnection."</p>
-            <div className="category-description">
-              <p><strong>Purpose:</strong> Rebuild emotional and professional ties between alumni and their alma maters.</p>
-              <div className="key-components">
-                <h4>Key Components:</h4>
-                <ul>
-                  <li><strong>Alumni Relationship Portal:</strong> Connect by year, region, profession, or interest.</li>
-                  <li><strong>Support Circles:</strong> Peer mentorship, career guidance, and wellness check-ins.</li>
-                  <li><strong>Recognition System:</strong> Silver, Gold, Diamond tiers for active contributors.</li>
-                  <li><strong>Events & Reunions:</strong> Hybrid gatherings to celebrate legacy and spark revival.</li>
-                </ul>
-              </div>
+            <div className="feature-card">
+              <div className="feature-icon">🤝</div>
+              <h3>Alumni Connection & Support Network</h3>
+              <p>Rebuild emotional and professional ties between alumni and their alma maters. "NAIRA is not just a platform — it's a movement of reconnection."</p>
             </div>
           </div>
         </div>
