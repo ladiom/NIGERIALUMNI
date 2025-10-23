@@ -2,6 +2,12 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
   font-weight: 400;
+}
+
+body {
+  background: #ffffff;
+  margin: 0;
+  padding: 0;
 
   /* SPACO Alumni Color Palette */
   --spaco-primary: #1e40af;        /* Deep blue - primary brand color */

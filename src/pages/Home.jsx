@@ -630,22 +630,37 @@ function Home() {
 
   return (
     <div className="home-container">
-      {/* Search and Filter Form - Now at the top */}
+      {/* New Landing Page Format */}
+      <section className="landing-hero">
+        <div className="landing-hero-content">
+          <div className="landing-header">
+            <div className="beta-header">
+              ST. PATRICK'S IBADAN ALUMNI – Beta Testing
+            </div>
+            <div className="mission-statement">
+              <div className="naira-title">
+                <strong>National Alumni Institutions Revival Alliance</strong>
+                <div className="naira-acronym">(NAIRA)</div>
+              </div>
+              <div className="mission-text">
+                unites alumni across Nigeria and the diaspora to revive the educational quality of their alma maters through strategic partnerships, knowledge sharing, and modern learning innovations like STEM and AI.
+              </div>
+            </div>
+            <div className="tagline">
+              ALUMNI REVIVING ALMA-MATER
+            </div>
+            <div className="cta-button">
+              <Link to="/register-school" className="btn-register">
+                Register or update your profile
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Search and Filter Form */}
       <section className="search-hero">
         <div className="search-hero-content">
-          <div className="search-header">
-            <div className="spaco-beta-title">
-              St. Patrick's Ibadan (SPACO) ALUMNI - Beta
-            </div>
-            <div className="main-title">
-              <h1>National Alumni Institutions Revival Alliance</h1>
-              <div className="title-line-2">Get your NAIRA 100 ID NOW!</div>
-            </div>
-            <p className="search-description tagline">
-              Reconnect. Rediscover. Rebuild.
-            </p>
-          </div>
-          
           <div className="search-form-container">
             <form className="home-search-form" onSubmit={handleSearch}>
               {/* Top section: Search input and actions */}
@@ -794,6 +809,41 @@ function Home() {
               ⚠️ Database connection issue - please refresh the page
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section className="partners-section">
+        <div className="partners-header">
+          <h3>Partner with us to revive Nigeria's educational institutions</h3>
+        </div>
+        <div className="partners-scroll">
+          <div className="partners-track">
+            <div className="partner-logo">
+              <img src="/partner-logos/microsoft.png" alt="Microsoft" />
+            </div>
+            <div className="partner-logo">
+              <img src="/partner-logos/wema-bank.png" alt="Wema Bank" />
+            </div>
+            <div className="partner-logo">
+              <img src="/partner-logos/google.png" alt="Google" />
+            </div>
+            <div className="partner-logo">
+              <img src="/partner-logos/amazon.png" alt="Amazon" />
+            </div>
+            <div className="partner-logo">
+              <img src="/partner-logos/netflix.png" alt="Netflix" />
+            </div>
+            <div className="partner-logo">
+              <img src="/partner-logos/linkedin.png" alt="LinkedIn" />
+            </div>
+            <div className="partner-logo">
+              <img src="/partner-logos/wema-bank.png" alt="Wema Bank" />
+            </div>
+            <div className="partner-logo">
+              <img src="/partner-logos/microsoft.png" alt="Microsoft" />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -966,36 +1016,7 @@ function Home() {
           <div className="hero-pattern"></div>
         </div>
         <div className="hero-content">
-          <div className="hero-stats">
-            <div className="stat-item">
-              <div className="stat-icon">👥</div>
-              <span className="stat-number">10K+</span>
-              <span className="stat-label">Alumni Connected</span>
-            </div>
-            <div className="stat-item">
-              <div className="stat-icon">🏫</div>
-              <span className="stat-number">100+</span>
-              <span className="stat-label">Schools Registered</span>
-            </div>
-            <div className="stat-item">
-              <div className="stat-icon">🏆</div>
-              <span className="stat-number">3</span>
-              <span className="stat-label">Member Tiers</span>
-            </div>
-            <div className="stat-item">
-              <div className="stat-icon">🗺️</div>
-              <span className="stat-number">36</span>
-              <span className="stat-label">States Covered</span>
-            </div>
-          </div>
-          <div className="hero-actions">
-            <Link to="/register-school" className="btn btn-primary btn-large">
-              Join Now
-            </Link>
-            <Link to="/login" className="btn btn-primary btn-large">
-              Sign In
-            </Link>
-          </div>
+          {/* Hero content can be added here if needed */}
         </div>
       </section>
       )}

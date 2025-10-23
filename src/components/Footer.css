@@ -1,8 +1,9 @@
 .footer {
-  background-color: #1e3a8a;
-  color: rgba(255, 255, 255, 0.87);
+  background-color: #ffffff;
+  color: #1e293b;
   padding: 2rem;
   margin-top: auto;
+  border-top: 1px solid #e2e8f0;
 }
 
 .footer-container {
@@ -39,19 +40,20 @@
 }
 
 .footer-link {
-  color: rgba(255, 255, 255, 0.87);
+  color: #64748b;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer-link:hover {
-  color: #646cff;
+  color: #2563eb;
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(59, 130, 246, 0.3);
+  border-top: 1px solid #e2e8f0;
   padding-top: 1rem;
   text-align: center;
+  color: #64748b;
 }
 
 /* Responsive styles */
