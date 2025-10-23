@@ -1954,7 +1954,7 @@
 
 .partners-header {
   max-width: 1200px;
-  margin: 0 auto 2rem auto;
+  margin: 0 auto 0.5rem auto;
   padding: 0 2rem;
 }
 
@@ -2213,7 +2213,7 @@
   font-size: 2.5rem;
   font-weight: 700;
   color: #1e293b;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -2283,7 +2283,7 @@
   
   .features-container h2 {
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
   }
   
   .features-grid {
@@ -2507,7 +2507,7 @@
   font-size: 1.125rem;
   color: var(--spaco-primary);
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   font-weight: 500;
   font-style: italic;
 }
