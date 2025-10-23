@@ -1061,52 +1061,31 @@ function Home() {
         </div>
       </section>
 
-      {/* Member Recognition Tiers */}
+      {/* Partnership Benefits */}
       <section className="testimonials-section">
         <div className="testimonials-container">
-          <h2>NAIRA-100 Member Recognition</h2>
+          <h2>Partnership Benefits</h2>
           <p className="testimonials-subtitle">Join our tiered membership system and get recognized for your contributions</p>
           <div className="testimonials-grid">
             <div className="testimonial-card silver-tier">
-              <div className="tier-badge silver">🥈</div>
+              <div className="tier-badge silver">📢</div>
               <div className="testimonial-content">
-                <h3>Silver Member</h3>
-                <p>"As a registered and verified member, I received my unique NAIRA-100 ID and official brooch pin. It's a badge of pride and commitment to my alma mater."</p>
-              </div>
-              <div className="testimonial-author">
-                <div className="author-avatar">AO</div>
-                <div className="author-info">
-                  <h4>Chinedu Adebayo</h4>
-                  <p>STP-1998-0023-AO • St. Patrick's Grammar School</p>
-                </div>
+                <h3>Brand Visibility</h3>
+                <p>Brand visibility across alumni communities and educational institutions</p>
               </div>
             </div>
             <div className="testimonial-card gold-tier">
-              <div className="tier-badge gold">🥇</div>
+              <div className="tier-badge gold">🎯</div>
               <div className="testimonial-content">
-                <h3>Gold Member</h3>
-                <p>"Being an active contributor in school projects has been rewarding. The platform connects me with like-minded alumni working to improve education in Nigeria."</p>
-              </div>
-              <div className="testimonial-author">
-                <div className="author-avatar">CA</div>
-                <div className="author-info">
-                  <h4>Chinwe Adebayo</h4>
-                  <p>UNI-2005-0156-CA • University of Lagos</p>
-                </div>
+                <h3>CSR Alignment</h3>
+                <p>CSR alignment with measurable impact in education and youth development</p>
               </div>
             </div>
             <div className="testimonial-card diamond-tier">
-              <div className="tier-badge diamond">💎</div>
+              <div className="tier-badge diamond">🔑</div>
               <div className="testimonial-content">
-                <h3>Diamond Member</h3>
-                <p>"As a major donor and project sponsor, I'm honored to be in the Hall of Contributors. NAIRA-100 has given me a platform to make real impact in education."</p>
-              </div>
-              <div className="testimonial-author">
-                <div className="author-avatar">FO</div>
-                <div className="author-info">
-                  <h4>Folake Ogunlesi</h4>
-                  <p>POL-1995-0089-FO • Yaba College of Technology</p>
-                </div>
+                <h3>Exclusive Access</h3>
+                <p>Exclusive access to alumni engagement platforms and events</p>
               </div>
             </div>
           </div>
