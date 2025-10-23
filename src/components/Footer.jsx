@@ -1,4 +1,5 @@
 import './Footer.css';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -9,21 +10,45 @@ function Footer() {
             <div className="footer-logo">
               <img 
                 src="/NAIRA100LOGO.JPG" 
-                alt="Nigeria Alumni Network Logo" 
+                alt="NAIRA-100 Logo" 
                 className="footer-logo-image"
               />
             </div>
-            <p>Connecting alumni to their alma maters and supporting educational development.</p>
+            <p>National Alumni Institutions Revival Alliance (NAIRA) - Connecting alumni to their alma maters and supporting educational development across Nigeria.</p>
           </div>
-          <div className="footer-links">
-            <a href="#" className="footer-link">About Us</a>
-            <a href="#" className="footer-link">Contact</a>
-            <a href="#" className="footer-link">Privacy Policy</a>
-            <a href="#" className="footer-link">Terms of Service</a>
+          
+          <div className="footer-navigation">
+            <h4>Navigation</h4>
+            <div className="footer-links">
+              <Link to="/" className="footer-link">Home</Link>
+              <Link to="/about" className="footer-link">About</Link>
+              <Link to="/partners" className="footer-link">Partners</Link>
+              <Link to="/register-school" className="footer-link">Register School</Link>
+              <Link to="/login" className="footer-link">Login</Link>
+            </div>
+          </div>
+          
+          <div className="footer-contact">
+            <h4>Contact Information</h4>
+            <div className="contact-details">
+              <div className="contact-item">
+                <span className="contact-icon">📍</span>
+                <span>No 5 Adeoyo Hospital Road Ringroad<br />00000 Ibadan, Nigeria</span>
+              </div>
+              <div className="contact-item">
+                <span className="contact-icon">📞</span>
+                <span>+234 9055552524</span>
+              </div>
+              <div className="contact-item">
+                <span className="contact-icon">✉️</span>
+                <span>operations@kajopo.com</span>
+              </div>
+            </div>
           </div>
         </div>
+        
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Nigeria Alumni Platform. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} NAIRA-100 - National Alumni Institutions Revival Alliance. All rights reserved.</p>
         </div>
       </div>
     </footer>
