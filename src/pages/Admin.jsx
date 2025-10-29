@@ -51,6 +51,45 @@ function Admin() {
   const [totalUsers, setTotalUsers] = useState(0);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  
+  // User modal state
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isAddMode, setIsAddMode] = useState(false);
+  const [schoolsList, setSchoolsList] = useState([]);
+  const [showSchoolCreator, setShowSchoolCreator] = useState(false);
+  const [newSchool, setNewSchool] = useState({
+    name: '',
+    state: '',
+    lga: '',
+    level: ''
+  });
+  const [sendWelcomeEmail, setSendWelcomeEmail] = useState(true);
+
+  // School modal state
+  const [showSchoolModal, setShowSchoolModal] = useState(false);
+  const [selectedSchoolDetails, setSelectedSchoolDetails] = useState(null);
+  const [isSchoolEditMode, setIsSchoolEditMode] = useState(false);
+  const [isSchoolAddMode, setIsSchoolAddMode] = useState(false);
+
+  // Nigeria states (proper case, matching existing data)
+  const nigeriaStates = [
+    'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa',
+    'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo',
+    'Ekiti', 'Enugu', 'Gombe', 'Imo', 'Jigawa', 'Kaduna',
+    'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos',
+    'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo',
+    'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
+  ];
+
+  // School levels
+  const schoolLevels = [
+    { value: 'PR', label: 'Primary School' },
+    { value: 'HI', label: 'Secondary School' },
+    { value: 'PO', label: 'Polytechnic' },
+    { value: 'UN', label: 'University' }
+  ];
 
   // No longer using localStorage - all data comes from database
   const getProcessedItems = () => {
@@ -75,7 +114,7 @@ function Admin() {
       
       let query = supabase
         .from('alumni')
-        .select('id, full_name, graduation_year, created_at, email, schools(name)', { count: 'exact' });
+        .select('id, full_name, graduation_year, created_at, email, school_id, schools(id, name)', { count: 'exact' });
       
       // Add search filter
       if (search.trim()) {
@@ -547,6 +586,185 @@ Nigeria Alumni Network Team`,
     }
   };
 
+  // School modal handlers
+  const handleAddSchool = () => {
+    setSelectedSchoolDetails({
+      name: '',
+      state: '',
+      lga: '',
+      level: '',
+      status: 'active'
+    });
+    setIsSchoolAddMode(true);
+    setIsSchoolEditMode(true);
+    setShowSchoolModal(true);
+  };
+
+  const handleViewSchool = async (school) => {
+    setSelectedSchoolDetails(school);
+    setIsSchoolEditMode(false);
+    setIsSchoolAddMode(false);
+    setShowSchoolModal(true);
+    try {
+      const { data, error } = await supabase
+        .from('schools')
+        .select('id, name, state, lga, level, created_at, school_code')
+        .eq('id', school.id)
+        .single();
+      if (!error && data) {
+        setSelectedSchoolDetails(data);
+      }
+    } catch (e) {
+      console.error('Failed to load full school details:', e);
+    }
+  };
+
+  const handleEditSchool = async (school) => {
+    setSelectedSchoolDetails(school);
+    setIsSchoolEditMode(true);
+    setIsSchoolAddMode(false);
+    setShowSchoolModal(true);
+    try {
+      const { data, error } = await supabase
+        .from('schools')
+        .select('id, name, state, lga, level, created_at, school_code')
+        .eq('id', school.id)
+        .single();
+      if (!error && data) {
+        setSelectedSchoolDetails(data);
+      }
+    } catch (e) {
+      console.error('Failed to load full school details:', e);
+    }
+  };
+
+  const handleCloseSchoolModal = () => {
+    setSelectedSchoolDetails(null);
+    setIsSchoolEditMode(false);
+    setIsSchoolAddMode(false);
+    setShowSchoolModal(false);
+  };
+
+  const handleSaveSchool = async () => {
+    if (!selectedSchoolDetails) return;
+    
+    // Validation
+    if (!selectedSchoolDetails.name || !selectedSchoolDetails.state || !selectedSchoolDetails.lga || !selectedSchoolDetails.level) {
+      alert('Please fill in all required fields (Name, State, LGA, and Level)');
+      return;
+    }
+
+    try {
+      if (isSchoolAddMode) {
+        // Create new school
+        const { data, error } = await supabase
+          .from('schools')
+          .insert({
+            name: selectedSchoolDetails.name.trim(),
+            state: selectedSchoolDetails.state.trim(),
+            lga: selectedSchoolDetails.lga.trim(),
+            level: selectedSchoolDetails.level.trim(),
+            school_code: 'NEW',
+            created_at: new Date().toISOString()
+          })
+          .select();
+
+        if (error) throw error;
+
+        // Refresh the schools list
+        const recentSchoolsRes = await supabase
+          .from('schools')
+          .select('id, name, state, lga, level, created_at, alumni_count, school_code')
+          .order('created_at', { ascending: false })
+          .limit(10);
+        const allSchoolsRes = await supabase
+          .from('schools')
+          .select('id, name, state, lga, level, created_at, alumni_count, school_code');
+
+        if (recentSchoolsRes.data) setRecentSchools(recentSchoolsRes.data);
+        if (allSchoolsRes.data) setAllSchools(allSchoolsRes.data);
+
+        alert('School created successfully!');
+        handleCloseSchoolModal();
+      } else {
+        // Update existing school
+        // Ensure school_code is not empty - default to 'NEW' if empty or undefined
+        const schoolCodeValue = selectedSchoolDetails.school_code?.trim() || 'NEW';
+        
+        const updateData = {
+          name: selectedSchoolDetails.name.trim(),
+          state: selectedSchoolDetails.state.trim(),
+          lga: selectedSchoolDetails.lga.trim(),
+          level: selectedSchoolDetails.level.trim(),
+          school_code: schoolCodeValue
+        };
+        
+        console.log('Updating school with data:', updateData);
+        console.log('Original school_code value:', selectedSchoolDetails.school_code);
+        console.log('Processed school_code value:', schoolCodeValue);
+        console.log('School ID:', selectedSchoolDetails.id);
+        
+        const { data: updateResult, error } = await supabase
+          .from('schools')
+          .update(updateData)
+          .eq('id', selectedSchoolDetails.id)
+          .select();
+
+        if (error) {
+          console.error('Update error:', error);
+          throw error;
+        }
+        
+        console.log('Update result:', updateResult);
+        if (!updateResult || updateResult.length === 0) {
+          console.warn('No rows returned from update. This may indicate RLS blocked the update or the id did not match.');
+        }
+
+        // Refresh the schools list from database to ensure school_code is updated
+        const recentSchoolsRes = await supabase
+          .from('schools')
+          .select('id, name, state, lga, level, created_at, alumni_count, school_code')
+          .order('created_at', { ascending: false })
+          .limit(10);
+        const allSchoolsRes = await supabase
+          .from('schools')
+          .select('id, name, state, lga, level, created_at, alumni_count, school_code');
+
+        if (recentSchoolsRes.data) setRecentSchools(recentSchoolsRes.data);
+        if (allSchoolsRes.data) setAllSchools(allSchoolsRes.data);
+
+        alert('School updated successfully!');
+        handleCloseSchoolModal();
+      }
+    } catch (error) {
+      console.error(`Error ${isSchoolAddMode ? 'creating' : 'updating'} school:`, error);
+      alert(`Failed to ${isSchoolAddMode ? 'create' : 'update'} school: ${error.message}`);
+    }
+  };
+
+  const handleDeleteSchool = async (schoolId) => {
+    if (!confirm('Are you sure you want to delete this school? This action cannot be undone.')) {
+      return;
+    }
+    try {
+      const { error } = await supabase
+        .from('schools')
+        .delete()
+        .eq('id', schoolId);
+
+      if (error) throw error;
+
+      setRecentSchools(prev => prev.filter(s => s.id !== schoolId));
+      setAllSchools(prev => prev.filter(s => s.id !== schoolId));
+
+      alert('School deleted successfully!');
+      handleCloseSchoolModal();
+    } catch (error) {
+      console.error('Error deleting school:', error);
+      alert('Failed to delete school. Please try again.');
+    }
+  };
+
   // Users selection handlers
   const handleSelectAllUsers = (checked) => {
     if (checked) {
@@ -572,24 +790,265 @@ Nigeria Alumni Network Team`,
       return;
     }
 
-    const count = selectedUsers.size;
-    if (confirm(`Are you sure you want to delete ${count} selected user(s)? This action cannot be undone.`)) {
-      try {
-        console.log('Bulk deleting users:', Array.from(selectedUsers));
+    const idsToDelete = Array.from(selectedUsers);
+    const count = idsToDelete.length;
+    if (!confirm(`Are you sure you want to delete ${count} selected user(s)? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      console.log('Bulk deleting users from DB:', idsToDelete);
+      const { error } = await supabase
+        .from('alumni')
+        .delete()
+        .in('id', idsToDelete);
+
+      if (error) throw error;
+
+      alert(`${count} user(s) have been deleted!`);
+      setSelectedUsers(new Set());
+      
+      // Refresh from database to reflect deletions
+      searchUsers(searchTerm, currentPage, sortField, sortDirection);
+    } catch (error) {
+      console.error('Error bulk deleting users:', error);
+      alert('Failed to delete users. Please try again.');
+    }
+  };
+
+  // Load schools for selection
+  const loadSchools = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('schools')
+        .select('id, name, state, lga, level')
+        .order('name');
+      
+      if (error) throw error;
+      setSchoolsList(data || []);
+    } catch (error) {
+      console.error('Error loading schools:', error);
+      setSchoolsList([]);
+    }
+  };
+
+  // Create a new school
+  const handleCreateSchool = async () => {
+    if (!newSchool.name || !newSchool.state || !newSchool.lga || !newSchool.level) {
+      alert('Please fill in all school fields');
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('schools')
+        .insert({
+          name: newSchool.name.trim(),
+          state: newSchool.state.trim(),
+          lga: newSchool.lga.trim(),
+          level: newSchool.level.trim(),
+          status: 'active',
+          created_at: new Date().toISOString()
+        })
+        .select();
+
+      if (error) throw error;
+
+      // Add the new school to the list and select it
+      setSchoolsList(prev => [...prev, data[0]]);
+      setSelectedUser(prev => ({ ...prev, school_id: data[0].id }));
+      setShowSchoolCreator(false);
+      setNewSchool({ name: '', state: '', lga: '', level: '' });
+      alert('School created successfully!');
+    } catch (error) {
+      console.error('Error creating school:', error);
+      alert(`Failed to create school: ${error.message}`);
+    }
+  };
+
+  // User modal handlers
+  const handleAddUser = async () => {
+    setSelectedUser({
+      id: '',
+      full_name: '',
+      email: '',
+      graduation_year: '',
+      school_id: null,
+      schools: { name: '' }
+    });
+    setIsAddMode(true);
+    setIsEditMode(true);
+    setShowUserModal(true);
+    // Load schools when opening add user modal
+    await loadSchools();
+  };
+
+  const handleViewUser = (user) => {
+    setSelectedUser(user);
+    setIsEditMode(false);
+    setIsAddMode(false);
+    setShowUserModal(true);
+  };
+
+  const handleEditUser = async (user) => {
+    setSelectedUser(user);
+    setIsEditMode(true);
+    setIsAddMode(false);
+    setShowUserModal(true);
+    // Load schools when editing
+    await loadSchools();
+  };
+
+  const handleCloseUserModal = () => {
+    setShowUserModal(false);
+    setSelectedUser(null);
+    setIsEditMode(false);
+    setIsAddMode(false);
+    setShowSchoolCreator(false);
+    setNewSchool({ name: '', state: '', lga: '', level: '' });
+    setSendWelcomeEmail(true); // Reset to default
+  };
+
+  const handleSaveUser = async () => {
+    if (!selectedUser) return;
+    
+    // Validation
+    if (!selectedUser.full_name || selectedUser.full_name.trim() === '') {
+      alert('Please enter a full name');
+      return;
+    }
+    
+    // Email is required only if sending welcome email
+    if (isAddMode && sendWelcomeEmail && (!selectedUser.email || selectedUser.email.trim() === '')) {
+      alert('Email is required to send welcome email. Either provide an email or uncheck the welcome email option.');
+      return;
+    }
+    
+    try {
+      if (isAddMode) {
+        // Create new user in the database
+        // Generate a unique ID based on current timestamp and random characters
+        const timestamp = Date.now().toString().slice(-6);
+        const randomStr = Math.random().toString(36).substring(2, 4).toUpperCase();
+        const alumniId = `NEW${timestamp}${randomStr}`;
         
-        setRecentAlumni(prev => prev.filter(u => !selectedUsers.has(u.id)));
-        setStats(prev => ({
-          ...prev,
-          users: prev.users - count,
-          alumni: prev.alumni - count
-        }));
-        setSelectedUsers(new Set());
+        const insertData = {
+          id: alumniId,
+          full_name: selectedUser.full_name.trim(),
+          email: selectedUser.email?.trim() || null,
+          graduation_year: selectedUser.graduation_year?.trim() || null,
+          school_id: selectedUser.school_id || null,
+          created_at: new Date().toISOString()
+        };
         
-        alert(`${count} user(s) have been deleted!`);
-      } catch (error) {
-        console.error('Error bulk deleting users:', error);
-        alert('Failed to delete users. Please try again.');
+        const { error } = await supabase
+          .from('alumni')
+          .insert(insertData);
+
+        if (error) {
+          console.error('Detailed insert error:', error);
+          throw error;
+        }
+
+        // Create a user account for login if welcome email is enabled
+        if (sendWelcomeEmail && selectedUser.email) {
+          try {
+            const { data: userData, error: userError } = await supabase
+              .from('users')
+              .insert({
+                email: selectedUser.email.trim(),
+                alumni_id: alumniId,
+                created_at: new Date().toISOString()
+              })
+              .select();
+
+            console.log('User account creation result:', { userData, userError });
+
+            if (userError && !userError.message.includes('duplicate')) {
+              console.warn('User creation warning:', userError);
+            } else if (userData) {
+              console.log('User account created successfully:', userData[0]);
+              
+              // Send welcome email notification
+              try {
+                const { sendApprovalEmail } = await import('../services/emailService');
+                const schoolName = schoolsList.find(s => s.id === selectedUser.school_id)?.name || 'Your School';
+                
+                await sendApprovalEmail({
+                  toEmail: selectedUser.email.trim(),
+                  toName: selectedUser.full_name.trim(),
+                  alumniId: alumniId,
+                  schoolName: schoolName,
+                  loginUrl: `${window.location.origin}/login`
+                });
+                console.log('Welcome email sent successfully');
+              } catch (emailError) {
+                console.warn('Email sending warning:', emailError);
+              }
+            }
+          } catch (userError) {
+            console.warn('User account creation error:', userError);
+          }
+        }
+
+        alert(sendWelcomeEmail 
+          ? 'User created successfully! Welcome email has been sent.' 
+          : 'User created successfully!');
+        handleCloseUserModal();
+        
+        // Refresh the user list
+        searchUsers(searchTerm, currentPage, sortField, sortDirection);
+      } else {
+        // Update existing user in the database
+        const { error } = await supabase
+          .from('alumni')
+          .update({
+            full_name: selectedUser.full_name,
+            email: selectedUser.email,
+            graduation_year: selectedUser.graduation_year || null,
+            school_id: selectedUser.school_id || null
+          })
+          .eq('id', selectedUser.id);
+
+        if (error) {
+          throw error;
+        }
+
+        alert('User updated successfully!');
+        handleCloseUserModal();
+        
+        // Refresh the user list
+        searchUsers(searchTerm, currentPage, sortField, sortDirection);
       }
+    } catch (error) {
+      console.error('Error saving user:', error);
+      alert(`Failed to ${isAddMode ? 'create' : 'update'} user: ${error.message}`);
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('alumni')
+        .delete()
+        .eq('id', userId);
+
+      if (error) {
+        throw error;
+      }
+
+      alert('User deleted successfully!');
+      handleCloseUserModal();
+      
+      // Refresh the user list
+      searchUsers(searchTerm, currentPage, sortField, sortDirection);
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      alert('Failed to delete user. Please try again.');
     }
   };
 
@@ -717,7 +1176,7 @@ Nigeria Alumni Network Team`,
           console.log('Testing recent schools query...');
           const recentSchoolsRes = await supabase
             .from('schools')
-            .select('id, name, state, lga, level, created_at')
+            .select('id, name, state, lga, level, created_at, school_code')
             .order('created_at', { ascending: false })
             .limit(10);
           console.log('Recent schools query result:', recentSchoolsRes);
@@ -865,6 +1324,134 @@ Nigeria Alumni Network Team`,
             >
               🔄 Retry
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* School View/Edit Modal */}
+      {showSchoolModal && selectedSchoolDetails && (
+        <div className="modal-overlay" onClick={handleCloseSchoolModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>{isSchoolAddMode ? 'Add New School' : (isSchoolEditMode ? 'Edit School' : 'View School')}</h2>
+              <button className="modal-close" onClick={handleCloseSchoolModal}>×</button>
+            </div>
+            <div className="modal-body">
+              {!isSchoolAddMode && (
+                <div className="form-row" style={{ display: 'flex', gap: '1rem' }}>
+                  <div className="form-group" style={{ flex: 1 }}>
+                    <label>School ID</label>
+                    <input type="text" value={selectedSchoolDetails.id || ''} disabled className="form-input" />
+                  </div>
+                  <div className="form-group" style={{ flex: 1 }}>
+                    <label>School Code</label>
+                    <input
+                      type="text"
+                      className="form-input"
+                      value={selectedSchoolDetails.school_code || ''}
+                      disabled={!isSchoolEditMode}
+                      onChange={(e) => setSelectedSchoolDetails({ ...selectedSchoolDetails, school_code: e.target.value })}
+                    />
+                  </div>
+                </div>
+              )}
+              <div className="form-group">
+                <label>School Name {isSchoolAddMode && <span style={{ color: '#e53e3e' }}>*</span>}</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={selectedSchoolDetails.name || ''}
+                  disabled={!isSchoolEditMode}
+                  onChange={(e) => setSelectedSchoolDetails({ ...selectedSchoolDetails, name: e.target.value })}
+                  required={isSchoolAddMode}
+                  placeholder={isSchoolAddMode ? "Enter school name" : ""}
+                />
+              </div>
+              <div className="form-group">
+                <label>State {isSchoolAddMode && <span style={{ color: '#e53e3e' }}>*</span>}</label>
+                {isSchoolEditMode ? (
+                  <select
+                    className="form-input"
+                    value={selectedSchoolDetails.state || ''}
+                    onChange={(e) => setSelectedSchoolDetails({ ...selectedSchoolDetails, state: e.target.value })}
+                    required={isSchoolAddMode}
+                  >
+                    <option value="">-- Select State --</option>
+                    {nigeriaStates.map((st) => (
+                      <option key={st} value={st}>{st}</option>
+                    ))}
+                  </select>
+                ) : (
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={selectedSchoolDetails.state || ''}
+                    disabled
+                  />
+                )}
+              </div>
+              <div className="form-group">
+                <label>CITY/LGA {isSchoolAddMode && <span style={{ color: '#e53e3e' }}>*</span>}</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={selectedSchoolDetails.lga || ''}
+                  disabled={!isSchoolEditMode}
+                  onChange={(e) => setSelectedSchoolDetails({ ...selectedSchoolDetails, lga: e.target.value })}
+                  required={isSchoolAddMode}
+                  placeholder={isSchoolAddMode ? "Enter City/LGA" : ""}
+                />
+              </div>
+              <div className="form-group">
+                <label>Level {isSchoolAddMode && <span style={{ color: '#e53e3e' }}>*</span>}</label>
+                {isSchoolEditMode ? (
+                  <select
+                    className="form-input"
+                    value={selectedSchoolDetails.level || ''}
+                    onChange={(e) => setSelectedSchoolDetails({ ...selectedSchoolDetails, level: e.target.value })}
+                    required={isSchoolAddMode}
+                  >
+                    <option value="">-- Select Level --</option>
+                    {schoolLevels.map(l => (
+                      <option key={l.value} value={l.value}>{l.label}</option>
+                    ))}
+                  </select>
+                ) : (
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={selectedSchoolDetails.level || ''}
+                    disabled
+                  />
+                )}
+              </div>
+              {/* Status removed from editing/creation as it's not in schema */}
+              {!isSchoolAddMode && (
+                <div className="form-group">
+                  <label>Created</label>
+                  <input type="text" className="form-input" value={selectedSchoolDetails.created_at ? new Date(selectedSchoolDetails.created_at).toLocaleString() : '—'} disabled />
+                </div>
+              )}
+            </div>
+            <div className="modal-footer">
+              {isSchoolEditMode ? (
+                <>
+                  <button className="btn-primary" onClick={handleSaveSchool}>
+                    {isSchoolAddMode ? '✓ Create School' : '💾 Save Changes'}
+                  </button>
+                  {!isSchoolAddMode && (
+                    <button className="btn-danger" onClick={() => handleDeleteSchool(selectedSchoolDetails.id)}>🗑 Delete School</button>
+                  )}
+                  <button className="btn-secondary" onClick={handleCloseSchoolModal}>Cancel</button>
+                </>
+              ) : (
+                <>
+                  <button className="btn-primary" onClick={() => setIsSchoolEditMode(true)}>✏ Edit</button>
+                  <button className="btn-danger" onClick={() => handleDeleteSchool(selectedSchoolDetails.id)}>🗑 Delete School</button>
+                  <button className="btn-secondary" onClick={handleCloseSchoolModal}>Close</button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -1469,6 +2056,14 @@ Nigeria Alumni Network Team`,
                 {selectedSchoolStatus === 'pending' && 'Pending Schools'}
               </h2>
               <div className="panel-actions">
+                <button 
+                  className="btn-success"
+                  onClick={handleAddSchool}
+                  style={{ marginRight: '1rem' }}
+                  title="Add New School"
+                >
+                  ➕ Add New School
+                </button>
                 <span className="registration-count">
                   {getDisplayCount()} {showAllSchools ? 'total' : 'recent'} schools
                 </span>
@@ -1519,7 +2114,7 @@ Nigeria Alumni Network Team`,
                         <th className="col-id">ID</th>
                         <th className="col-name">School Name</th>
                         <th className="col-location">State</th>
-                        <th className="col-lga">LGA</th>
+                        <th className="col-lga">City/LGA</th>
                         <th className="col-level">Level</th>
                         <th className="col-status">Status</th>
                         <th className="col-alumni">Alumni Count</th>
@@ -1556,14 +2151,14 @@ Nigeria Alumni Network Team`,
                             <div className="action-buttons">
                               <button 
                                 className="action-btn approve"
-                                onClick={() => alert(`Viewing school: ${s.name}`)}
+                                onClick={() => handleViewSchool(s)}
                                 title="View School Details"
                               >
                                 👁 View
                               </button>
                               <button 
                                 className="action-btn decline"
-                                onClick={() => alert(`Editing school: ${s.name}`)}
+                                onClick={() => handleEditSchool(s)}
                                 title="Edit School"
                               >
                                 ✏ Edit
@@ -1614,6 +2209,14 @@ Nigeria Alumni Network Team`,
             <div className="panel-header">
               <h2>Users Management</h2>
               <div className="panel-actions">
+                <button 
+                  className="btn-success"
+                  onClick={handleAddUser}
+                  style={{ marginRight: '1rem' }}
+                  title="Add New User"
+                >
+                  ➕ Add New User
+                </button>
                 <div className="search-container">
                   <input
                     type="text"
@@ -1728,14 +2331,14 @@ Nigeria Alumni Network Team`,
                             <div className="action-buttons">
                               <button 
                                 className="action-btn approve"
-                                onClick={() => alert(`Viewing user: ${a.full_name}`)}
+                                onClick={() => handleViewUser(a)}
                                 title="View User Profile"
                               >
                                 👁 View
                               </button>
                               <button 
                                 className="action-btn decline"
-                                onClick={() => alert(`Editing user: ${a.full_name}`)}
+                                onClick={() => handleEditUser(a)}
                                 title="Edit User"
                               >
                                 ✏ Edit
@@ -2002,6 +2605,218 @@ Nigeria Alumni Network Team`,
       )}
         </div>
       </div>
+
+      {/* User View/Edit Modal */}
+      {showUserModal && selectedUser && (
+        <div className="modal-overlay" onClick={handleCloseUserModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>{isAddMode ? 'Add New User' : (isEditMode ? 'Edit User' : 'View User')}</h2>
+              <button className="modal-close" onClick={handleCloseUserModal}>×</button>
+            </div>
+            <div className="modal-body">
+              {!isAddMode && (
+                <div className="form-group">
+                  <label>User ID</label>
+                  <input 
+                    type="text" 
+                    value={selectedUser.id || ''} 
+                    disabled 
+                    className="form-input"
+                  />
+                </div>
+              )}
+              <div className="form-group">
+                <label>Full Name {isEditMode && <span style={{ color: '#e53e3e' }}>*</span>}</label>
+                <input 
+                  type="text" 
+                  value={selectedUser.full_name || ''} 
+                  disabled={!isEditMode}
+                  onChange={(e) => setSelectedUser({...selectedUser, full_name: e.target.value})}
+                  className="form-input"
+                  required={isEditMode}
+                  placeholder="Enter full name"
+                />
+              </div>
+              <div className="form-group">
+                <label>Email {isAddMode && sendWelcomeEmail && <span style={{ color: '#e53e3e' }}>*</span>} 
+                  {isAddMode && !sendWelcomeEmail && <span style={{ color: '#4a5568', fontSize: '0.75rem', fontWeight: 'normal' }}>(optional)</span>}
+                </label>
+                <input 
+                  type="email" 
+                  value={selectedUser.email || ''} 
+                  disabled={!isEditMode}
+                  onChange={(e) => setSelectedUser({...selectedUser, email: e.target.value})}
+                  className="form-input"
+                  required={isAddMode && sendWelcomeEmail}
+                  placeholder="Enter email address"
+                />
+                {isAddMode && sendWelcomeEmail && (
+                  <small style={{ color: '#718096', fontSize: '0.75rem', marginTop: '0.25rem', display: 'block' }}>
+                    Required to send welcome email with login instructions
+                  </small>
+                )}
+              </div>
+              <div className="form-group">
+                <label>School {isAddMode && <span style={{ color: '#4a5568', fontSize: '0.75rem', fontWeight: 'normal' }}>(optional)</span>}</label>
+                {isEditMode ? (
+                  <div>
+                    <select 
+                      className="form-input"
+                      value={selectedUser.school_id || ''}
+                      onChange={(e) => setSelectedUser({...selectedUser, school_id: e.target.value || null})}
+                      style={{ marginBottom: '0.5rem' }}
+                    >
+                      <option value="">-- Select a school --</option>
+                      {schoolsList.map(school => (
+                        <option key={school.id} value={school.id}>
+                          {school.name} - {school.level} ({school.state})
+                        </option>
+                      ))}
+                    </select>
+                    <button 
+                      type="button"
+                      onClick={() => setShowSchoolCreator(!showSchoolCreator)}
+                      className="btn-secondary"
+                      style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}
+                    >
+                      {showSchoolCreator ? '✖ Close School Creator' : '➕ Create New School'}
+                    </button>
+                    
+                    {showSchoolCreator && (
+                      <div style={{ marginTop: '1rem', padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '6px', background: '#f7fafc' }}>
+                        <h4 style={{ margin: '0 0 1rem 0', fontSize: '1rem' }}>Create New School</h4>
+                        <div style={{ marginBottom: '0.75rem' }}>
+                          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.875rem' }}>School Name *</label>
+                          <input 
+                            type="text"
+                            value={newSchool.name}
+                            onChange={(e) => setNewSchool({...newSchool, name: e.target.value})}
+                            className="form-input"
+                            placeholder="Enter school name"
+                          />
+                        </div>
+                        <div style={{ marginBottom: '0.75rem' }}>
+                          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.875rem' }}>State *</label>
+                          <input 
+                            type="text"
+                            value={newSchool.state}
+                            onChange={(e) => setNewSchool({...newSchool, state: e.target.value})}
+                            className="form-input"
+                            placeholder="e.g., Lagos"
+                          />
+                        </div>
+                        <div style={{ marginBottom: '0.75rem' }}>
+                          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.875rem' }}>LGA *</label>
+                          <input 
+                            type="text"
+                            value={newSchool.lga}
+                            onChange={(e) => setNewSchool({...newSchool, lga: e.target.value})}
+                            className="form-input"
+                            placeholder="e.g., Ikeja"
+                          />
+                        </div>
+                        <div style={{ marginBottom: '0.75rem' }}>
+                          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.875rem' }}>Level *</label>
+                          <select 
+                            value={newSchool.level}
+                            onChange={(e) => setNewSchool({...newSchool, level: e.target.value})}
+                            className="form-input"
+                          >
+                            <option value="">Select level</option>
+                            <option value="Primary">Primary</option>
+                            <option value="Secondary">Secondary</option>
+                            <option value="Polytechnic">Polytechnic</option>
+                            <option value="University">University</option>
+                          </select>
+                        </div>
+                        <button 
+                          type="button"
+                          onClick={handleCreateSchool}
+                          className="btn-success"
+                          style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}
+                        >
+                          ✓ Create School
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <input 
+                    type="text" 
+                    value={selectedUser.schools?.name || '—'} 
+                    disabled 
+                    className="form-input"
+                  />
+                )}
+              </div>
+              <div className="form-group">
+                <label>Graduation Year</label>
+                <input 
+                  type="text" 
+                  value={selectedUser.graduation_year || ''} 
+                  disabled={!isEditMode}
+                  onChange={(e) => setSelectedUser({...selectedUser, graduation_year: e.target.value})}
+                  className="form-input"
+                />
+              </div>
+              <div className="form-group">
+                <label>Registered</label>
+                <input 
+                  type="text" 
+                  value={selectedUser.created_at ? new Date(selectedUser.created_at).toLocaleString() : '—'} 
+                  disabled 
+                  className="form-input"
+                />
+              </div>
+              
+              {/* Welcome email notification option - only show when adding new users */}
+              {isAddMode && (
+                <div className="form-group">
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                    <input 
+                      type="checkbox"
+                      checked={sendWelcomeEmail}
+                      onChange={(e) => setSendWelcomeEmail(e.target.checked)}
+                      style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                    />
+                    <span>Send welcome email with login instructions</span>
+                  </label>
+                  <small style={{ color: '#718096', fontSize: '0.75rem', marginLeft: '1.5rem', display: 'block' }}>
+                    User will receive an email with their Alumni ID and instructions to set up their password
+                  </small>
+                </div>
+              )}
+            </div>
+            <div className="modal-footer">
+              {isEditMode ? (
+                <>
+                  <button className="btn-primary" onClick={handleSaveUser}>
+                    {isAddMode ? '✓ Create User' : '💾 Save Changes'}
+                  </button>
+                  {!isAddMode && (
+                    <button className="btn-danger" onClick={() => handleDeleteUser(selectedUser.id)}>
+                      🗑 Delete User
+                    </button>
+                  )}
+                  <button className="btn-secondary" onClick={handleCloseUserModal}>
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button className="btn-primary" onClick={() => setIsEditMode(true)}>
+                    ✏ Edit
+                  </button>
+                  <button className="btn-secondary" onClick={handleCloseUserModal}>
+                    Close
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
