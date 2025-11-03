@@ -9,7 +9,7 @@ function Footer() {
           <div className="footer-info">
             <div className="footer-logo">
               <img 
-                src="/NAIRA100LOGO.JPG" 
+                src="/partner-logos/AlaumniNairaLogo3Oct.jpg" 
                 alt="NAIRA-100 Logo" 
                 className="footer-logo-image"
               />

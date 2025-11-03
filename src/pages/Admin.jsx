@@ -1302,7 +1302,7 @@ Nigeria Alumni Network Team`,
       <div className="admin-header">
         <div className="admin-header-content">
           <img 
-            src="/NAIRA100LOGO.JPG" 
+            src="/partner-logos/AlaumniNairaLogo3Oct.jpg" 
             alt="Nigeria Alumni Network Logo" 
             className="admin-logo"
           />

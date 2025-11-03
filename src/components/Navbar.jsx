@@ -43,7 +43,7 @@ function Navbar() {
       <div className="navbar-container">
         <Link to="/" className="navbar-logo" aria-label="100NAIRA Platform Home" onClick={closeMobileMenu}>
           <img 
-            src="/NAIRA100LOGO.JPG" 
+            src="/partner-logos/AlaumniNairaLogo3Oct.jpg" 
             alt="100NAIRA Platform Logo" 
             className="logo-image"
           />
