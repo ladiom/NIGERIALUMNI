@@ -1,6 +1,6 @@
-# Supabase Setup Guide for 100NAIRA Platform
+# Supabase Setup Guide for ALUMNAIRA Platform
 
-This guide will help you set up and configure Supabase for the 100NAIRA Platform.
+This guide will help you set up and configure Supabase for the ALUMNAIRA Platform.
 
 ## Prerequisites
 

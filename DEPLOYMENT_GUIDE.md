@@ -1,4 +1,4 @@
-# Deployment Guide - 100NAIRA Platform
+# Deployment Guide - ALUMNAIRA Platform
 
 ## 🚀 Quick Deployment Steps
 

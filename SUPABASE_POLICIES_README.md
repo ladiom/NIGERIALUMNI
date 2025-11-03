@@ -1,10 +1,10 @@
-# Supabase RLS Policies for 100NAIRA Platform
+# Supabase RLS Policies for ALUMNAIRA Platform
 
-This document explains the Row Level Security (RLS) policies defined in `supabase_policies.sql` and how to apply them to your 100NAIRA Platform Supabase database.
+This document explains the Row Level Security (RLS) policies defined in `supabase_policies.sql` and how to apply them to your ALUMNAIRA Platform Supabase database.
 
 ## Overview
 
-The policies in this file provide a comprehensive security framework for the 100NAIRA Platform, including:
+The policies in this file provide a comprehensive security framework for the ALUMNAIRA Platform, including:
 
 - Public read access to certain data (schools, events, news)
 - User-specific permissions (update own profile)

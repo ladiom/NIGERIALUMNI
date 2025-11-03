@@ -41,10 +41,10 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-logo" aria-label="100NAIRA Platform Home" onClick={closeMobileMenu}>
+        <Link to="/" className="navbar-logo" aria-label="ALUMNAIRA Platform Home" onClick={closeMobileMenu}>
           <img 
             src="/partner-logos/AlaumniNairaLogo3Oct.jpg" 
-            alt="100NAIRA Platform Logo" 
+            alt="ALUMNAIRA Platform Logo" 
             className="logo-image"
           />
         </Link>
